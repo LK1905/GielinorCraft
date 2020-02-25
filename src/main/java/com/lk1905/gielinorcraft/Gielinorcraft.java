@@ -7,9 +7,12 @@ import com.lk1905.gielinorcraft.capability.skill.SkillContainer;
 import com.lk1905.gielinorcraft.skills.AttackSkill;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod(Gielinorcraft.MODID)
+@Mod.EventBusSubscriber
 public class Gielinorcraft {
 
 	public static Logger logger;
@@ -17,6 +20,11 @@ public class Gielinorcraft {
 	public static final String MODID = "gielinorcraft";
 	
 	public Gielinorcraft() {
+		
+	}
+	
+	@SubscribeEvent
+	public static void onCommonSetup(FMLCommonSetupEvent e) {
 		
 		CapabilitySkills.register();
 		

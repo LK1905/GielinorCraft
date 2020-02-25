@@ -1,5 +1,7 @@
 package com.lk1905.gielinorcraft.capability;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -14,7 +16,7 @@ public class CommonCapabilityProvider<HANDLER> implements ICapabilitySerializabl
 	
 	protected final LazyOptional<HANDLER> lazyOptional;
 	
-	public CommonCapabilityProvider(Capability<HANDLER> capability, Direction side, HANDLER instance) {
+	public CommonCapabilityProvider(final Capability<HANDLER> capability, @Nullable final Direction side, @Nullable final HANDLER instance) {
 		
 		this.capability = capability;
 		this.side = side;
@@ -22,48 +24,39 @@ public class CommonCapabilityProvider<HANDLER> implements ICapabilitySerializabl
 		
 		if(this.instance != null) {
 			
-		lazyOptional = LazyOptional.of(() -> this.instance);
+			lazyOptional = LazyOptional.of(() -> this.instance);
 			
 		}else {
 			
 			lazyOptional = LazyOptional.empty();
 		}
 	}
-	
-	
-
 
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		// TODO Auto-generated method stub
-		if(cap == getCapability()) {
-			
-			return getCapability().orEmpty(cap, lazyOptional);
-		}
+	public <T> LazyOptional<T> getCapability(final Capability<T> cap, @Nullable final Direction side) {
 		
-		return null;
-	}
-	
-	public final Capability<HANDLER> getCapability(){
-		return capability;
+		return capability.orEmpty(cap, lazyOptional);
 	}
 
+	@Nullable
 	@Override
 	public INBT serializeNBT() {
-		// TODO Auto-generated method stub
-		return getCapability().writeNBT(getInstance(), getFacing());
+
+		return capability.writeNBT(getInstance(), getFacing());//<-- THIS LINE
 	}
 
 	@Override
 	public void deserializeNBT(INBT nbt) {
-		// TODO Auto-generated method stub
-		getCapability().readNBT(getInstance(), getFacing(), nbt);
+
+		capability.readNBT(getInstance(), getFacing(), nbt);
 	}
 	
+	@Nullable
 	public Direction getFacing() {
 		return side;
 	}
 	
+	@Nullable
 	public HANDLER getInstance() {
 		return instance;
 	}

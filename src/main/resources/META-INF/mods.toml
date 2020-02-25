@@ -1,9 +1,9 @@
 modLoader="javafml" #mandatory
-loaderVersion="[28.1]" #mandatory
+loaderVersion="[31.1]" #mandatory
 credits="LK1905" #optional
 [[mods]] #mandatory
 modId="gielinorcraft" #mandatory
-version="0.0.0.0" #mandatory
+version="0.0.0" #mandatory
 displayName="Gielinorcraft" #mandatory
 description='''
 A Runescape themed Minecraft Mod

@@ -42,8 +42,8 @@ public class CapabilitySkills {
 	@SubscribeEvent
 	public static void onPlayerClone(final PlayerEvent.Clone e) {
 		
-		ISkillContainer oldCapability = (ISkillContainer) CapabilityUtils.getCapability(e.getOriginal(), null);
-		ISkillContainer newCapability = (ISkillContainer) CapabilityUtils.getCapability(e.getPlayer(), null);
+		ISkillContainer oldCapability = (ISkillContainer) CapabilityUtils.getCapability(e.getOriginal(), skillContainerCapability);
+		ISkillContainer newCapability = (ISkillContainer) CapabilityUtils.getCapability(e.getPlayer(), skillContainerCapability);
 		
 		newCapability.setAllSkills(oldCapability.getAllSkills());
 	}

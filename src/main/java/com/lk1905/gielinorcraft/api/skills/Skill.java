@@ -57,7 +57,7 @@ public abstract class Skill implements ISkill{
 			}
 		}
 		
-		return 99;
+		return getMaxLevel();
 	}
 	
 	@Override
