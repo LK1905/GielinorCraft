@@ -30,7 +30,7 @@ public class SkillIcon {
 		return texWidth;
 	}
 	
-	public int getTExHeight() {
+	public int getTexHeight() {
 		return texHeight;
 	}
 }

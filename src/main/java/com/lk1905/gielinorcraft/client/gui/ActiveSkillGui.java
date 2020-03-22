@@ -1,4 +1,4 @@
-package com.lk1905.gielinorcraft.gui;
+package com.lk1905.gielinorcraft.client.gui;
 
 import com.lk1905.gielinorcraft.api.skills.ISkill;
 
