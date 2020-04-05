@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 
+/*Incomplete*/
 public class DiggingSkill extends Skill{
 
 	@Override

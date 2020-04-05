@@ -10,8 +10,8 @@ import com.lk1905.gielinorcraft.api.skills.ISkill;
 import com.lk1905.gielinorcraft.api.skills.SkillIcon;
 import com.lk1905.gielinorcraft.api.utils.Colour;
 import com.lk1905.gielinorcraft.api.utils.Position;
+import com.mojang.blaze3d.systems.RenderSystem;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
@@ -28,17 +28,16 @@ public class ScreenSkills extends Screen{
 	protected final int xSize = 134;
 	protected final int ySize = 219;
 	
-	public enum ButtonIDs{
-		SkillsButton
-	}
-	
-	protected ScreenSkills() {
+	public ScreenSkills() {
 		
 		super(new StringTextComponent("Skills"));
 	}
 	
 	@Override
 	public void init() {
+		
+		super.init();
+		
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 	}
@@ -47,10 +46,15 @@ public class ScreenSkills extends Screen{
 		super.setSize(xSize, ySize);	
 	}
 	
+	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		
-		//GlStateManager.pushMatrix(); <---Outdated
-		//GlStateManager.color(1F, 1F, 1F, 1F); <---Outdated
+		super.render(mouseX, mouseY, partialTicks);
+		
+		this.renderBackground();
+		RenderSystem.pushMatrix();
+		RenderSystem.color4f(1F, 1F, 1F, 1F);
+		RenderSystem.scalef(1F, 1F, 1F);
 		
 		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 		super.blit(guiLeft, guiTop, 0, 0, xSize, ySize);
@@ -62,12 +66,12 @@ public class ScreenSkills extends Screen{
 		if(skillCapability == null) {
 			
 			super.drawCenteredString(this.minecraft.fontRenderer, "Loading Player stats",
-									this.guiLeft + 87, this.guiTop + 130, white.getIntValue());
+									this.guiLeft + 60, this.guiTop + 190, white.getIntValue());
 			
 			super.drawCenteredString(this.minecraft.fontRenderer, "from server...",
-					this.guiLeft + 87, this.guiTop + 141, white.getIntValue());
+					this.guiLeft + 60, this.guiTop + 201, white.getIntValue());
 			
-			//GlStateManager.popMatrix(); <---Outdated
+			RenderSystem.popMatrix();
 			return;
 		}
 		
@@ -84,27 +88,27 @@ public class ScreenSkills extends Screen{
 				drawSkill(skillIndex++, skill, white);
 				
 				minecraft.fontRenderer.drawString(String.format("Skill: %d", activeSkillDisplay.getName()),
-													this.guiLeft + 25, this.guiTop + 169, white.getIntValue());
+													this.guiLeft + 60, this.guiTop + 169, white.getIntValue());
 				
 				minecraft.fontRenderer.drawString(String.format("Level: %d", activeSkillDisplay.getLevel()),
-													this.guiLeft + 25, this.guiTop + 180, white.getIntValue());
+													this.guiLeft + 60, this.guiTop + 180, white.getIntValue());
 				
 				minecraft.fontRenderer.drawString(String.format("XP: %d", activeSkillDisplay.getXP()),
-													this.guiLeft + 25, this.guiTop + 191, white.getIntValue());
+													this.guiLeft + 60, this.guiTop + 191, white.getIntValue());
 				
 				minecraft.fontRenderer.drawString(String.format("XP to next level: %d", activeSkillDisplay.xpToNextLevel()),
-													this.guiLeft + 25, this.guiTop + 202, white.getIntValue());
+													this.guiLeft + 60, this.guiTop + 202, white.getIntValue());
 			}else {
 				
 				minecraft.fontRenderer.drawString(String.format("Total level: %d", skillCapability.getAllSkills()),
-													this.guiLeft + 25, this.guiTop + 180, white.getIntValue());
+													this.guiLeft + 60, this.guiTop + 180, white.getIntValue());
 				
 				minecraft.fontRenderer.drawString(String.format("Total XP: %d", skillCapability.getAllSkillXP()),
-													this.guiLeft + 25, this.guiTop + 191, white.getIntValue());
+													this.guiLeft + 60, this.guiTop + 191, white.getIntValue());
 			}
 		}
 		
-		//GlStateManager.popMatrix(); <---Outdated
+		RenderSystem.popMatrix();
 	}
 	
 	private void drawSkill(int skillIndex, ISkill skill, Colour colour) {
@@ -113,8 +117,8 @@ public class ScreenSkills extends Screen{
 		Position iconPosition = getIconPosition(skillIndex);
 		SkillIcon icon = skill.getSkillIcon();
 		
-		//GlStateManager.pushMatrix(); <---Outdated
-		//GlStateManager.color(1F, 1F, 1F, 1F); <---Outdated
+		RenderSystem.pushMatrix();
+		RenderSystem.color4f(1F, 1F, 1F, 1F);
 		
 		drawSkillIcon(icon, iconPosition);
 		
@@ -122,7 +126,7 @@ public class ScreenSkills extends Screen{
 		minecraft.fontRenderer.drawString(String.valueOf(skill.getLevel()), levelPosition.getX() + 20,
 											levelPosition.getY(), colour.getIntValue());
 		
-		//GlStateManager.popMatrix(); <---Outdated
+		RenderSystem.popMatrix();
 	}
 	
 	private Position getIconPosition(int skillIndex) {
@@ -187,10 +191,5 @@ public class ScreenSkills extends Screen{
 		}else {
 			super.mouseClicked(mouseX, mouseY, mouseButton);
 		}
-	}
-	
-	public static void open() {
-		
-		Minecraft.getInstance().displayGuiScreen(new ScreenSkills());
 	}
 }

@@ -1,8 +1,8 @@
 package com.lk1905.gielinorcraft.api.skills;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 
 public interface ISkill {
 
@@ -30,9 +30,9 @@ public interface ISkill {
 	
 	void deserializeNBT(CompoundNBT data);
 	
-	void serializePacket(ByteBuf buf);
+	void serializePacket(PacketBuffer buf);
 	
-	void deserializePacket(ByteBuf buf);
+	void deserializePacket(PacketBuffer buf);
 	
 	SkillIcon getSkillIcon();
 }

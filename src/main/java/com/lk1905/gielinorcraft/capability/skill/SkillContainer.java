@@ -10,7 +10,7 @@ import com.lk1905.gielinorcraft.Gielinorcraft;
 import com.lk1905.gielinorcraft.api.capability.ISkillContainer;
 import com.lk1905.gielinorcraft.api.skills.ISkill;
 
-import io.netty.buffer.ByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 
 public class SkillContainer implements ISkillContainer{
@@ -52,7 +52,7 @@ public class SkillContainer implements ISkillContainer{
 	}
 	
 	@Override
-	public void serializePacket(ByteBuf buf) {
+	public void serializePacket(PacketBuffer buf) {
 		
 		buf.writeInt(skills.size());
 		
@@ -65,7 +65,7 @@ public class SkillContainer implements ISkillContainer{
 	}
 	
 	@Override
-	public void deserializePacket(ByteBuf buf) {
+	public void deserializePacket(PacketBuffer buf) {
 		
 		int numberOfSkills = buf.readInt();
 		

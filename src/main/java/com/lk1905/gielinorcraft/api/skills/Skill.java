@@ -3,9 +3,9 @@ package com.lk1905.gielinorcraft.api.skills;
 import com.lk1905.gielinorcraft.api.events.LevelUpEvent;
 import com.lk1905.gielinorcraft.api.events.XPGainEvent;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.MinecraftForge;
 
 public abstract class Skill implements ISkill{
@@ -120,12 +120,12 @@ public abstract class Skill implements ISkill{
 	}
 	
 	@Override
-	public void serializePacket(ByteBuf buf) {
+	public void serializePacket(PacketBuffer buf) {
 		buf.writeDouble(getXP());
 	}
 	
 	@Override
-	public void deserializePacket(ByteBuf buf) {
+	public void deserializePacket(PacketBuffer buf) {
 		currentXP = buf.readDouble();
 	}
 }
