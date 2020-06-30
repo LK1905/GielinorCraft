@@ -2,10 +2,10 @@ package com.lk1905.gielinorcraft.network.messages;
 
 import java.util.function.Supplier;
 
-import com.lk1905.gielinorcraft.Gielinorcraft;
 import com.lk1905.gielinorcraft.api.capability.ISkillContainer;
 import com.lk1905.gielinorcraft.api.skills.ISkill;
 import com.lk1905.gielinorcraft.api.utils.NetworkUtils;
+import com.lk1905.gielinorcraft.client.ClientProxy;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -49,11 +49,12 @@ public class LevelSetMessage {
 		
 		ctx.get().enqueueWork(() -> {
 			
-			ISkillContainer skillCapability = Gielinorcraft.getSkillCapability();
+			ISkillContainer skillCapability = ClientProxy.getSkillCapability();
 			
 			ISkill skill = skillCapability.getSkill(getSkillName());
 			
 			skill.setLevel(getNewLevel());
 		});
+		ctx.get().setPacketHandled(true);
 	}
 }

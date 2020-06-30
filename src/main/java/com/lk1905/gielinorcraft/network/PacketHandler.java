@@ -13,10 +13,10 @@ public class PacketHandler {
 	private static final String PROTOCOL_VERSION = Integer.toString(1);
 	
 	private static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-												new ResourceLocation(Gielinorcraft.MODID, "main"),
-												() -> PROTOCOL_VERSION,
-												PROTOCOL_VERSION::equals,
-												PROTOCOL_VERSION::equals);
+			new ResourceLocation(Gielinorcraft.MODID, "main"),
+			() -> PROTOCOL_VERSION,
+			PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals);
 	
 	public static void register() {
 		
@@ -42,14 +42,14 @@ public class PacketHandler {
 		
 		/*INSTANCE.registerMessage(disc++,
 				StatsRequestMessage.class,
-				StatsRequestMessage::toBytes,
-				StatsRequestMessage::fromBytes,
+				null,
+				null,
 				StatsRequestHandler.class);
 		
 		INSTANCE.registerMessage(disc++,
 				StatsResponseMessage.class,
-				StatsResponseMessage::toBytes,
-				StatsResponseMessage::fromBytes,
+				null,
+				null,
 				StatsResponseHandler.class);*/
 	}
 }

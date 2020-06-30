@@ -10,13 +10,14 @@ import com.lk1905.gielinorcraft.api.skills.ISkill;
 import com.lk1905.gielinorcraft.api.skills.SkillIcon;
 import com.lk1905.gielinorcraft.api.utils.Colour;
 import com.lk1905.gielinorcraft.api.utils.Position;
+import com.lk1905.gielinorcraft.client.ClientProxy;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
-public class ScreenSkills extends Screen{
+public class SkillsScreen extends Screen{
 
 	private final ResourceLocation TEXTURE = new ResourceLocation(Gielinorcraft.MODID, "textures/gui/skills.png");
 	private List<String> skillNameIndices = new ArrayList<>();
@@ -28,7 +29,7 @@ public class ScreenSkills extends Screen{
 	protected final int xSize = 134;
 	protected final int ySize = 219;
 	
-	public ScreenSkills() {
+	public SkillsScreen() {
 		
 		super(new StringTextComponent("Skills"));
 	}
@@ -61,15 +62,15 @@ public class ScreenSkills extends Screen{
 		
 		Colour white = new Colour(255, 255, 255, 255);
 		
-		ISkillContainer skillCapability = Gielinorcraft.getSkillCapability();
+		ISkillContainer skillCapability = ClientProxy.getSkillCapability();
 		
 		if(skillCapability == null) {
 			
 			super.drawCenteredString(this.minecraft.fontRenderer, "Loading Player stats",
-									this.guiLeft + 60, this.guiTop + 190, white.getIntValue());
+									this.guiLeft + 65, this.guiTop + 190, white.getIntValue());
 			
 			super.drawCenteredString(this.minecraft.fontRenderer, "from server...",
-					this.guiLeft + 60, this.guiTop + 201, white.getIntValue());
+					this.guiLeft + 65, this.guiTop + 201, white.getIntValue());
 			
 			RenderSystem.popMatrix();
 			return;
@@ -78,6 +79,8 @@ public class ScreenSkills extends Screen{
 		int skillIndex = 1;
 		skillNameIndices = new ArrayList<>();
 		
+		Colour orange = new Colour(217, 146, 24, 255);
+		
 		for(String skillName : skillCapability.getAllSkillXP().keySet()) {
 			
 			skillNameIndices.add(skillName);
@@ -85,20 +88,22 @@ public class ScreenSkills extends Screen{
 			
 			if(skill == activeSkillDisplay) {
 				
-				drawSkill(skillIndex++, skill, white);
+				drawSkill(skillIndex++, skill, orange);
 				
 				minecraft.fontRenderer.drawString(String.format("Skill: %d", activeSkillDisplay.getName()),
-													this.guiLeft + 60, this.guiTop + 169, white.getIntValue());
+													this.guiLeft + 65, this.guiTop + 169, white.getIntValue());
 				
 				minecraft.fontRenderer.drawString(String.format("Level: %d", activeSkillDisplay.getLevel()),
-													this.guiLeft + 60, this.guiTop + 180, white.getIntValue());
+													this.guiLeft + 65, this.guiTop + 180, white.getIntValue());
 				
 				minecraft.fontRenderer.drawString(String.format("XP: %d", activeSkillDisplay.getXP()),
-													this.guiLeft + 60, this.guiTop + 191, white.getIntValue());
+													this.guiLeft + 65, this.guiTop + 191, white.getIntValue());
 				
 				minecraft.fontRenderer.drawString(String.format("XP to next level: %d", activeSkillDisplay.xpToNextLevel()),
-													this.guiLeft + 60, this.guiTop + 202, white.getIntValue());
+													this.guiLeft + 65, this.guiTop + 202, white.getIntValue());
 			}else {
+				
+				drawSkill(skillIndex++, skill, white);
 				
 				minecraft.fontRenderer.drawString(String.format("Total level: %d", skillCapability.getAllSkills()),
 													this.guiLeft + 60, this.guiTop + 180, white.getIntValue());
@@ -171,7 +176,7 @@ public class ScreenSkills extends Screen{
 			int column = (int) ((mouseX - this.guiLeft - 7) / 53F);
 			int skillIndex = (row * 3) + column;
 			
-			ISkillContainer skillCapability = Gielinorcraft.getSkillCapability();
+			ISkillContainer skillCapability = ClientProxy.getSkillCapability();
 			
 			if(skillIndex > skillNameIndices.size() - 1) {
 				

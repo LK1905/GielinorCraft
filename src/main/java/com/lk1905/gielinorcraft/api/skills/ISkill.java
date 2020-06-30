@@ -6,13 +6,13 @@ import net.minecraft.network.PacketBuffer;
 
 public interface ISkill {
 
-	void gainXP(double amount, PlayerEntity player);
+	void gainXP(int amount, PlayerEntity player);
 	
-	void setXP(double xp);
+	void setXP(int xp);
 	
-	double getXP();
+	int getXP();
 	
-	double getMaxXP();
+	int getMaxXP();
 	
 	int getLevel();
 	
@@ -20,9 +20,9 @@ public interface ISkill {
 	
 	void setLevel(int newLevel);
 	
-	double xpToNextLevel();
+	int xpToNextLevel();
 	
-	double xpForLevel(int level);
+	int xpForLevel(int level);
 	
 	String getName();
 	

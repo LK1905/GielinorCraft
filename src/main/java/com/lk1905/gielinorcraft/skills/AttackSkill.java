@@ -1,27 +1,26 @@
 package com.lk1905.gielinorcraft.skills;
 
+import java.util.Optional;
+
+import com.lk1905.gielinorcraft.api.capability.ISkillContainer;
+import com.lk1905.gielinorcraft.api.skills.ISkill;
 import com.lk1905.gielinorcraft.api.skills.Skill;
 import com.lk1905.gielinorcraft.api.skills.SkillIcon;
+import com.lk1905.gielinorcraft.api.utils.CapabilityUtils;
+import com.lk1905.gielinorcraft.api.utils.OptionalUtils;
 import com.lk1905.gielinorcraft.api.utils.Position;
+import com.lk1905.gielinorcraft.capability.skill.CapabilitySkills;
+
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class AttackSkill extends Skill{
-
-	double xpGained;
 	
 	@Override
 	public String getName() {
 		return "Attack";
-	}
-	
-	
-	@Override
-	public void gainXP(double amount, PlayerEntity player) {
-		
-		this.xpGained = amount;
 	}
 	
 	@Override
@@ -39,12 +38,14 @@ public class AttackSkill extends Skill{
 			return;
 		}
 		
-		//PlayerEntity player = (PlayerEntity) e.getSource().getTrueSource();
+		PlayerEntity player = (PlayerEntity) e.getSource().getTrueSource();
 		
-		//LazyOptional<ISkillContainer> skill = CapabilityUtils.getCapability(player, CapabilitySkills.getSkillCapability(), null);
+		Optional<ISkillContainer> capability = OptionalUtils.toOptional(CapabilityUtils.getCapability(player, CapabilitySkills.getSkillCapability(), null));
 		
-		this.xpGained = (double) e.getAmount() * 4;
+		int xpGained = (int) e.getAmount() * 4;
 		
-		//skill.gainXP(xpGained, player);
+		ISkillContainer skill = capability.get();
+		
+		((ISkill) skill).gainXP(xpGained, player);
 	}
 }

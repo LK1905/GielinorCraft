@@ -2,7 +2,7 @@ package com.lk1905.gielinorcraft.client;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.lk1905.gielinorcraft.client.gui.ScreenSkills;
+import com.lk1905.gielinorcraft.client.gui.SkillsScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -27,7 +27,7 @@ public class ClientEventHandler {
 		
 		if(toggleScreenSkills.isPressed() && Minecraft.getInstance().currentScreen == null) {
 			
-			Minecraft.getInstance().displayGuiScreen(new ScreenSkills());
+			Minecraft.getInstance().displayGuiScreen(new SkillsScreen());
 		}
 	}
 }

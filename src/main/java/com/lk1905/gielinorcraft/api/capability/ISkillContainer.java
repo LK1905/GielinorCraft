@@ -8,7 +8,7 @@ public interface ISkillContainer extends ICommonCapability{
 
 	Map<String, ISkill> getAllSkills();
 	
-	Map<String, Double> getAllSkillXP();
+	Map<String, Integer> getAllSkillXP();
 	
 	ISkill getSkill(String name);
 	

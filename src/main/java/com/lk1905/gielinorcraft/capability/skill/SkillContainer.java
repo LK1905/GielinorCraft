@@ -89,9 +89,9 @@ public class SkillContainer implements ISkillContainer{
 	}
 	
 	@Override
-	public Map<String, Double> getAllSkillXP(){
+	public Map<String, Integer> getAllSkillXP(){
 		
-		Map<String, Double> skillXP = new HashMap<>();
+		Map<String, Integer> skillXP = new HashMap<>();
 		
 		for(Map.Entry<String, ISkill> entry : skills.entrySet())	{
 			

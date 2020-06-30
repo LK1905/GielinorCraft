@@ -1,11 +1,12 @@
 package com.lk1905.gielinorcraft;
 
 import org.apache.logging.log4j.Logger;
-import com.lk1905.gielinorcraft.api.capability.ISkillContainer;
 import com.lk1905.gielinorcraft.api.skills.Skill;
 import com.lk1905.gielinorcraft.capability.skill.CapabilitySkills;
 import com.lk1905.gielinorcraft.capability.skill.SkillContainer;
 import com.lk1905.gielinorcraft.client.ClientEventHandler;
+import com.lk1905.gielinorcraft.client.ClientProxy;
+import com.lk1905.gielinorcraft.network.handlers.StatsResponseHandler;
 import com.lk1905.gielinorcraft.skills.AttackSkill;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -26,8 +27,6 @@ public class Gielinorcraft {
 		
 	}
 	
-	private static ISkillContainer skillCapability;
-	
 	@SubscribeEvent
 	public static void onCommonSetup(FMLCommonSetupEvent e) {
 
@@ -43,10 +42,8 @@ public class Gielinorcraft {
 	public static void onClientSetup(FMLClientSetupEvent e) {
 		
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
-	}
-	
-	public static ISkillContainer getSkillCapability() {
 		
-		return skillCapability;
+		StatsResponseHandler.registerListener(ClientProxy::loadSkillCapability);
 	}
 }
+	

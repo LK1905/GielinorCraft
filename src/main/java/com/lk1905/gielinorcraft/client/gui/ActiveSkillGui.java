@@ -1,6 +1,7 @@
 package com.lk1905.gielinorcraft.client.gui;
 
 import com.lk1905.gielinorcraft.api.skills.ISkill;
+import com.lk1905.gielinorcraft.client.ClientProxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -10,21 +11,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ActiveSkillGui extends Screen{
 
-	private static ISkill activelyTrainedSkill;
-	
 	protected ActiveSkillGui() {
 		super(new StringTextComponent(""));
 		// TODO Auto-generated constructor stub
-	}
-	
-	public static void setActivelyTrainedSkill(ISkill newActiveSkill) {
-		
-		activelyTrainedSkill = newActiveSkill;
-	}
-	
-	public static ISkill getActivelyTrainedSkill() {
-		
-		return activelyTrainedSkill;
 	}
 	
 	@SubscribeEvent
@@ -39,7 +28,7 @@ public class ActiveSkillGui extends Screen{
 		int xPos = (width / 2);
 		int yPos = 20;
 		
-		ISkill activeSkill = getActivelyTrainedSkill();
+		ISkill activeSkill = ClientProxy.getActivelyTrainedSkill();
 		
 		if(activeSkill == null) {
 			return;
@@ -54,5 +43,4 @@ public class ActiveSkillGui extends Screen{
 		
 		Minecraft.getInstance().displayGuiScreen(new ActiveSkillGui());
 	}
-
 }

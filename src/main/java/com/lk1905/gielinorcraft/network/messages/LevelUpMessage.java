@@ -63,5 +63,6 @@ public class LevelUpMessage {
 			
 			Minecraft.getInstance().player.playSound(new SoundEvent(location), 100, 100);
 		});
+		ctx.get().setPacketHandled(true);
 	}
 }

@@ -10,14 +10,13 @@ import net.minecraftforge.common.util.LazyOptional;
 public class CapabilityUtils {
 
 	@Nullable
-	public static <T> LazyOptional<T> getCapability(@Nullable final ICapabilityProvider provider, final Capability<T> capability, @Nullable final Direction side) {
+	public static <T> LazyOptional<T> getCapability(@Nullable final ICapabilityProvider provider, final Capability<T> cap, @Nullable final Direction side) {
 		
-		return provider != provider.getCapability(capability, side) ? provider.getCapability(capability, side) : null;
-	}
-	
-	@Nullable
-	public static <T> LazyOptional<T> getCapability(@Nullable final ICapabilityProvider provider, final Capability<T> capability) {
+		if(provider == null || cap == null) {
+			
+			return LazyOptional.empty();
+		}
 		
-		return getCapability(provider, capability, null);
+		return provider.getCapability(cap, side);
 	}
 }
