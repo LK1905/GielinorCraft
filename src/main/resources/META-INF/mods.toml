@@ -1,5 +1,6 @@
 modLoader="javafml" #mandatory
-loaderVersion="[31.1]" #mandatory
+loaderVersion="[35.1]" #mandatory
+license="MIT" #mandatory
 credits="LK1905" #optional
 [[mods]] #mandatory
 modId="gielinorcraft" #mandatory
