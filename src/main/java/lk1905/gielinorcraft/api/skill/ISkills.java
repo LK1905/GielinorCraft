@@ -273,5 +273,7 @@ public interface ISkills {
 	 * */
 	public boolean hasLevel(int skillId, int level);
 	
-	/*public void sync(ServerPlayerEntity player);*/
+	public int[] getDynamicLevels();
+	
+	public void sync(ServerPlayerEntity player);
 }

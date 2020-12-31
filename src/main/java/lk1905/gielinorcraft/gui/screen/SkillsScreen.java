@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 
+/**A Simple gui containing all the player's skill data. Just text for now, will upgrade in the future.*/
 public class SkillsScreen extends Screen{
 
 	private String[] skill_info = new String[26];
@@ -23,7 +24,7 @@ public class SkillsScreen extends Screen{
 	public void init() {
 		super.init();
 		
-		//Theres probrably an easier way of doing this.
+		//Theres probably an easier way of doing this.
 		skill_info[0] = "Attack, Level: " + skills.getLevel(0) + "/" + skills.getStaticLevel(0) + ", xp: " + (int) Math.floor(skills.getXp(0));
 		skill_info[1] = "Defence, Level: " + skills.getLevel(1) + "/" + skills.getStaticLevel(1) + ", xp: " + (int) Math.floor(skills.getXp(1));
 		skill_info[2] = "Strength, Level: " + skills.getLevel(2) + "/" + skills.getStaticLevel(2) + ", xp: " + (int) Math.floor(skills.getXp(2));
@@ -60,7 +61,7 @@ public class SkillsScreen extends Screen{
 		drawCenteredString(stack, font, "Skills", width / 2, height - 200, 111111);
 		drawCenteredString(stack, font, "Total level: " + skills.getTotalLevel() + ", Total xp: " +  (int) Math.floor(skills.getTotalXp()), width / 2, height - 190, 111111);
 		
-		//Again, theres probrably an easier way of doing this.
+		//Again, theres probably an easier way of doing this.
 		drawString(stack, font, skill_info[0], (width / 2) - 200, height - 180, 111111);
 		drawString(stack, font, skill_info[1], (width / 2) - 200, height - 170, 111111);
 		drawString(stack, font, skill_info[2], (width / 2) - 200, height - 160, 111111);

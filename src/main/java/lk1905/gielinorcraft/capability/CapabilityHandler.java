@@ -11,19 +11,11 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = Gielinorcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CapabilityHandler {
 
 	public static final ResourceLocation SKILLS_CAP = new ResourceLocation(Gielinorcraft.MODID, "skills");
-	
-	private static LivingEntity entity;
-	
-	@SubscribeEvent
-	public static void onCommonSetup(FMLCommonSetupEvent event) {
-		CapabilityManager.INSTANCE.register(ISkills.class, new SkillStorage(), () -> new Skills(entity));
-	}
 	
 	@SubscribeEvent
 	public static void onAttachCapabilites(AttachCapabilitiesEvent<Entity> event) {
@@ -31,5 +23,9 @@ public class CapabilityHandler {
 		if(event.getObject() instanceof LivingEntity) {
 			event.addCapability(SKILLS_CAP, new SkillCapability());
 		}
+	}
+	
+	public static void register() {
+		CapabilityManager.INSTANCE.register(ISkills.class, new SkillStorage(), () -> new Skills(null));
 	}
 }

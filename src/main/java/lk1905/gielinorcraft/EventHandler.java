@@ -35,7 +35,7 @@ public class EventHandler {
 		}
 	}
 	
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public static void onPlayerChangedDimensionEvent(PlayerChangedDimensionEvent event) {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 		if(!player.world.isRemote) {
@@ -56,5 +56,5 @@ public class EventHandler {
 		if(!player.world.isRemote) {
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync(player));
 		}
-	}*/
+	}
 }

@@ -4,7 +4,7 @@ license="MIT" #mandatory
 credits="LK1905" #optional
 [[mods]] #mandatory
 modId="gielinorcraft" #mandatory
-version="0.0.0" #mandatory
+version="0.0.1" #mandatory
 displayName="Gielinorcraft" #mandatory
 description='''
 A Runescape themed Minecraft Mod

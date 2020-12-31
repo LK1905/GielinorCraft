@@ -599,8 +599,13 @@ public final class Skills implements ISkills{
 		return getStaticLevel(skillId) >= level;
 	}
 	
-	/*@Override
+	@Override
+	public int[] getDynamicLevels() {
+		return dynamicLevels;
+	}
+	
+	@Override
 	public void sync(ServerPlayerEntity player) {
-		PacketHandler.sendTo(new SkillsPacket((CompoundNBT) serializeNBT()), player);
-	}*/
+		PacketHandler.sendTo(new SkillsPacket(serializeNBT()), player);
+	}
 }
