@@ -3,7 +3,6 @@ package lk1905.gielinorcraft.api.exp;
 import lk1905.gielinorcraft.Gielinorcraft;
 import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
-import lk1905.gielinorcraft.client.ClientEventHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -19,7 +18,8 @@ public class CombatExp {
 			return;
 		}
 		
-		LazyOptional<ISkills> cap = ClientEventHandler.mc.player.getCapability(SkillCapability.SKILL_CAP);
+		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
+		LazyOptional<ISkills> cap = player.getCapability(SkillCapability.SKILL_CAP);
 		ISkills skills = cap.orElse(null);
 		
 		double xpGained = event.getAmount() * (1 + 1/3);

@@ -1,12 +1,9 @@
 package lk1905.gielinorcraft.api.skill;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import io.netty.buffer.ByteBuf;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.SkillsPacket;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -122,7 +119,7 @@ public final class Skills implements ISkills{
 		
 		this.xp[HITPOINTS] = 1154;
 		this.dynamicLevels[HITPOINTS] = 10;
-		this.staticLevels[HITPOINTS] = 10;
+		this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
 	}
 	
 	@Override
@@ -206,7 +203,9 @@ public final class Skills implements ISkills{
 			}
 			staticLevels[slot] = newLevel;
 		}
-		
+		if(entity instanceof PlayerEntity) {
+			sync((ServerPlayerEntity) entity);
+		}
 	}
 	
 	@Override
@@ -230,60 +229,6 @@ public final class Skills implements ISkills{
 			setLevel(i, stat);
 		}
 		rechargePrayerPoints();
-	}
-	
-	@Override
-	public void deserializePacket(ByteBuf buf) {
-		
-		for(int i = 0; i < 26; i++) {
-			
-			xp[i] = ((double) buf.readInt() / 10D);
-			dynamicLevels[i] = buf.readInt() & 0xFF;
-			
-			if(i == HITPOINTS) {
-				dynamicLevels[i] = lifepoints;
-			}else if(i == PRAYER) {
-				dynamicLevels[i] = (int) prayerPoints;
-			}
-			staticLevels[i] = buf.readInt() & 0xFF;
-		}
-		xpGained = buf.readInt();
-	}
-	
-	public void parse(JsonArray skillData) {
-		
-		for(int i = 0; i < skillData.size(); i++) {
-			
-			JsonObject skill = (JsonObject) skillData.get(i);
-			int id = Integer.parseInt(skill.get("id").toString());
-			dynamicLevels[id] = Integer.parseInt(skill.get("dynamic").toString());
-			
-			if(id == HITPOINTS) {
-				lifepoints = dynamicLevels[i];
-			}else if(id == PRAYER) {
-				prayerPoints = dynamicLevels[i];
-			}
-			staticLevels[id] = Integer.parseInt(skill.get("static").toString());
-			xp[id] = Double.parseDouble(skill.get("xp").toString());
-		}
-	}
-	
-	@Override
-	public void serializePacket(ByteBuf buf) {
-		
-		for(int i = 0; i < 26; i++) {
-			buf.writeInt((int) (xp[i] * 10));
-			
-			if(i == HITPOINTS) {
-				buf.writeInt((byte) lifepoints);
-			}else if(i == PRAYER) {
-				buf.writeInt((byte) Math.ceil(prayerPoints));
-			}else {
-				buf.writeInt((byte) dynamicLevels[i]);
-			}
-			buf.writeInt((byte) staticLevels[i]);
-		}
-		buf.writeInt((int) xpGained);
 	}
 	
 	@Override

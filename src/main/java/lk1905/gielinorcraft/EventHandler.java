@@ -16,6 +16,9 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone event) {
+		if(!event.isWasDeath()) {
+			return;
+		}
 		
 		LazyOptional<ISkills> oldCap = event.getOriginal().getCapability(SkillCapability.SKILL_CAP, null);
 		LazyOptional<ISkills> newCap = event.getPlayer().getCapability(SkillCapability.SKILL_CAP, null);

@@ -46,21 +46,15 @@ public interface ISkills {
 	public void restore();
 	
 	/**
-	 * Deserializes the skill data from the buf.
-	 * @param buf The byte buf.
+	 * Serializes the skill data into nbt tag format.
+	 * @return A CompoundNBT tag representing skill data.
 	 * */
-	public void deserializePacket(ByteBuf buf);
-	
-	public void parse(JsonArray skillData);
-	
-	/**
-	 * Serializes the skill data on the buf.
-	 * @param buf The byte buf.
-	 * */
-	public void serializePacket(ByteBuf buf);
-	
 	public CompoundNBT serializeNBT();
 	
+	/**
+	 * Deserializes the skill data from nbt tag format.
+	 * @param data The CompoundNBT representing skill data.
+	 * */
 	public void deserializeNBT(CompoundNBT data);
 	
 	/**

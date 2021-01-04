@@ -3,7 +3,7 @@ package lk1905.gielinorcraft.client;
 import org.lwjgl.glfw.GLFW;
 
 import lk1905.gielinorcraft.Gielinorcraft;
-import lk1905.gielinorcraft.gui.screen.SkillsScreen;
+import lk1905.gielinorcraft.client.gui.screen.SkillsScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;

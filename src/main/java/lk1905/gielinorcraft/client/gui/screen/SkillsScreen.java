@@ -1,11 +1,12 @@
-package lk1905.gielinorcraft.gui.screen;
+package lk1905.gielinorcraft.client.gui.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
-import lk1905.gielinorcraft.client.ClientEventHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -13,7 +14,9 @@ import net.minecraftforge.common.util.LazyOptional;
 public class SkillsScreen extends Screen{
 
 	private String[] skill_info = new String[26];
-	private LazyOptional<ISkills> cap = ClientEventHandler.mc.player.getCapability(SkillCapability.SKILL_CAP);
+	
+	private PlayerEntity player = Minecraft.getInstance().player;
+	private LazyOptional<ISkills> cap = player.getCapability(SkillCapability.SKILL_CAP);
 	private ISkills skills = cap.orElse(null);
 	
 	public SkillsScreen() {

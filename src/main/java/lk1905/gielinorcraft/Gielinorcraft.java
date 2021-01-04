@@ -2,6 +2,7 @@ package lk1905.gielinorcraft;
 
 import org.apache.logging.log4j.Logger;
 
+import lk1905.gielinorcraft.api.exp.CombatExp;
 import lk1905.gielinorcraft.capability.CapabilityHandler;
 import lk1905.gielinorcraft.client.ClientEventHandler;
 import lk1905.gielinorcraft.network.PacketHandler;
@@ -22,6 +23,7 @@ public class Gielinorcraft {
 	public Gielinorcraft() {
 		MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
+		MinecraftForge.EVENT_BUS.register(new CombatExp());
 	}
 	
 	@SubscribeEvent
