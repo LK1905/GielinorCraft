@@ -1,4 +1,4 @@
-package lk1905.gielinorcraft.client;
+package lk1905.gielinorcraft.events;
 
 import org.lwjgl.glfw.GLFW;
 

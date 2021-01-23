@@ -15,13 +15,14 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Gielinorcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CapabilityHandler {
 
-	public static final ResourceLocation SKILLS_CAP = new ResourceLocation(Gielinorcraft.MODID, "skills");
+	public static final ResourceLocation SKILLS_CAP = new ResourceLocation(Gielinorcraft.MODID, "skills");;
 	
 	@SubscribeEvent
 	public static void onAttachCapabilites(AttachCapabilitiesEvent<Entity> event) {
 		
 		if(event.getObject() instanceof LivingEntity) {
-			event.addCapability(SKILLS_CAP, new SkillCapability());
+			final Skills skills = new Skills((LivingEntity) event.getObject());
+			event.addCapability(SKILLS_CAP, SkillCapability.createProvider(skills));
 		}
 	}
 	

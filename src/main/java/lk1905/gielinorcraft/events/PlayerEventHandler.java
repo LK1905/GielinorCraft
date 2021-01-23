@@ -1,5 +1,6 @@
-package lk1905.gielinorcraft;
+package lk1905.gielinorcraft.events;
 
+import lk1905.gielinorcraft.Gielinorcraft;
 import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -12,7 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Gielinorcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class EventHandler {
+public class PlayerEventHandler {
 
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone event) {

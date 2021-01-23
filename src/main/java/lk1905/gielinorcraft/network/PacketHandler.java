@@ -26,6 +26,11 @@ public class PacketHandler {
 				SkillsPacket::encode,
 				SkillsPacket::decode,
 				SkillsPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				XPGainPacket.class,
+				XPGainPacket::encode,
+				XPGainPacket::decode,
+				XPGainPacket.Handler::handle);
 	}
 	
 	/**

@@ -1,11 +1,12 @@
 package lk1905.gielinorcraft.api.skill;
 
+import lk1905.gielinorcraft.api.events.XPGainEvent;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.SkillsPacket;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.MinecraftForge;
 
 public final class Skills implements ISkills{
 
@@ -113,13 +114,17 @@ public final class Skills implements ISkills{
 		this.restoration = new SkillRestoration[26];
 		
 		for(int i = 0; i < 26; i++) {
-			this.staticLevels[i] = 1;
-			this.dynamicLevels[i] = 1;
+			if(i == HITPOINTS) {
+				this.xp[HITPOINTS] = 1154;
+				this.dynamicLevels[HITPOINTS] = 10;
+				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
+			}else {
+				this.staticLevels[i] = 1;
+				this.dynamicLevels[i] = 1;
+			}
 		}
 		
-		this.xp[HITPOINTS] = 1154;
-		this.dynamicLevels[HITPOINTS] = 10;
-		this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
+		
 	}
 	
 	@Override
@@ -181,7 +186,7 @@ public final class Skills implements ISkills{
 	
 	@Override
 	public void addXp(int slot, double xp) {
-		
+
 		double xpAdd = xp;
 		this.xp[slot] += xpAdd;
 		
@@ -203,9 +208,8 @@ public final class Skills implements ISkills{
 			}
 			staticLevels[slot] = newLevel;
 		}
-		if(entity instanceof PlayerEntity) {
-			sync((ServerPlayerEntity) entity);
-		}
+		
+		MinecraftForge.EVENT_BUS.post(new XPGainEvent(slot, this.entity, xp));
 	}
 	
 	@Override
@@ -551,6 +555,8 @@ public final class Skills implements ISkills{
 	
 	@Override
 	public void sync(ServerPlayerEntity player) {
-		PacketHandler.sendTo(new SkillsPacket(serializeNBT()), player);
+		if(entity instanceof ServerPlayerEntity) {
+			PacketHandler.sendTo(new SkillsPacket(serializeNBT()), player);
+		}
 	}
 }

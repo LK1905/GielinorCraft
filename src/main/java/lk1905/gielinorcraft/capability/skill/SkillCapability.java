@@ -1,36 +1,17 @@
 package lk1905.gielinorcraft.capability.skill;
 
+import lk1905.gielinorcraft.api.capability.SerializableCapabilityProvider;
 import lk1905.gielinorcraft.api.skill.ISkills;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
-public class SkillCapability implements ICapabilitySerializable<INBT>{
+public class SkillCapability {
 
 	@CapabilityInject(ISkills.class)
-	public static final Capability<ISkills> SKILL_CAP = null;
-	
-	private LazyOptional<ISkills> instance = LazyOptional.of(() -> SKILL_CAP.getDefaultInstance());
-	
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-		return cap == SKILL_CAP ? instance.cast() : LazyOptional.empty();
-	}
+	public static Capability<ISkills> SKILL_CAP = null;
 
-	@Override
-	public INBT serializeNBT() {
-		return SKILL_CAP.getStorage().writeNBT(SKILL_CAP, this.instance.orElseThrow(() ->
-												new IllegalArgumentException("LazyOptional must not be empty!")), null);
+	public static ICapabilityProvider createProvider(final ISkills skills) {
+		return new SerializableCapabilityProvider<>(SKILL_CAP, null, skills);
 	}
-
-	@Override
-	public void deserializeNBT(INBT nbt) {
-		SKILL_CAP.getStorage().readNBT(SKILL_CAP, this.instance.orElseThrow(() ->
-										new IllegalArgumentException("LazyOptional must not be empty!")), null, nbt);
-		
-	}
-
 }
