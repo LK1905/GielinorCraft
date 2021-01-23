@@ -31,6 +31,11 @@ public class PacketHandler {
 				XPGainPacket::encode,
 				XPGainPacket::decode,
 				XPGainPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				LevelUpPacket.class,
+				LevelUpPacket::encode,
+				LevelUpPacket::decode,
+				LevelUpPacket.Handler::handle);
 	}
 	
 	/**

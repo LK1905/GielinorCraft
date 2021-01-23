@@ -1,5 +1,6 @@
 package lk1905.gielinorcraft.api.skill;
 
+import lk1905.gielinorcraft.api.events.LevelUpEvent;
 import lk1905.gielinorcraft.api.events.XPGainEvent;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.SkillsPacket;
@@ -119,7 +120,7 @@ public final class Skills implements ISkills{
 				this.dynamicLevels[HITPOINTS] = 10;
 				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
 			}else {
-				this.staticLevels[i] = 1;
+				this.staticLevels[i] = getStaticLevelByXp(i);
 				this.dynamicLevels[i] = 1;
 			}
 		}
@@ -207,9 +208,13 @@ public final class Skills implements ISkills{
 				lifepoints += amount;
 			}
 			staticLevels[slot] = newLevel;
+			
+			MinecraftForge.EVENT_BUS.post(new LevelUpEvent(slot, this.entity, newLevel));
 		}
 		
-		MinecraftForge.EVENT_BUS.post(new XPGainEvent(slot, this.entity, xp));
+		if(xp < 200000000) {
+			MinecraftForge.EVENT_BUS.post(new XPGainEvent(slot, this.entity, xp));
+		}
 	}
 	
 	@Override
@@ -241,14 +246,7 @@ public final class Skills implements ISkills{
 		
 		for(int i = 0; i < 26; i++) {
 			data.putInt("xp", (int) (xp[i] * 10));
-			
-			if(i == HITPOINTS) {
-				data.putInt("hitpoints", lifepoints);
-			}else if(i == PRAYER) {
-				data.putInt("prayer_points", (int) Math.ceil(prayerPoints));
-			}else {
-				data.putInt("dynamic", dynamicLevels[i]);
-			}
+			data.putInt("dynamic", dynamicLevels[i]);
 			data.putInt("static", staticLevels[i]);
 		}
 		return data;
@@ -260,12 +258,6 @@ public final class Skills implements ISkills{
 		for(int i = 0; i < 26; i++) {
 			xp[i] = data.getInt("xp");
 			dynamicLevels[i] = data.getInt("dynamic");
-			
-			if(i == HITPOINTS) {
-				lifepoints = data.getInt("hitpoints");
-			}else if(i == PRAYER) {
-				prayerPoints = data.getInt("prayer_points");
-			}
 			staticLevels[i] = data.getInt("static");
 		}
 	}
