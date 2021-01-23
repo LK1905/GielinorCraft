@@ -118,9 +118,9 @@ public final class Skills implements ISkills{
 			if(i == HITPOINTS) {
 				this.xp[HITPOINTS] = 1154;
 				this.dynamicLevels[HITPOINTS] = 10;
-				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
+				this.staticLevels[HITPOINTS] = 10;
 			}else {
-				this.staticLevels[i] = getStaticLevelByXp(i);
+				this.staticLevels[i] = 1;
 				this.dynamicLevels[i] = 1;
 			}
 		}
@@ -245,9 +245,9 @@ public final class Skills implements ISkills{
 		CompoundNBT data = new CompoundNBT();
 		
 		for(int i = 0; i < 26; i++) {
-			data.putInt("xp", (int) (xp[i] * 10));
-			data.putInt("dynamic", dynamicLevels[i]);
-			data.putInt("static", staticLevels[i]);
+			data.putInt("xp_" + i, (int) xp[i]);
+			data.putInt("dynamic_" + i, dynamicLevels[i]);
+			data.putInt("static_" + i, staticLevels[i]);
 		}
 		return data;
 	}
@@ -256,9 +256,9 @@ public final class Skills implements ISkills{
 	public void deserializeNBT(CompoundNBT data) {
 		
 		for(int i = 0; i < 26; i++) {
-			xp[i] = data.getInt("xp");
-			dynamicLevels[i] = data.getInt("dynamic");
-			staticLevels[i] = data.getInt("static");
+			xp[i] = data.getInt("xp_" + i);
+			dynamicLevels[i] = data.getInt("dynamic_" + i);
+			staticLevels[i] = data.getInt("static_" + i);
 		}
 	}
 	

@@ -6,6 +6,7 @@ import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,6 +30,7 @@ public class XPEventHandler {
 		skills.addXp(1, xpGained);
 		skills.addXp(2, xpGained);
 		skills.addXp(3, xpGained);
+		skills.sync((ServerPlayerEntity) player);
 	}
 	
 	@SubscribeEvent
@@ -39,6 +41,7 @@ public class XPEventHandler {
 		double xpGained = diggingXpForBlock(event.getState().getBlock());
 		
 		skills.addXp(24, xpGained);
+		skills.sync((ServerPlayerEntity) player);
 	}
 	
 	@SubscribeEvent
@@ -49,6 +52,7 @@ public class XPEventHandler {
 		double xpGained = miningXpForBlock(event.getState().getBlock());
 		
 		skills.addXp(14, xpGained);
+		skills.sync((ServerPlayerEntity) player);
 	}
 	
 	@SubscribeEvent
@@ -59,6 +63,7 @@ public class XPEventHandler {
 		double xpGained = woodcuttingXpForBlock(event.getState().getBlock());
 		
 		skills.addXp(8, xpGained);
+		skills.sync((ServerPlayerEntity) player);
 	}
 	
 	private static double diggingXpForBlock(Block block) {
