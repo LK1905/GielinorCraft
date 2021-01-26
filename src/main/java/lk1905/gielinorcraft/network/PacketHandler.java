@@ -36,6 +36,11 @@ public class PacketHandler {
 				LevelUpPacket::encode,
 				LevelUpPacket::decode,
 				LevelUpPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				StringPacket.class,
+				StringPacket::encode,
+				StringPacket::decode,
+				StringPacket.Handler::handle);
 	}
 	
 	/**

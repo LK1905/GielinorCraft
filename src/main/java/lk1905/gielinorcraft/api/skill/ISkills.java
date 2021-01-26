@@ -61,12 +61,14 @@ public interface ISkills {
 	 * */
 	public int getStaticLevelByXp(int slot);
 	
+	public int levelFromXP(double xp);
+	
 	/**
 	 * Gets the experience for a certain level.
 	 * @param level The level.
 	 * @return The experience needed.
 	 * */
-	public int getXpByLevel(int level);
+	public double getXpByLevel(int level);
 	
 	/**
 	 * Gets the combat level.

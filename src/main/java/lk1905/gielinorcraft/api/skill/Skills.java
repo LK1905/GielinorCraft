@@ -118,9 +118,9 @@ public final class Skills implements ISkills{
 			if(i == HITPOINTS) {
 				this.xp[HITPOINTS] = 1154;
 				this.dynamicLevels[HITPOINTS] = 10;
-				this.staticLevels[HITPOINTS] = 10;
+				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
 			}else {
-				this.staticLevels[i] = 1;
+				this.staticLevels[i] = getStaticLevelByXp(i);
 				this.dynamicLevels[i] = 1;
 			}
 		}
@@ -266,8 +266,8 @@ public final class Skills implements ISkills{
 	public int getStaticLevelByXp(int slot) {
 		
 		double exp = xp[slot];
-		int points = 0;
-		int output = 0;
+		double points = 0;
+		double output = 0;
 		
 		for(byte lvl = 1; lvl < 100; lvl++) {
 			points += Math.floor(lvl + 300 * Math.pow(2, lvl / 7));
@@ -280,16 +280,31 @@ public final class Skills implements ISkills{
 	}
 	
 	@Override
-	public int getXpByLevel(int level) {
-		int points = 0;
-		int output = 0;
+	public int levelFromXP(double xp) {
+		double points = 0;
+		double output = 0;
+		
+		for(byte lvl = 1; lvl < 100; lvl++) {
+			points += Math.floor(lvl + 300 * Math.pow(2, lvl / 7));
+			output = (int) Math.floor(points / 4);
+			if((output - 1) >= xp) {
+				return lvl;
+			}
+		}
+		return 99;
+	}
+	
+	@Override
+	public double getXpByLevel(int level) {
+		double points = 0;
+		double output = 0;
 		
 		for(int lvl = 1; lvl <= level; lvl++) {
 			points += Math.floor(lvl + 300 * Math.pow(2, lvl / 7));
 			if(lvl >= level) {
 				return output;
-			}
-			output = (int) Math.floor(points / 4); 
+			} 
+			output = Math.floor(points / 4);
 		}
 		return 0;
 	}
