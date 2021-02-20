@@ -72,6 +72,34 @@ public class LevelLockEventHandler {
 		}
 	}
 	
+	@SubscribeEvent
+	public static void onWoodcuttingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+		
+		PlayerEntity player = event.getPlayer();
+		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		int levelReq = woodcuttingLevelForBlock(event.getState().getBlock());
+		
+		if(skills.getLevel(8) < levelReq) {
+			event.setCanceled(true);
+			/*PacketHandler.sendTo(new StringPacket("You do not have the Woodcutting level required to chop this block. Level "
+						+ levelReq + " required."), (ServerPlayerEntity) player)*/;
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onFarmingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+		
+		PlayerEntity player = event.getPlayer();
+		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		int levelReq = farmingLevelForBlock(event.getState().getBlock());
+		
+		if(skills.getLevel(19) < levelReq) {
+			event.setCanceled(true);
+			/*PacketHandler.sendTo(new StringPacket("You do not have the Farming level required to harvest this block. Level "
+						+ levelReq + " required."), (ServerPlayerEntity) player)*/;
+		}
+	}
+	
 	private static int diggingLevelForBlock(Block block) {
 		
 		if(block == Blocks.GRAVEL) {

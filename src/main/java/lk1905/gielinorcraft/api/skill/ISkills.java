@@ -21,12 +21,6 @@ public interface ISkills {
 	public void restoreTick();
 	
 	/**
-	 * Copies the skills data.
-	 * @param skills The skills.
-	 * */
-	public void copy(Skills skills);
-	
-	/**
 	 * Adds the experience to the skill.
 	 * @param slot The skill slot.
 	 * @param xp The experience.
@@ -265,6 +259,12 @@ public interface ISkills {
 	 * @return {code True} if so.
 	 * */
 	public boolean hasLevel(int skillId, int level);
+	
+	/**
+	 * Gets the name of the skill.
+	 * @return The skill name.
+	 * */
+	public String getName(int slot);
 	
 	public int[] getDynamicLevels();
 	

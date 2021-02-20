@@ -77,6 +77,39 @@ public class XPEventHandler {
 		skills.sync((ServerPlayerEntity) player);
 	}
 	
+	@SubscribeEvent
+	public static void onDiggingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+		
+		PlayerEntity player = event.getPlayer();
+		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		double xpGained = diggingXpForBlock(event.getState().getBlock());
+		
+		skills.addXp(24, xpGained);
+		skills.sync((ServerPlayerEntity) player);
+	}
+	
+	@SubscribeEvent
+	public static void onWoodcuttingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+		
+		PlayerEntity player = event.getPlayer();
+		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		double xpGained = woodcuttingXpForBlock(event.getState().getBlock());
+		
+		skills.addXp(8, xpGained);
+		skills.sync((ServerPlayerEntity) player);
+	}
+	
+	@SubscribeEvent
+	public static void onFarmingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+		
+		PlayerEntity player = event.getPlayer();
+		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		double xpGained = farmingXpForBlock(event.getState().getBlock());
+		
+		skills.addXp(19, xpGained);
+		skills.sync((ServerPlayerEntity) player);
+	}
+	
 	private static double diggingXpForBlock(Block block) {
 		
 		if(block == Blocks.DIRT || block == Blocks.GRASS_BLOCK || block == Blocks.GRASS_PATH || block == Blocks.SAND

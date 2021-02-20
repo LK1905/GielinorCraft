@@ -117,11 +117,12 @@ public final class Skills implements ISkills{
 		for(int i = 0; i < 26; i++) {
 			if(i == HITPOINTS) {
 				this.xp[HITPOINTS] = 1154;
-				this.dynamicLevels[HITPOINTS] = 10;
+				this.dynamicLevels[HITPOINTS] = (int) entity.getHealth();
 				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
 			}else {
+				this.xp[i] = 0;
 				this.staticLevels[i] = getStaticLevelByXp(i);
-				this.dynamicLevels[i] = 1;
+				this.dynamicLevels[i] = getStaticLevel(i);
 			}
 		}
 		
@@ -168,21 +169,6 @@ public final class Skills implements ISkills{
 	 * */
 	private void configureRestoration(final int skillId) {
 		restoration[skillId] = new SkillRestoration(skillId);
-	}
-	
-	@Override
-	public void copy(Skills skills) {
-		
-		for(int i = 0; i < 26; i++) {
-			this.staticLevels[i] = skills.staticLevels[i];
-			this.dynamicLevels[i] = skills.dynamicLevels[i];
-			this.xp[i] = skills.xp[i];
-		}
-		
-		prayerPoints = skills.prayerPoints;
-		lifepoints = skills.lifepoints;
-		lifepointsIncrease = skills.lifepointsIncrease;
-		xpGained = skills.xpGained;
 	}
 	
 	@Override
@@ -245,7 +231,7 @@ public final class Skills implements ISkills{
 		CompoundNBT data = new CompoundNBT();
 		
 		for(int i = 0; i < 26; i++) {
-			data.putInt("xp_" + i, (int) xp[i]);
+			data.putDouble("xp_" + i, xp[i]);
 			data.putInt("dynamic_" + i, dynamicLevels[i]);
 			data.putInt("static_" + i, staticLevels[i]);
 		}
@@ -256,7 +242,7 @@ public final class Skills implements ISkills{
 	public void deserializeNBT(CompoundNBT data) {
 		
 		for(int i = 0; i < 26; i++) {
-			xp[i] = data.getInt("xp_" + i);
+			xp[i] = data.getDouble("xp_" + i);
 			dynamicLevels[i] = data.getInt("dynamic_" + i);
 			staticLevels[i] = data.getInt("static_" + i);
 		}
@@ -270,7 +256,7 @@ public final class Skills implements ISkills{
 		double output = 0;
 		
 		for(byte lvl = 1; lvl < 100; lvl++) {
-			points += Math.floor(lvl + 300 * Math.pow(2, lvl / 7));
+			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
 			output = (int) Math.floor(points / 4);
 			if((output - 1) >= exp) {
 				return lvl;
@@ -285,7 +271,7 @@ public final class Skills implements ISkills{
 		double output = 0;
 		
 		for(byte lvl = 1; lvl < 100; lvl++) {
-			points += Math.floor(lvl + 300 * Math.pow(2, lvl / 7));
+			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
 			output = (int) Math.floor(points / 4);
 			if((output - 1) >= xp) {
 				return lvl;
@@ -300,7 +286,7 @@ public final class Skills implements ISkills{
 		double output = 0;
 		
 		for(int lvl = 1; lvl <= level; lvl++) {
-			points += Math.floor(lvl + 300 * Math.pow(2, lvl / 7));
+			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
 			if(lvl >= level) {
 				return output;
 			} 
@@ -465,9 +451,6 @@ public final class Skills implements ISkills{
 		}else if(amount > 0 && level > max) {
 			dynamicLevels[skill] = max;
 		}
-		if(restoration[skill] != null) {
-			restoration[skill].onTick(null);
-		}
 		return left;
 	}
 	
@@ -485,7 +468,7 @@ public final class Skills implements ISkills{
 	
 	@Override
 	public void setStaticLevel(int skill, int level) {
-		xp[skill] = getXpByLevel(staticLevels[skill] = dynamicLevels[skill] = level);
+			staticLevels[skill] = dynamicLevels[skill] = level = getStaticLevelByXp(skill);
 	}
 	
 	@Override
@@ -553,6 +536,11 @@ public final class Skills implements ISkills{
 	@Override
 	public boolean hasLevel(int skillId, int level) {
 		return getStaticLevel(skillId) >= level;
+	}
+	
+	@Override
+	public String getName(int slot) {
+		return SKILL_NAME[slot];
 	}
 	
 	@Override

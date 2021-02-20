@@ -2,8 +2,7 @@ package lk1905.gielinorcraft.api.skill;
 
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.entity.LivingEntity;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.WorldTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /**Handles the skill restoration data.*/
@@ -13,7 +12,7 @@ public final class SkillRestoration {
 	private final int skillId;
 	
 	/**The current game tick.*/
-	private int tick;
+	private int tick = 0;
 	
 	/**
 	 * Constructs a new {@code SkillRestoration} {@code Object}.
@@ -30,12 +29,12 @@ public final class SkillRestoration {
 	 * */
 	public void restore(LivingEntity entity) {
 		
-		LazyOptional<ISkills> cap = entity.getCapability(SkillCapability.SKILL_CAP);
-		ISkills skills = cap.orElse(null);
+		ISkills skills = entity.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		int max = skills.getStaticLevel(skillId);
 		
 		if(tick == 1200) {
 			if(skillId == Skills.HITPOINTS) {
-				int max = skills.getMaximumLifepoints();
+				max = skills.getMaximumLifepoints();
 			}else {
 				int dynamic = skills.getLevel(skillId);
 				int stat = skills.getStaticLevel(skillId);
@@ -48,13 +47,12 @@ public final class SkillRestoration {
 	
 	/**Restarts the restoration.*/
 	@SubscribeEvent
-	public void onTick(TickEvent event) {
+	public void onTick(WorldTickEvent event) {
 		
-		int timer = tick;
-		if(timer < 1200) {
-			timer++;
+		if(tick < 1200) {
+			tick++;
 		}else {
-			timer = 0;
+			tick = 0;
 		}
 	}
 	
