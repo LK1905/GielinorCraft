@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -78,46 +79,58 @@ public class XPEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void onDiggingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+	public static void onDiggingToolInteractEvent(BlockEvent.BlockToolInteractEvent event) {
 		
 		PlayerEntity player = event.getPlayer();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
-		double xpGained = diggingXpForBlock(event.getState().getBlock());
+		double xpGained = diggingXpForToolInteract(event.getState().getBlock());
 		
-		skills.addXp(24, xpGained);
-		skills.sync((ServerPlayerEntity) player);
+		if(!player.world.isRemote) {
+			if(event.getToolType() == ToolType.SHOVEL) {
+				skills.addXp(24, xpGained);
+				skills.sync((ServerPlayerEntity) player);
+			}
+		}
 	}
 	
 	@SubscribeEvent
-	public static void onWoodcuttingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+	public static void onWoodcuttingToolInteractEvent(BlockEvent.BlockToolInteractEvent event) {
 		
 		PlayerEntity player = event.getPlayer();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
-		double xpGained = woodcuttingXpForBlock(event.getState().getBlock());
+		double xpGained = woodcuttingXpForToolInteract(event.getState().getBlock());
 		
-		skills.addXp(8, xpGained);
-		skills.sync((ServerPlayerEntity) player);
+		if(!player.world.isRemote) {
+			if(event.getToolType() == ToolType.AXE) {
+				skills.addXp(8, xpGained);
+				skills.sync((ServerPlayerEntity) player);
+			}
+		}
 	}
 	
 	@SubscribeEvent
-	public static void onFarmingInteractEvent(BlockEvent.BlockToolInteractEvent event) {
+	public static void onFarmingToolInteractEvent(BlockEvent.BlockToolInteractEvent event) {
 		
 		PlayerEntity player = event.getPlayer();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
-		double xpGained = farmingXpForBlock(event.getState().getBlock());
+		double xpGained = farmingXpForToolInteract(event.getState().getBlock());
 		
-		skills.addXp(19, xpGained);
-		skills.sync((ServerPlayerEntity) player);
+		if(!player.world.isRemote) {
+			if(event.getToolType() == ToolType.HOE) {
+				skills.addXp(19, xpGained);
+				skills.sync((ServerPlayerEntity) player);
+			}
+		}
 	}
 	
 	private static double diggingXpForBlock(Block block) {
 		
 		if(block == Blocks.DIRT || block == Blocks.GRASS_BLOCK || block == Blocks.GRASS_PATH || block == Blocks.SAND
-				|| block == Blocks.COARSE_DIRT|| block == Blocks.MYCELIUM || block == Blocks.RED_SAND) {
+				|| block == Blocks.COARSE_DIRT|| block == Blocks.MYCELIUM || block == Blocks.RED_SAND || block == Blocks.FARMLAND) {
 			return 10;
 		}else if(block == Blocks.GRAVEL) {
 			return 20;
-		}else if(block == Blocks.NETHERRACK || block == Blocks.CRIMSON_NYLIUM || block == Blocks.WARPED_NYLIUM) {
+		}else if(block == Blocks.CRIMSON_NYLIUM || block == Blocks.WARPED_NYLIUM) {
 			return 30;
 		}else if(block == Blocks.CLAY) {
 			return 40;
@@ -137,7 +150,7 @@ public class XPEventHandler {
 				|| block == Blocks.COBBLESTONE_STAIRS || block == Blocks.COBBLESTONE_WALL || block == Blocks.RED_SANDSTONE
 				|| block == Blocks.RED_SANDSTONE_SLAB || block == Blocks.RED_SANDSTONE_STAIRS || block == Blocks.RED_SANDSTONE_WALL
 				|| block == Blocks.END_STONE || block == Blocks.END_STONE_BRICK_SLAB || block == Blocks.END_STONE_BRICK_STAIRS
-				|| block == Blocks.END_STONE_BRICK_WALL || block == Blocks.END_STONE_BRICKS
+				|| block == Blocks.END_STONE_BRICK_WALL || block == Blocks.END_STONE_BRICKS || block == Blocks.NETHERRACK
 				|| block == Blocks.CRACKED_STONE_BRICKS || block == Blocks.INFESTED_CHISELED_STONE_BRICKS || block == Blocks.INFESTED_CRACKED_STONE_BRICKS
 				|| block == Blocks.INFESTED_COBBLESTONE || block == Blocks.INFESTED_MOSSY_STONE_BRICKS || block == Blocks.INFESTED_STONE || block == Blocks.INFESTED_STONE_BRICKS) {
 			return 5;
@@ -258,4 +271,50 @@ public class XPEventHandler {
 			return 0;
 		}
 	}
+	
+	private static double diggingXpForToolInteract(Block block) {
+		if(block == Blocks.GRASS_BLOCK || block == Blocks.DIRT || block == Blocks.COARSE_DIRT || block == Blocks.PODZOL || block == Blocks.MYCELIUM) {
+			return 5;
+		}else {
+			return 0;
+		}
+	}
+	
+	private static double woodcuttingXpForToolInteract(Block block) {
+		if(block == Blocks.OAK_LOG || block == Blocks.OAK_WOOD) {
+			return 2.5;
+		}else if(block == Blocks.BIRCH_LOG || block == Blocks.BIRCH_WOOD) {
+			return 4;
+		}else if(block == Blocks.SPRUCE_LOG || block == Blocks.SPRUCE_WOOD) {
+			return 7;
+		}else if(block == Blocks.ACACIA_LOG || block == Blocks.ACACIA_WOOD) {
+			return 10;
+		}else if(block == Blocks.JUNGLE_LOG || block == Blocks.JUNGLE_WOOD) {
+			return 12.5;
+		}else if(block == Blocks.DARK_OAK_LOG || block == Blocks.DARK_OAK_WOOD) {
+			return 17.5;
+		}else if(block == Blocks.WARPED_STEM || block == Blocks.WARPED_HYPHAE) {
+			return 25;
+		}else if(block == Blocks.CRIMSON_STEM || block == Blocks.CRIMSON_HYPHAE) {
+			return 38;
+		}else {
+			return 0;
+		}
+	}
+	
+	private static double farmingXpForToolInteract(Block block) {
+		if(block == Blocks.GRASS_BLOCK || block == Blocks.GRASS_PATH || block == Blocks.DIRT || block == Blocks.COARSE_DIRT) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+
+	/*private static double farmingXpForRightClickBlock(Block block) {
+		if(block == Blocks.SWEET_BERRY_BUSH) {
+			return 4.5;
+		}else {
+			return 0;
+		}
+	}*/
 }

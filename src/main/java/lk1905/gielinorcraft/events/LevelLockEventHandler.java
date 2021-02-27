@@ -79,10 +79,12 @@ public class LevelLockEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = woodcuttingLevelForBlock(event.getState().getBlock());
 		
-		if(skills.getLevel(8) < levelReq) {
-			event.setCanceled(true);
-			/*PacketHandler.sendTo(new StringPacket("You do not have the Woodcutting level required to chop this block. Level "
-						+ levelReq + " required."), (ServerPlayerEntity) player)*/;
+		if(!player.world.isRemote) {
+			if(skills.getLevel(8) < levelReq) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("You do not have the Woodcutting level required to strip this block. Level "
+					+ levelReq + " required."), (ServerPlayerEntity) player);
+			}
 		}
 	}
 	
@@ -93,10 +95,12 @@ public class LevelLockEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = farmingLevelForBlock(event.getState().getBlock());
 		
-		if(skills.getLevel(19) < levelReq) {
-			event.setCanceled(true);
-			/*PacketHandler.sendTo(new StringPacket("You do not have the Farming level required to harvest this block. Level "
-						+ levelReq + " required."), (ServerPlayerEntity) player)*/;
+		if(!player.world.isRemote) {
+			if(skills.getLevel(19) < levelReq) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("You do not have the Farming level required to harvest this block. Level "
+					+ levelReq + " required."), (ServerPlayerEntity) player);
+			}
 		}
 	}
 	
@@ -104,7 +108,7 @@ public class LevelLockEventHandler {
 		
 		if(block == Blocks.GRAVEL) {
 			return 10;
-		}else if(block == Blocks.NETHERRACK || block == Blocks.CRIMSON_NYLIUM || block == Blocks.WARPED_NYLIUM) {
+		}else if(block == Blocks.CRIMSON_NYLIUM || block == Blocks.WARPED_NYLIUM) {
 			return 20;
 		}else if(block == Blocks.CLAY) {
 			return 30;
