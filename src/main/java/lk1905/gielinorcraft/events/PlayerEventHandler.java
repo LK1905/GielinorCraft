@@ -4,7 +4,6 @@ import lk1905.gielinorcraft.Gielinorcraft;
 import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
@@ -21,15 +20,11 @@ public class PlayerEventHandler {
 			return;
 		}
 		
-		LazyOptional<ISkills> oldCap = event.getOriginal().getCapability(SkillCapability.SKILL_CAP, null);
-		LazyOptional<ISkills> newCap = event.getPlayer().getCapability(SkillCapability.SKILL_CAP, null);
-		ISkills oldSkills = oldCap.orElse(null);
+		ISkills oldSkills = event.getOriginal().getCapability(SkillCapability.SKILL_CAP, null).orElse(null);
+		ISkills newSkills = event.getPlayer().getCapability(SkillCapability.SKILL_CAP, null).orElse(null);
 		
 		if(oldSkills != null) {
-			ISkills newSkills = newCap.orElse(null);
-			
 			if(newSkills != null) {
-				
 				for(int i = 0; i < 26; i++) {
 					newSkills.setXp(i, oldSkills.getXp(i));
 					newSkills.setStaticLevel(i, oldSkills.getStaticLevel(i));
@@ -44,13 +39,16 @@ public class PlayerEventHandler {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 		if(!player.world.isRemote) {
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync(player));
+			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.modifyMaxHealth(player));
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onRespawnEvent(PlayerRespawnEvent event) {
-		if(!event.getPlayer().world.isRemote) {
-			event.getPlayer().getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync((ServerPlayerEntity) event.getPlayer()));
+		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+		if(!player.world.isRemote) {
+			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync(player));
+			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.modifyMaxHealth(player));
 		}
 	}
 	
@@ -59,6 +57,7 @@ public class PlayerEventHandler {
 		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 		if(!player.world.isRemote) {
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync(player));
+			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.modifyMaxHealth(player));
 		}
 	}
 }

@@ -34,7 +34,6 @@ public class SkillStorage implements Capability.IStorage<ISkills>{
 			instance.setXp(i, data.getDouble("xp_" + i));
 			instance.setStaticLevel(i, data.getInt("static_" + i));
 			instance.setLevel(i, data.getInt("dynamic_" + i));
-		}
+		}	
 	}
-
 }

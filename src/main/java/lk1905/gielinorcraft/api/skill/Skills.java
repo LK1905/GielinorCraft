@@ -1,12 +1,20 @@
 package lk1905.gielinorcraft.api.skill;
 
+import java.util.Collections;
+import java.util.UUID;
+
 import lk1905.gielinorcraft.api.events.LevelUpEvent;
 import lk1905.gielinorcraft.api.events.XPGainEvent;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.SkillsPacket;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.play.server.SEntityPropertiesPacket;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 
 public final class Skills implements ISkills{
@@ -87,12 +95,9 @@ public final class Skills implements ISkills{
 	
 	/**Represents the amount of Prayer Points left.*/
 	private double prayerPoints = 1;
-
-	/**The player's health.*/
-	private int lifepoints = 10;
 	
 	/**The increased maximum health value.*/
-	private int lifepointsIncrease = 0;
+	private int healthIncrease = 0;
 	
 	/**The total experience gained.*/
 	private double xpGained = 0;
@@ -101,7 +106,7 @@ public final class Skills implements ISkills{
 	private final SkillRestoration[] restoration;
 	
 	/**If a health update should occur.*/
-	private boolean lifepointsUpdate;
+	private boolean healthUpdate;
 	
 	/**
 	 * Constructs a new {@code Skills} {@code Object}.
@@ -117,7 +122,7 @@ public final class Skills implements ISkills{
 		for(int i = 0; i < 26; i++) {
 			if(i == HITPOINTS) {
 				this.xp[HITPOINTS] = 1154;
-				this.dynamicLevels[HITPOINTS] = (int) entity.getHealth();
+				this.dynamicLevels[HITPOINTS] = getLevel(HITPOINTS);
 				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
 			}else {
 				this.xp[i] = 0;
@@ -125,8 +130,6 @@ public final class Skills implements ISkills{
 				this.dynamicLevels[i] = getStaticLevel(i);
 			}
 		}
-		
-		
 	}
 	
 	@Override
@@ -150,12 +153,7 @@ public final class Skills implements ISkills{
 	}
 	
 	@Override
-	public void restoreTick() {
-		
-		if(lifepoints < 1) {
-			return;
-		}
-		
+	public void restoreTick() {	
 		for(int i = 0; i < restoration.length; i++) {
 			if(restoration[i] != null) {
 				restoration[i].restore(entity);
@@ -189,9 +187,6 @@ public final class Skills implements ISkills{
 			
 			if(dynamicLevels[slot] < newLevel) {
 				dynamicLevels[slot] += amount;
-			}
-			if(slot == HITPOINTS) {
-				lifepoints += amount;
 			}
 			staticLevels[slot] = newLevel;
 			
@@ -232,9 +227,9 @@ public final class Skills implements ISkills{
 		
 		for(int i = 0; i < 26; i++) {
 			data.putDouble("xp_" + i, xp[i]);
-			data.putInt("dynamic_" + i, dynamicLevels[i]);
 			data.putInt("static_" + i, staticLevels[i]);
-		}
+			data.putInt("dynamic_" + i, dynamicLevels[i]);
+		}	
 		return data;
 	}
 	
@@ -243,8 +238,8 @@ public final class Skills implements ISkills{
 		
 		for(int i = 0; i < 26; i++) {
 			xp[i] = data.getDouble("xp_" + i);
-			dynamicLevels[i] = data.getInt("dynamic_" + i);
 			staticLevels[i] = data.getInt("static_" + i);
+			dynamicLevels[i] = data.getInt("dynamic_" + i);
 		}
 	}
 	
@@ -357,14 +352,14 @@ public final class Skills implements ISkills{
 	public void setLevel(int slot, int level) {
 		
 		if(slot == HITPOINTS) {
-			lifepoints = level;
+			level = (int) entity.getHealth();
 		}else if(slot == PRAYER) {
 			prayerPoints = level;
 		}
 		
 		dynamicLevels[slot] = level;
 		if(restoration[slot] != null) {
-			restoration[slot].onTick(null);
+
 		}
 	}
 	
@@ -374,28 +369,43 @@ public final class Skills implements ISkills{
 	}
 	
 	@Override
-	public void setLifepoints(int lifepoints) {
-		this.lifepoints = lifepoints;
-		
-		if(this.lifepoints < 0) {
-			this.lifepoints = 0;
+	public int getMaxHealth() {
+		return staticLevels[HITPOINTS] + healthIncrease;
+	}
+	
+	@Override
+	public void setHealthIncrease(int amount) {
+		this.healthIncrease = amount;
+	}
+	
+	@Override
+	public void modifyMaxHealth(LivingEntity entity) {
+		if(entity == null) {
+			return;
 		}
-		lifepointsUpdate = true;
-	}
-	
-	@Override
-	public int getLifepoints() {
-		return lifepoints;
-	}
-	
-	@Override
-	public int getMaximumLifepoints() {
-		return staticLevels[HITPOINTS] + lifepointsIncrease;
-	}
-	
-	@Override
-	public void setLifepointsIncrease(int amount) {
-		this.lifepointsIncrease = amount;
+		entity = getEntity();
+		final float newAmount = getMaxHealth();
+		final float oldAmount;
+		
+		final UUID MODIFIER_ID = UUID.fromString("d5d0d878-b3c2-469b-ba89-ac01c0635a9c");
+		final ModifiableAttributeInstance health = entity.getAttribute(Attributes.MAX_HEALTH);
+		final AttributeModifier mod = new AttributeModifier(MODIFIER_ID, "Max Health", newAmount, AttributeModifier.Operation.ADDITION);
+		
+		final AttributeModifier oldMod = health.getModifier(MODIFIER_ID);
+		
+		if(oldMod != null) {
+			health.removeModifier(oldMod);
+			oldAmount = (float) oldMod.getAmount();
+		}else {
+			oldAmount = 0;
+		}
+		
+		health.applyPersistentModifier(mod);
+		
+		final float amountToHeal = newAmount - oldAmount;
+		if(amountToHeal > 0) {
+			entity.heal(amountToHeal);
+		}
 	}
 	
 	@Override
@@ -519,13 +529,13 @@ public final class Skills implements ISkills{
 	}
 	
 	@Override
-	public boolean isLifepointsUpdate() {
-		return lifepointsUpdate;
+	public boolean isHealthUpdate() {
+		return healthUpdate;
 	}
 	
 	@Override
-	public void setLifepointsUpdate(boolean lifepointsUpdate) {
-		this.lifepointsUpdate = lifepointsUpdate;
+	public void setHealthUpdate(boolean update) {
+		this.healthUpdate = update;
 	}
 	
 	@Override
@@ -552,6 +562,12 @@ public final class Skills implements ISkills{
 	public void sync(ServerPlayerEntity player) {
 		if(entity instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new SkillsPacket(serializeNBT()), player);
+			
+			if(!player.world.isRemote) {
+				ModifiableAttributeInstance attribute = player.getAttribute(Attributes.MAX_HEALTH);
+				SEntityPropertiesPacket packet = new SEntityPropertiesPacket(player.getEntityId(), Collections.singleton(attribute));
+				((ServerWorld) player.getEntityWorld()).getChunkProvider().sendToTrackingAndSelf(player, packet);
+			}
 		}
 	}
 }

@@ -2,7 +2,7 @@ package lk1905.gielinorcraft.api.skill;
 
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.entity.LivingEntity;
-import net.minecraftforge.event.TickEvent.WorldTickEvent;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 /**Handles the skill restoration data.*/
@@ -30,11 +30,11 @@ public final class SkillRestoration {
 	public void restore(LivingEntity entity) {
 		
 		ISkills skills = entity.getCapability(SkillCapability.SKILL_CAP).orElse(null);
-		int max = skills.getStaticLevel(skillId);
+		//int max = skills.getStaticLevel(skillId);
 		
 		if(tick == 1200) {
 			if(skillId == Skills.HITPOINTS) {
-				max = skills.getMaximumLifepoints();
+				return;
 			}else {
 				int dynamic = skills.getLevel(skillId);
 				int stat = skills.getStaticLevel(skillId);
@@ -47,12 +47,12 @@ public final class SkillRestoration {
 	
 	/**Restarts the restoration.*/
 	@SubscribeEvent
-	public void onTick(WorldTickEvent event) {
+	public void onTick(ClientTickEvent event) {
 		
 		if(tick < 1200) {
 			tick++;
 		}else {
-			tick = 0;
+			setTick(0);
 		}
 	}
 	

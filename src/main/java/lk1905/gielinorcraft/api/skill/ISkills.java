@@ -121,28 +121,19 @@ public interface ISkills {
 	public int getLevel(int slot);
 	
 	/**
-	 * Sets the current amount of lifepoints.
-	 * @param lifepoints The lifepoints.
-	 * */
-	public void setLifepoints(int lifepoints);
-	
-	/**
-	 * Gets the lifepoints.
-	 * @return The lifepoints.
-	 * */
-	public int getLifepoints();
-	
-	/**
-	 * Gets the maximum amount of lifepoints.
+	 * Gets the maximum amount of health.
 	 * @return The maximum amount.
 	 * */
-	public int getMaximumLifepoints();
+	public int getMaxHealth();
 	
 	/**
-	 * Sets amount of lifepoints increase.
+	 * Sets amount of health increase.
 	 * @param amount The amount.
 	 * */
-	public void setLifepointsIncrease(int amount);
+	public void setHealthIncrease(int amount);
+	
+	/**Modifies the max health of the entity.*/
+	public void modifyMaxHealth(LivingEntity entity);
 	
 	/**
 	 * Gets the prayer points.
@@ -235,16 +226,16 @@ public interface ISkills {
 	public int getTotalXp();
 	
 	/**
-	 * Gets the lifepointsUpdate.
-	 * @return The lifepointsUpdate.
+	 * Gets the Health Update.
+	 * @return The health Update.
 	 * */
-	public boolean isLifepointsUpdate();
+	public boolean isHealthUpdate();
 	
 	/**
-	 * Sets the lifepointsUpdate.
-	 * @param lifepointsUpdate The lifepointsUpdate to set.
+	 * Sets the Health Update.
+	 * @param update The health Update to set.
 	 * */
-	public void setLifepointsUpdate(boolean lifepointsUpdate);
+	public void setHealthUpdate(boolean update);
 	
 	/**
 	 * Gets the static levels.

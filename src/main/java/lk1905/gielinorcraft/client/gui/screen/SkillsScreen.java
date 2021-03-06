@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.common.util.LazyOptional;
 
 /**A Simple gui containing all the player's skill data. Just text for now, will upgrade in the future.*/
 public class SkillsScreen extends Screen{
@@ -19,8 +18,7 @@ public class SkillsScreen extends Screen{
 	private String[] skill_info = new String[26];
 	
 	private PlayerEntity player = Minecraft.getInstance().player;
-	private LazyOptional<ISkills> cap = player.getCapability(SkillCapability.SKILL_CAP);
-	private ISkills skills = cap.orElse(null);
+	private ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 	
 	public SkillsScreen() {
 		super(new StringTextComponent("Skills"));
