@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SEntityPropertiesPacket;
@@ -230,6 +231,7 @@ public final class Skills implements ISkills{
 			data.putInt("static_" + i, staticLevels[i]);
 			data.putInt("dynamic_" + i, dynamicLevels[i]);
 		}	
+		data.putInt("health", getMaxHealth());
 		return data;
 	}
 	
@@ -384,28 +386,20 @@ public final class Skills implements ISkills{
 			return;
 		}
 		entity = getEntity();
-		final float newAmount = getMaxHealth();
+		final float newAmount = getStaticLevel(HITPOINTS);
 		final float oldAmount;
 		
-		final UUID MODIFIER_ID = UUID.fromString("d5d0d878-b3c2-469b-ba89-ac01c0635a9c");
-		final ModifiableAttributeInstance health = entity.getAttribute(Attributes.MAX_HEALTH);
-		final AttributeModifier mod = new AttributeModifier(MODIFIER_ID, "Max Health", newAmount, AttributeModifier.Operation.ADDITION);
-		
-		final AttributeModifier oldMod = health.getModifier(MODIFIER_ID);
-		
-		if(oldMod != null) {
-			health.removeModifier(oldMod);
-			oldAmount = (float) oldMod.getAmount();
+		if(entity instanceof PlayerEntity) {
+			oldAmount = 20;
 		}else {
 			oldAmount = 0;
 		}
 		
+		final UUID MODIFIER_ID = UUID.fromString("d5d0d878-b3c2-469b-ba89-ac01c0635a9c");
+		final ModifiableAttributeInstance health = entity.getAttribute(Attributes.MAX_HEALTH);
+		final AttributeModifier mod = new AttributeModifier(MODIFIER_ID, "Max Health", newAmount - oldAmount, AttributeModifier.Operation.ADDITION);
+		health.removeModifier(mod);
 		health.applyPersistentModifier(mod);
-		
-		final float amountToHeal = newAmount - oldAmount;
-		if(amountToHeal > 0) {
-			entity.heal(amountToHeal);
-		}
 	}
 	
 	@Override

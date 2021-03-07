@@ -32,7 +32,7 @@ public class SkillsScreen extends Screen{
 		skill_info[0] = "Attack, Level: " + skills.getLevel(0) + "/" + skills.getStaticLevel(0) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(0)));
 		skill_info[1] = "Defence, Level: " + skills.getLevel(1) + "/" + skills.getStaticLevel(1) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(1)));
 		skill_info[2] = "Strength, Level: " + skills.getLevel(2) + "/" + skills.getStaticLevel(2) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(2)));
-		skill_info[3] = "Hitpoints, Level: " + skills.getLevel(3) + "/" + skills.getStaticLevel(3) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(3)));
+		skill_info[3] = "Hitpoints, Level: " + (int) player.getHealth() + "/" + skills.getStaticLevel(3) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(3)));
 		skill_info[4] = "Ranged, Level: " + skills.getLevel(4) + "/" + skills.getStaticLevel(4) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(4)));
 		skill_info[5] = "Prayer, Level: " + skills.getLevel(5) + "/" + skills.getStaticLevel(5) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(5)));
 		skill_info[6] = "Magic, Level: " + skills.getLevel(6) + "/" + skills.getStaticLevel(6) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(6)));
