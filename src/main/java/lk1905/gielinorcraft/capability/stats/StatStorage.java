@@ -12,17 +12,10 @@ public class StatStorage implements Capability.IStorage<IStats>{
 	public INBT writeNBT(Capability<IStats> capability, IStats instance, Direction side) {
 		CompoundNBT data = new CompoundNBT();
 		
-		data.putInt("stab_accuracy", instance.getStabAccuracy());
-		data.putInt("slash_accuracy", instance.getSlashAccuracy());
-		data.putInt("crush_accuracy", instance.getCrushAccuracy());
-		data.putInt("ranged_accuracy", instance.getRangedAccuracy());
-		data.putInt("magic_accuracy", instance.getMagicAccuracy());
-		
-		data.putInt("stab_defence", instance.getStabDefence());
-		data.putInt("slash_defence", instance.getSlashDefence());
-		data.putInt("crush_defence", instance.getCrushDefence());
-		data.putInt("ranged_defence", instance.getRangedDefence());
-		data.putInt("magic_defence", instance.getMagicDefence());
+		for(int i = 0; i < 5; i++) {
+			data.putInt("accuracy_" + i, instance.getAccuracy(i));
+			data.putInt("defence_" + i, instance.getDefence(i));
+		}
 		
 		data.putInt("melee_strength", instance.getMeleeStrength());
 		data.putInt("ranged_strength", instance.getRangedStrength());
@@ -34,6 +27,10 @@ public class StatStorage implements Capability.IStorage<IStats>{
 		data.putDouble("draconic", instance.getDraconicBonus());
 		data.putDouble("other", instance.getOtherBonus());
 		
+		data.putDouble("melee_absorbtion", instance.getMeleeAbsorbtion());
+		data.putDouble("ranged_absorbtion", instance.getRangedAbsorbtion());
+		data.putDouble("magic_absorbtion", instance.getMagicAbsorbtion());
+		
 		return data;
 	}
 
@@ -44,17 +41,10 @@ public class StatStorage implements Capability.IStorage<IStats>{
 		}
 		CompoundNBT data = (CompoundNBT) nbt;
 		
-		instance.setStabAccuracy(data.getInt("stab_accuracy"));
-		instance.setSlashAccuracy(data.getInt("slash_accuracy"));
-		instance.setCrushAccuracy(data.getInt("crush_accuracy"));
-		instance.setRangedAccuracy(data.getInt("ranged_accuracy"));
-		instance.setMagicAccuracy(data.getInt("magic_accuracy"));
-		
-		instance.setStabDefence(data.getInt("stab_defence"));
-		instance.setSlashDefence(data.getInt("slash_defence"));
-		instance.setCrushDefence(data.getInt("crush_defence"));
-		instance.setRangedDefence(data.getInt("ranged_defence"));
-		instance.setMagicDefence(data.getInt("magic_defence"));
+		for(int i = 0; i < 5; i++) {
+			instance.setAccuracy(i, data.getInt("accuracy_" + i));
+			instance.setDefence(i, data.getInt("defence_" + i));
+		}
 		
 		instance.setMeleeStrength(data.getInt("melee_strength"));
 		instance.setRangedStrength(data.getInt("ranged_strength"));
@@ -65,6 +55,10 @@ public class StatStorage implements Capability.IStorage<IStats>{
 		instance.setDemonicBonus(data.getDouble("demonic"));
 		instance.setDraconicBonus(data.getDouble("draconic"));
 		instance.setOtherBonus(data.getDouble("other"));
+		
+		instance.setMeleeAbsorbtion(data.getDouble("melee_absorbtion"));
+		instance.setRangedAbsorbtion(data.getDouble("ranged_absorbtion"));
+		instance.setMagicAbsorbtion(data.getDouble("magic_absorbtion"));
 	}
 
 }

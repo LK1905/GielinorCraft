@@ -1,7 +1,11 @@
 package lk1905.gielinorcraft.events;
 
 import lk1905.gielinorcraft.Gielinorcraft;
+import lk1905.gielinorcraft.api.combat.AttackStyles;
+import lk1905.gielinorcraft.api.combat.IAttackStyles;
 import lk1905.gielinorcraft.api.skill.ISkills;
+import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
+import lk1905.gielinorcraft.capability.attackstyle.IAttackStyle;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -24,14 +28,46 @@ public class XPEventHandler {
 		
 		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		IAttackStyle style = player.getCapability(AttackStyleCapability.STYLE_CAP).orElse(null);
+		IAttackStyles activeStyle = style.getActiveStyle();
 		
-		double xpGained = event.getAmount() * (1 + 1/3);
-		
-		skills.addXp(0, xpGained);
-		skills.addXp(1, xpGained);
-		skills.addXp(2, xpGained);
-		skills.addXp(3, xpGained);
-		skills.sync((ServerPlayerEntity) player);
+		if(activeStyle == AttackStyles.ACCURATE_STAB || activeStyle == AttackStyles.ACCURATE_SLASH || activeStyle == AttackStyles.ACCURATE_CRUSH) {
+			skills.addXp(0, event.getAmount() * 4);
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}else if(activeStyle == AttackStyles.AGGRESSIVE_STAB || activeStyle == AttackStyles.AGGRESSIVE_SLASH || activeStyle == AttackStyles.AGGRESSIVE_CRUSH) {
+			skills.addXp(2, event.getAmount() * 4);
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}else if(activeStyle == AttackStyles.CONTROLLED_STAB || activeStyle == AttackStyles.CONTROLLED_SLASH || activeStyle == AttackStyles.CONTROLLED_CRUSH) {
+			skills.addXp(0, event.getAmount() * (1 + 1/3));
+			skills.addXp(1, event.getAmount() * (1 + 1/3));
+			skills.addXp(2, event.getAmount() * (1 + 1/3));
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}else if(activeStyle == AttackStyles.DEFENSIVE_STAB || activeStyle == AttackStyles.DEFENSIVE_SLASH || activeStyle == AttackStyles.DEFENSIVE_CRUSH) {
+			skills.addXp(1, event.getAmount() * 4);
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}else if(activeStyle == AttackStyles.RANGED_ACCURATE || activeStyle == AttackStyles.RANGED_RAPID) {
+			skills.addXp(4, event.getAmount() * 4);
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}else if(activeStyle == AttackStyles.RANGED_LONG) {
+			skills.addXp(1, event.getAmount() * 2);
+			skills.addXp(4, event.getAmount() * 2);
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}else if(activeStyle == AttackStyles.SPELL_CAST) {
+			skills.addXp(6, event.getAmount() * 4);
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}else if(activeStyle == AttackStyles.SPELL_DEFENSIVE) {
+			skills.addXp(1, event.getAmount() * 2);
+			skills.addXp(6, event.getAmount() * 2);
+			skills.addXp(3, event.getAmount() * (1 + 1/3));
+			skills.sync((ServerPlayerEntity) player);
+		}
 	}
 	
 	@SubscribeEvent

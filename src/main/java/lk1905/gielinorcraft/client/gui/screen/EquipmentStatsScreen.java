@@ -19,6 +19,11 @@ public class EquipmentStatsScreen extends Screen{
 	}
 	
 	@Override
+	public boolean isPauseScreen() {
+		return false;
+	}
+	
+	@Override
 	public void render(final MatrixStack stack, final int mouseX, final int mouseY, final float partialTicks) {
 		renderBackground(stack);
 		this.blit(stack, width, height, 0, 0, width, height);
@@ -26,22 +31,22 @@ public class EquipmentStatsScreen extends Screen{
 		drawCenteredString(stack, font, "Equipment Stats", width / 2, height - 200, 111111);
 		
 		drawString(stack, font, "Accuracy bonuses", (width / 2) - 100, height - 180, 111111);
-		drawString(stack, font, "Stab: " + stats.getStabAccuracy(), (width / 2) - 100, height - 170, 111111);
-		drawString(stack, font, "Slash: " + stats.getSlashAccuracy(), (width / 2) - 100, height - 160, 111111);
-		drawString(stack, font, "Crush: " + stats.getCrushAccuracy(), (width / 2) - 100, height - 150, 111111);
-		drawString(stack, font, "Ranged: " + stats.getRangedAccuracy(), (width / 2) - 100, height - 140, 111111);
-		drawString(stack, font, "Magic: " + stats.getMagicAccuracy(), (width / 2) - 100, height - 130, 111111);
+		drawString(stack, font, "Stab: " + stats.getAccuracy(0), (width / 2) - 100, height - 170, 111111);
+		drawString(stack, font, "Slash: " + stats.getAccuracy(1), (width / 2) - 100, height - 160, 111111);
+		drawString(stack, font, "Crush: " + stats.getAccuracy(2), (width / 2) - 100, height - 150, 111111);
+		drawString(stack, font, "Ranged: " + stats.getAccuracy(3), (width / 2) - 100, height - 140, 111111);
+		drawString(stack, font, "Magic: " + stats.getAccuracy(4), (width / 2) - 100, height - 130, 111111);
 		drawString(stack, font, "Strength bonuses", (width / 2) - 100, height - 120, 111111);
 		drawString(stack, font, "Melee: " + stats.getMeleeStrength(), (width / 2) - 100, height - 110, 111111);
 		drawString(stack, font, "Ranged: " + stats.getRangedStrength(), (width / 2) - 100, height - 100, 111111);
 		drawString(stack, font, "Magic: " + stats.getMagicStrength() + "%", (width / 2) - 100, height - 90, 111111);
 
 		drawString(stack, font, "Defence bonuses", (width / 2) + 20, height - 180, 111111);
-		drawString(stack, font, "Stab: " + stats.getStabDefence(), (width / 2) + 20, height - 170, 111111);
-		drawString(stack, font, "Slash: " + stats.getSlashDefence(), (width / 2) + 20, height - 160, 111111);
-		drawString(stack, font, "Crush: " + stats.getCrushDefence(), (width / 2) + 20, height - 150, 111111);
-		drawString(stack, font, "Ranged: " + stats.getRangedDefence(), (width / 2) + 20, height - 140, 111111);
-		drawString(stack, font, "Magic: " + stats.getMagicDefence(), (width / 2) + 20, height - 130, 111111);
+		drawString(stack, font, "Stab: " + stats.getDefence(0), (width / 2) + 20, height - 170, 111111);
+		drawString(stack, font, "Slash: " + stats.getDefence(1), (width / 2) + 20, height - 160, 111111);
+		drawString(stack, font, "Crush: " + stats.getDefence(2), (width / 2) + 20, height - 150, 111111);
+		drawString(stack, font, "Ranged: " + stats.getDefence(3), (width / 2) + 20, height - 140, 111111);
+		drawString(stack, font, "Magic: " + stats.getDefence(4), (width / 2) + 20, height - 130, 111111);
 		drawString(stack, font, "Other bonuses", (width / 2) + 20, height - 120, 111111);
 		drawString(stack, font, "Slayer: " + stats.getSlayerBonus() + "%", (width / 2) + 20, height - 110, 111111);
 		drawString(stack, font, "Undead: " + stats.getUndeadBonus() + "%", (width / 2) + 20, height - 100, 111111);

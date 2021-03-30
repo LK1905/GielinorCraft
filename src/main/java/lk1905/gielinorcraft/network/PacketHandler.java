@@ -41,6 +41,21 @@ public class PacketHandler {
 				StringPacket::encode,
 				StringPacket::decode,
 				StringPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				AttackStyleCapPacket.class,
+				AttackStyleCapPacket::encode,
+				AttackStyleCapPacket::decode,
+				AttackStyleCapPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				AttackStyleClientPacket.class,
+				AttackStyleClientPacket::encode,
+				AttackStyleClientPacket::decode,
+				AttackStyleClientPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				AttackStyleServerPacket.class,
+				AttackStyleServerPacket::encode,
+				AttackStyleServerPacket::decode,
+				AttackStyleServerPacket.Handler::handle);
 	}
 	
 	/**

@@ -121,7 +121,9 @@ public final class Skills implements ISkills{
 		this.restoration = new SkillRestoration[26];
 		
 		for(int i = 0; i < 26; i++) {
-			if(i == HITPOINTS) {
+			if(!(entity instanceof PlayerEntity)) {
+				this.xp[i] = getXpByLevel(i);
+			}else if(i == HITPOINTS) {
 				this.xp[HITPOINTS] = 1154;
 				this.dynamicLevels[HITPOINTS] = getLevel(HITPOINTS);
 				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);

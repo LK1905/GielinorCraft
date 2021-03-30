@@ -4,17 +4,10 @@ import net.minecraft.nbt.CompoundNBT;
 
 public class Stats implements IStats{
 
-	private int STAB_ACCURACY = 0;
-	private int SLASH_ACCURACY = 0;
-	private int CRUSH_ACCURACY = 0;
-	private int RANGED_ACCURACY = 0;
-	private int MAGIC_ACCURACY = 0;
+	public static final int STAB = 0, SLASH = 1, CRUSH = 2, MAGIC = 3, RANGED = 4;
 	
-	private int STAB_DEFENCE = 0;
-	private int SLASH_DEFENCE = 0;
-	private int CRUSH_DEFENCE = 0;
-	private int RANGED_DEFENCE = 0;
-	private int MAGIC_DEFENCE = 0;
+	private final int[] accuracy = new int[5];
+	private final int[] defence = new int[5];
 	
 	private int MELEE_STRENGTH = 0;
 	private int RANGED_STRENGTH = 0;
@@ -25,57 +18,21 @@ public class Stats implements IStats{
 	private double DEMONIC_BONUS = 0;
 	private double DRACONIC_BONUS = 0;
 	private double OTHER_BONUS = 0;
-
+	
+	private double MELEE_ABSORBTION = 0;
+	private double RANGED_ABSORBTION = 0;
+	private double MAGIC_ABSORBTION = 0;
+	
 	@Override
-	public void setStabAccuracy(int stat) {
-		stat = STAB_ACCURACY;	
+	public void setAccuracy(int slot, int stat) {
+		accuracy[slot] = stat;
 	}
-
+	
 	@Override
-	public void setSlashAccuracy(int stat) {
-		stat = SLASH_ACCURACY;	
+	public void setDefence(int slot, int stat) {
+		defence[slot] = stat;
 	}
-
-	@Override
-	public void setCrushAccuracy(int stat) {
-		stat = CRUSH_ACCURACY;	
-	}
-
-	@Override
-	public void setRangedAccuracy(int stat) {
-		stat = RANGED_ACCURACY;	
-	}
-
-	@Override
-	public void setMagicAccuracy(int stat) {
-		stat = MAGIC_ACCURACY;	
-	}
-
-	@Override
-	public void setStabDefence(int stat) {
-		stat = STAB_DEFENCE;	
-	}
-
-	@Override
-	public void setSlashDefence(int stat) {
-		stat = SLASH_DEFENCE;	
-	}
-
-	@Override
-	public void setCrushDefence(int stat) {
-		stat = CRUSH_DEFENCE;	
-	}
-
-	@Override
-	public void setRangedDefence(int stat) {
-		stat = RANGED_DEFENCE;	
-	}
-
-	@Override
-	public void setMagicDefence(int stat) {
-		stat = MAGIC_DEFENCE;	
-	}
-
+	
 	@Override
 	public void setMeleeStrength(int stat) {
 		stat = MELEE_STRENGTH;	
@@ -115,55 +72,30 @@ public class Stats implements IStats{
 	public void setOtherBonus(double stat) {
 		stat = OTHER_BONUS;	
 	}
-
+	
 	@Override
-	public int getStabAccuracy() {
-		return STAB_ACCURACY;
+	public void setMeleeAbsorbtion(double stat) {
+		stat = MELEE_ABSORBTION;
 	}
-
+	
 	@Override
-	public int getSlashAccuracy() {
-		return SLASH_ACCURACY;
+	public void setRangedAbsorbtion(double stat) {
+		stat = RANGED_ABSORBTION;
 	}
-
+	
 	@Override
-	public int getCrushAccuracy() {
-		return CRUSH_ACCURACY;
+	public void setMagicAbsorbtion(double stat) {
+		stat = MAGIC_ABSORBTION;
 	}
-
+	
 	@Override
-	public int getRangedAccuracy() {
-		return RANGED_ACCURACY;
+	public int getAccuracy(int slot) {
+		return accuracy[slot];
 	}
-
+	
 	@Override
-	public int getMagicAccuracy() {
-		return MAGIC_ACCURACY;
-	}
-
-	@Override
-	public int getStabDefence() {
-		return STAB_DEFENCE;
-	}
-
-	@Override
-	public int getSlashDefence() {
-		return SLASH_DEFENCE;
-	}
-
-	@Override
-	public int getCrushDefence() {
-		return CRUSH_DEFENCE;
-	}
-
-	@Override
-	public int getRangedDefence() {
-		return RANGED_DEFENCE;
-	}
-
-	@Override
-	public int getMagicDefence() {
-		return MAGIC_DEFENCE;
+	public int getDefence(int slot) {
+		return defence[slot];
 	}
 
 	@Override
@@ -205,22 +137,30 @@ public class Stats implements IStats{
 	public double getOtherBonus() {
 		return OTHER_BONUS;
 	}
+	
+	@Override
+	public double getMeleeAbsorbtion() {
+		return MELEE_ABSORBTION;
+	}
+	
+	@Override
+	public double getRangedAbsorbtion() {
+		return RANGED_ABSORBTION;
+	}
+	
+	@Override
+	public double getMagicAbsorbtion() {
+		return MAGIC_ABSORBTION;
+	}
 
 	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT data = new CompoundNBT();
 		
-		data.putInt("stab_accuracy", STAB_ACCURACY);
-		data.putInt("slash_accuracy", SLASH_ACCURACY);
-		data.putInt("crush_accuracy", CRUSH_ACCURACY);
-		data.putInt("ranged_accuracy", RANGED_ACCURACY);
-		data.putInt("magic_accuracy", MAGIC_ACCURACY);
-		
-		data.putInt("stab_defence", STAB_DEFENCE);
-		data.putInt("slash_defence", SLASH_DEFENCE);
-		data.putInt("crush_defence", CRUSH_DEFENCE);
-		data.putInt("ranged_defence", RANGED_DEFENCE);
-		data.putInt("magic_defence", MAGIC_DEFENCE);
+		for(int i = 0; i < 5; i++) {
+			data.putInt("accuracy_" + i, accuracy[i]);
+			data.putInt("defence_" + i, defence[i]);
+		}
 		
 		data.putInt("melee_strength", MELEE_STRENGTH);
 		data.putInt("ranged_strength", RANGED_STRENGTH);
@@ -232,23 +172,20 @@ public class Stats implements IStats{
 		data.putDouble("draconic", DRACONIC_BONUS);
 		data.putDouble("other", OTHER_BONUS);
 		
+		data.putDouble("melee_absorbtion", MELEE_ABSORBTION);
+		data.putDouble("ranged_absorbtion", RANGED_ABSORBTION);
+		data.putDouble("magic_absorbtion", MAGIC_ABSORBTION);
+		
 		return data;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundNBT data) {
 		
-		STAB_ACCURACY = data.getInt("stab_accuracy");
-		SLASH_ACCURACY = data.getInt("slash_accuracy");
-		CRUSH_ACCURACY = data.getInt("crush_accuracy");
-		RANGED_ACCURACY = data.getInt("ranged_accuracy");
-		MAGIC_ACCURACY = data.getInt("magic_accuracy");
-		
-		STAB_DEFENCE = data.getInt("stab_defence");
-		SLASH_DEFENCE = data.getInt("slash_defence");
-		CRUSH_DEFENCE = data.getInt("crush_defence");
-		RANGED_DEFENCE = data.getInt("ranged_defence");
-		MAGIC_DEFENCE = data.getInt("magic_defence");
+		for(int i = 0; i < 5; i++) {
+			accuracy[i] = data.getInt("accuracy_" + i);
+			defence[i] = data.getInt("defence_" + i);
+		}
 		
 		MELEE_STRENGTH = data.getInt("melee_strength");
 		RANGED_STRENGTH = data.getInt("ranged_strength");
@@ -259,5 +196,9 @@ public class Stats implements IStats{
 		DEMONIC_BONUS = data.getDouble("demonic");
 		DRACONIC_BONUS = data.getDouble("draconic");
 		OTHER_BONUS = data.getDouble("other");
+		
+		MELEE_ABSORBTION = data.getDouble("melee_absorbtion");
+		RANGED_ABSORBTION = data.getDouble("ranged_absorbtion");
+		MAGIC_ABSORBTION = data.getDouble("magic_absorbtion");
 	}
 }

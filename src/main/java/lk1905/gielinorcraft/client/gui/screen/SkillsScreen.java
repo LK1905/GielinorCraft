@@ -25,6 +25,11 @@ public class SkillsScreen extends Screen{
 	}
 	
 	@Override
+	public boolean isPauseScreen() {
+		return false;
+	}
+	
+	@Override
 	public void init() {
 		super.init();
 		

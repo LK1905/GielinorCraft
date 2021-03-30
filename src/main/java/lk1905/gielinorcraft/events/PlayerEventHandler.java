@@ -2,6 +2,7 @@ package lk1905.gielinorcraft.events;
 
 import lk1905.gielinorcraft.Gielinorcraft;
 import lk1905.gielinorcraft.api.skill.ISkills;
+import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -40,6 +41,7 @@ public class PlayerEventHandler {
 		if(!player.world.isRemote) {
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync(player));
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.modifyMaxHealth(player));
+			player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(c -> c.sync(player));
 		}
 	}
 	
@@ -49,6 +51,7 @@ public class PlayerEventHandler {
 		if(!player.world.isRemote) {
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync(player));
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.modifyMaxHealth(player));
+			player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(c -> c.sync(player));
 		}
 	}
 	
@@ -58,6 +61,7 @@ public class PlayerEventHandler {
 		if(!player.world.isRemote) {
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.sync(player));
 			player.getCapability(SkillCapability.SKILL_CAP).ifPresent(c -> c.modifyMaxHealth(player));
+			player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(c -> c.sync(player));
 		}
 	}
 }

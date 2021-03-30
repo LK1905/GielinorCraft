@@ -4,17 +4,9 @@ import net.minecraft.nbt.CompoundNBT;
 
 public interface IStats {
 
-	public void setStabAccuracy(int stat);
-	public void setSlashAccuracy(int stat);
-	public void setCrushAccuracy(int stat);
-	public void setRangedAccuracy(int stat);
-	public void setMagicAccuracy(int stat);
+	public void setAccuracy(int slot, int stat);
 	
-	public void setStabDefence(int stat);
-	public void setSlashDefence(int stat);
-	public void setCrushDefence(int stat);
-	public void setRangedDefence(int stat);
-	public void setMagicDefence(int stat);
+	public void setDefence(int slot, int stat);
 	
 	public void setMeleeStrength(int stat);
 	public void setRangedStrength(int stat);
@@ -26,17 +18,13 @@ public interface IStats {
 	public void setDraconicBonus(double stat);
 	public void setOtherBonus(double stat);
 	
-	public int getStabAccuracy();
-	public int getSlashAccuracy();
-	public int getCrushAccuracy();
-	public int getRangedAccuracy();
-	public int getMagicAccuracy();
+	public void setMeleeAbsorbtion(double stat);
+	public void setRangedAbsorbtion(double stat);
+	public void setMagicAbsorbtion(double stat);
 	
-	public int getStabDefence();
-	public int getSlashDefence();
-	public int getCrushDefence();
-	public int getRangedDefence();
-	public int getMagicDefence();
+	public int getAccuracy(int slot);
+	
+	public int getDefence(int slot);
 	
 	public int getMeleeStrength();
 	public int getRangedStrength();
@@ -47,6 +35,10 @@ public interface IStats {
 	public double getDemonicBonus();
 	public double getDraconicBonus();
 	public double getOtherBonus();
+	
+	public double getMeleeAbsorbtion();
+	public double getRangedAbsorbtion();
+	public double getMagicAbsorbtion();
 	
 	public CompoundNBT serializeNBT();
 	public void deserializeNBT(CompoundNBT data);
