@@ -81,6 +81,10 @@ public class AttackStyleScreen extends Screen{
 		for(int i = 0; i < 6; i++) {
 			if(styleButton[i] != null) {
 				styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
+				
+				if(styleButton[i].isHovered()) {
+					this.renderTooltip(stack, new StringTextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
+				}
 			}
 			if(styleName[i] != null) {
 				drawCenteredString(stack, font, styleName[0], width / 2 - 30, height / 2 - 40, Integer.parseInt("FFFFFF", 16));

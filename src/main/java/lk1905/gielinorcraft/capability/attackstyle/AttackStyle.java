@@ -70,6 +70,16 @@ public class AttackStyle implements IAttackStyle{
 	}
 	
 	@Override
+	public void setStyleDescription(int slot, String description) {
+		description = style[slot].getDescription();
+	}
+	
+	@Override
+	public String getStyleDescription(int slot) {
+		return style[slot].getDescription();
+	}
+	
+	@Override
 	public void setStyleId(int slot, int id) {
 		id = style[slot].getStyleId();
 	}
@@ -95,6 +105,7 @@ public class AttackStyle implements IAttackStyle{
 		
 		for(int i = 0; i < 6; i++) {
 			data.putString("style_name_" + i, getStyleName(i));
+			data.putString("style_descript_" + i, getStyleDescription(i));
 			data.putInt("style_id_" + i, getStyleId(i));
 		}
 		data.putInt("active_style", activeId);
@@ -106,6 +117,7 @@ public class AttackStyle implements IAttackStyle{
 		
 		for(int i = 0; i < 6; i++) {
 			setStyleName(i, data.getString("style_name_" + i));
+			setStyleDescription(i, data.getString("style_descript_" + i));
 			setStyleId(i, data.getInt("style_id_" + i));
 		}
 		setActiveStyle(data.getInt("active_style"));

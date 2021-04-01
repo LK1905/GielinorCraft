@@ -16,6 +16,9 @@ public interface IAttackStyle {
 	void setStyleName(int slot, String name);
 	String getStyleName(int slot);
 	
+	void setStyleDescription(int slot, String description);
+	String getStyleDescription(int slot);
+	
 	void setStyleId(int slot, int id);
 	int getStyleId(int slot);
 	

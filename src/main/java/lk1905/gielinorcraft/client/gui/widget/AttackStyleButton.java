@@ -15,7 +15,7 @@ public class AttackStyleButton extends ImageButton{
 	private static PlayerEntity player = Minecraft.getInstance().player;
 	private static IAttackStyle styleCap = player.getCapability(AttackStyleCapability.STYLE_CAP).orElse(null);
 	
-	private static int height = 0;
+	private static int yTex = 0;
 	
 	public AttackStyleButton(int xIn, int yIn, int widthIn, int heightIn, int xTexStartIn, int yTexStartIn,
 			int yDiffTextIn, ResourceLocation resourceLocationIn, IPressable onPressIn) {
@@ -23,14 +23,14 @@ public class AttackStyleButton extends ImageButton{
 	}
 
 	public AttackStyleButton(int xIn, int yIn, int styleId) {
-		this(xIn, yIn, 56, 20, 137, height, 0 , new ResourceLocation(Gielinorcraft.MODID, "textures/gui/combat.png"), (button) -> {
+		this(xIn, yIn, 56, 20, 137, yTex, 0 , new ResourceLocation(Gielinorcraft.MODID, "textures/gui/combat.png"), (button) -> {
 			PacketHandler.sendToServer(new AttackStyleClientPacket(styleId));
 		});
 		
-		if(styleCap.getAttackStyle(styleId) == styleCap.getActiveStyle()) {
-			height = 23;
+		if(styleCap.getActiveStyleId() == styleId) {
+			yTex = 23;
 		}else {
-			height = 0;
+			yTex = 0;
 		}
 	}
 }

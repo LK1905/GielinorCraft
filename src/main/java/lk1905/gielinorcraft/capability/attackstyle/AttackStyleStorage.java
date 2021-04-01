@@ -16,6 +16,7 @@ public class AttackStyleStorage implements Capability.IStorage<IAttackStyle>{
 		
 		for(int i = 0; i < 6; i++) {
 			data.putString("style_name_" + i, instance.getStyleName(i));
+			data.putString("style_descript_" + i, instance.getStyleDescription(i));
 			data.putInt("style_id_" + i, instance.getStyleId(i));
 		}
 		data.putInt("active_style", instance.getActiveStyleId());
@@ -31,6 +32,7 @@ public class AttackStyleStorage implements Capability.IStorage<IAttackStyle>{
 
 		for(int i = 0; i < 6; i++) {
 			instance.setStyleName(i, data.getString("style_name_" + i));
+			instance.setStyleDescription(i, data.getString("style_descript_" + i));
 			instance.setStyleId(i, data.getInt("style_id_" + i));
 		}
 		instance.setActiveStyle(data.getInt("active_style"));
