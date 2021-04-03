@@ -9,7 +9,6 @@ import lk1905.gielinorcraft.capability.skill.*;
 import lk1905.gielinorcraft.capability.stats.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -31,10 +30,9 @@ public class CapabilityHandler {
 			event.addCapability(SKILLS_CAP, SkillCapability.createProvider(skills));
 			
 			final Stats stats = new Stats();
-			event.addCapability(STATS_CAP, StatCapability.createProvider(stats));	
-		}
-		if(event.getObject() instanceof PlayerEntity) {
-			final AttackStyle style = new AttackStyle((PlayerEntity) event.getObject());
+			event.addCapability(STATS_CAP, StatCapability.createProvider(stats));
+			
+			final AttackStyle style = new AttackStyle((LivingEntity) event.getObject());
 			event.addCapability(ATTACK_STYLE_CAP, AttackStyleCapability.createProvider(style));
 		}
 	}
