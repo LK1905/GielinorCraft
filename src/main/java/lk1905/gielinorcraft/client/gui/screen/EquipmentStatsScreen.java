@@ -48,11 +48,6 @@ public class EquipmentStatsScreen extends Screen{
 		drawString(stack, font, "Ranged: " + stats.getDefence(3), (width / 2) + 20, height - 140, 111111);
 		drawString(stack, font, "Magic: " + stats.getDefence(4), (width / 2) + 20, height - 130, 111111);
 		drawString(stack, font, "Other bonuses", (width / 2) + 20, height - 120, 111111);
-		drawString(stack, font, "Slayer: " + stats.getSlayerBonus() + "%", (width / 2) + 20, height - 110, 111111);
-		drawString(stack, font, "Undead: " + stats.getUndeadBonus() + "%", (width / 2) + 20, height - 100, 111111);
-		drawString(stack, font, "Demonic: " + stats.getDemonicBonus() + "%", (width / 2) + 20, height - 90, 111111);
-		drawString(stack, font, "Draconic: " + stats.getDraconicBonus() + "%", (width / 2) + 20, height - 80, 111111);
-		drawString(stack, font, "Other: " + stats.getOtherBonus() + "%", (width / 2) + 20, height - 70, 111111);
 		
 		super.render(stack, mouseX, mouseY, partialTicks);
 	}

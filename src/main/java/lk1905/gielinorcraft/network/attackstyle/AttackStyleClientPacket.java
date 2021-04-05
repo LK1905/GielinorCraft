@@ -1,8 +1,9 @@
-package lk1905.gielinorcraft.network;
+package lk1905.gielinorcraft.network.attackstyle;
 
 import java.util.function.Supplier;
 
 import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
+import lk1905.gielinorcraft.network.PacketHandler;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;

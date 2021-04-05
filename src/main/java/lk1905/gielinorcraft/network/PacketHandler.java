@@ -2,6 +2,9 @@ package lk1905.gielinorcraft.network;
 
 import java.util.List;
 
+import lk1905.gielinorcraft.network.attackstyle.*;
+import lk1905.gielinorcraft.network.skill.*;
+import lk1905.gielinorcraft.network.stat.*;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -56,6 +59,31 @@ public class PacketHandler {
 				AttackStyleServerPacket::encode,
 				AttackStyleServerPacket::decode,
 				AttackStyleServerPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				AccuracyPacket.class,
+				AccuracyPacket::encode,
+				AccuracyPacket::decode,
+				AccuracyPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				DefencePacket.class,
+				DefencePacket::encode,
+				DefencePacket::decode,
+				DefencePacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				MeleeStrengthPacket.class,
+				MeleeStrengthPacket::encode,
+				MeleeStrengthPacket::decode,
+				MeleeStrengthPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				RangedStrengthPacket.class,
+				RangedStrengthPacket::encode,
+				RangedStrengthPacket::decode,
+				RangedStrengthPacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
+				MagicStrengthPacket.class,
+				MagicStrengthPacket::encode,
+				MagicStrengthPacket::decode,
+				MagicStrengthPacket.Handler::handle);
 	}
 	
 	/**

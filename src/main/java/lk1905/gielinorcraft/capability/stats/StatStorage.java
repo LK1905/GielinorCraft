@@ -21,16 +21,6 @@ public class StatStorage implements Capability.IStorage<IStats>{
 		data.putInt("ranged_strength", instance.getRangedStrength());
 		data.putDouble("magic_strength", instance.getMagicStrength());
 		
-		data.putDouble("slayer", instance.getSlayerBonus());
-		data.putDouble("undead", instance.getUndeadBonus());
-		data.putDouble("demonic", instance.getDemonicBonus());
-		data.putDouble("draconic", instance.getDraconicBonus());
-		data.putDouble("other", instance.getOtherBonus());
-		
-		data.putDouble("melee_absorbtion", instance.getMeleeAbsorbtion());
-		data.putDouble("ranged_absorbtion", instance.getRangedAbsorbtion());
-		data.putDouble("magic_absorbtion", instance.getMagicAbsorbtion());
-		
 		return data;
 	}
 
@@ -50,15 +40,6 @@ public class StatStorage implements Capability.IStorage<IStats>{
 		instance.setRangedStrength(data.getInt("ranged_strength"));
 		instance.setMagicStrength(data.getDouble("magic_strength"));
 		
-		instance.setSlayerBonus(data.getDouble("slayer"));
-		instance.setUndeadBonus(data.getDouble("undead"));
-		instance.setDemonicBonus(data.getDouble("demonic"));
-		instance.setDraconicBonus(data.getDouble("draconic"));
-		instance.setOtherBonus(data.getDouble("other"));
-		
-		instance.setMeleeAbsorbtion(data.getDouble("melee_absorbtion"));
-		instance.setRangedAbsorbtion(data.getDouble("ranged_absorbtion"));
-		instance.setMagicAbsorbtion(data.getDouble("magic_absorbtion"));
 	}
 
 }

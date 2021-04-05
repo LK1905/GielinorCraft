@@ -22,7 +22,7 @@ public class AttackStyleScreen extends Screen{
 	private AttackStyleButton[] styleButton;
 	private String[] styleName;
 	
-	private PlayerEntity player = Minecraft.getInstance().player;
+	private PlayerEntity player = mc.player;
 	private ISkills skillCap = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 	private IAttackStyle styleCap = player.getCapability(AttackStyleCapability.STYLE_CAP).orElse(null);
 	
@@ -83,6 +83,7 @@ public class AttackStyleScreen extends Screen{
 				styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 				
 				if(styleButton[i].isHovered()) {
+					styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 					this.renderTooltip(stack, new StringTextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
 				}
 			}

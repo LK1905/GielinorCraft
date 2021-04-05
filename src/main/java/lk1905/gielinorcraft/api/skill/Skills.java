@@ -6,7 +6,7 @@ import java.util.UUID;
 import lk1905.gielinorcraft.api.events.LevelUpEvent;
 import lk1905.gielinorcraft.api.events.XPGainEvent;
 import lk1905.gielinorcraft.network.PacketHandler;
-import lk1905.gielinorcraft.network.SkillsPacket;
+import lk1905.gielinorcraft.network.skill.SkillsPacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;

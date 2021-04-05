@@ -1,4 +1,4 @@
-package lk1905.gielinorcraft.network;
+package lk1905.gielinorcraft.network.skill;
 
 import java.util.function.Supplier;
 

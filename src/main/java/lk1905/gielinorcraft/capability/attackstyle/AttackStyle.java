@@ -2,8 +2,8 @@ package lk1905.gielinorcraft.capability.attackstyle;
 
 import lk1905.gielinorcraft.api.combat.AttackStyles;
 import lk1905.gielinorcraft.api.combat.IAttackStyles;
-import lk1905.gielinorcraft.network.AttackStyleCapPacket;
 import lk1905.gielinorcraft.network.PacketHandler;
+import lk1905.gielinorcraft.network.attackstyle.AttackStyleCapPacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.AxeItem;

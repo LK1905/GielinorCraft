@@ -1,0 +1,18 @@
+{
+    "result": {
+        "item": "gielinorcraft:iron_dagger"
+    },
+    "pattern": [
+        "i",
+        "s"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "i": {
+            "item": "minecraft:iron_ingot"
+        },
+        "s": {
+            "item": "minecraft:stick"
+        }
+    }
+}
