@@ -83,8 +83,12 @@ public class AttackStyleScreen extends Screen{
 				styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 				
 				if(styleButton[i].isHovered()) {
-					styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 					this.renderTooltip(stack, new StringTextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
+				}
+				
+				if(styleButton[i].mouseClicked(mouseX, mouseY, 0)) {
+					buttons.clear();
+					this.init();
 				}
 			}
 			if(styleName[i] != null) {

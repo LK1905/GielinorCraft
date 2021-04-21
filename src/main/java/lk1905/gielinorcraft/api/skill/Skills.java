@@ -122,7 +122,15 @@ public final class Skills implements ISkills{
 		
 		for(int i = 0; i < 26; i++) {
 			if(!(entity instanceof PlayerEntity)) {
-				this.xp[i] = getXpByLevel(i);
+				if(i == HITPOINTS) {
+					this.xp[HITPOINTS] = getXpByLevel(i);
+					this.staticLevels[HITPOINTS] = 10;
+					this.dynamicLevels[HITPOINTS] = 10;
+				}else {
+					this.xp[i] = getXpByLevel(i);
+					this.staticLevels[i] = 1;
+					this.dynamicLevels[i] = getStaticLevel(i);
+				}
 			}else if(i == HITPOINTS) {
 				this.xp[HITPOINTS] = 1154;
 				this.dynamicLevels[HITPOINTS] = getLevel(HITPOINTS);
@@ -388,13 +396,15 @@ public final class Skills implements ISkills{
 			return;
 		}
 		entity = getEntity();
-		final float newAmount = getStaticLevel(HITPOINTS);
+		final float newAmount;
 		final float oldAmount;
 		
 		if(entity instanceof PlayerEntity) {
 			oldAmount = 20;
+			newAmount = getStaticLevel(HITPOINTS);
 		}else {
 			oldAmount = 0;
+			newAmount = 0;
 		}
 		
 		final UUID MODIFIER_ID = UUID.fromString("d5d0d878-b3c2-469b-ba89-ac01c0635a9c");
