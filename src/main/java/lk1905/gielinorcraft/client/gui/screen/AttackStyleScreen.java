@@ -77,19 +77,17 @@ public class AttackStyleScreen extends Screen{
 		mc.getTextureManager().bindTexture(TEXTURE);
 		this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
 		drawCenteredString(stack, font, "Combat level: " + skillCap.getCombatLevel(), width / 2, (height / 2) - 70, 111111);
+		drawCenteredString(stack, font, "Close and re-open screen for buttons to update", width / 2, (height / 2) + 70, 111111);
 
 		for(int i = 0; i < 6; i++) {
 			if(styleButton[i] != null) {
 				styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 				
-				if(styleButton[i].isHovered()) {
-					this.renderTooltip(stack, new StringTextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
-				}
-				
-				if(styleButton[i].mouseClicked(mouseX, mouseY, 0)) {
-					buttons.clear();
-					this.init();
-				}
+					if(styleButton[i].isHovered()) {
+						this.renderTooltip(stack, new StringTextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
+						buttons.clear();
+						this.init();
+					}
 			}
 			if(styleName[i] != null) {
 				drawCenteredString(stack, font, styleName[0], width / 2 - 30, height / 2 - 40, Integer.parseInt("FFFFFF", 16));
