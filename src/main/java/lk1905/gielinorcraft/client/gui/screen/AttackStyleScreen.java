@@ -77,7 +77,6 @@ public class AttackStyleScreen extends Screen{
 		mc.getTextureManager().bindTexture(TEXTURE);
 		this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
 		drawCenteredString(stack, font, "Combat level: " + skillCap.getCombatLevel(), width / 2, (height / 2) - 70, 111111);
-		drawCenteredString(stack, font, "Close and re-open screen for buttons to update", width / 2, (height / 2) + 70, 111111);
 
 		for(int i = 0; i < 6; i++) {
 			if(styleButton[i] != null) {
