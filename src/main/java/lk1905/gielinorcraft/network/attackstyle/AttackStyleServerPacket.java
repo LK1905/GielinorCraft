@@ -9,7 +9,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class AttackStyleServerPacket {
 
-private final int slot;
+	private final int slot;
 	
 	public AttackStyleServerPacket(int slot) {
 		this.slot = slot;

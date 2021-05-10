@@ -1,11 +1,13 @@
 package lk1905.gielinorcraft.item;
 
+import lk1905.gielinorcraft.Gielinorcraft;
 import lk1905.gielinorcraft.api.combat.AttackStyles;
 import lk1905.gielinorcraft.api.stats.IStats;
 import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
 import lk1905.gielinorcraft.capability.attackstyle.IAttackStyle;
 import lk1905.gielinorcraft.capability.stats.StatCapability;
 import lk1905.gielinorcraft.network.PacketHandler;
+import lk1905.gielinorcraft.network.StringPacket;
 import lk1905.gielinorcraft.network.stat.AccuracyPacket;
 import lk1905.gielinorcraft.network.stat.MeleeStrengthPacket;
 import net.minecraft.entity.LivingEntity;
@@ -14,7 +16,10 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.SwordItem;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(modid = Gielinorcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GcDaggerItem extends SwordItem{
 	
 	private int stab;
@@ -27,8 +32,9 @@ public class GcDaggerItem extends SwordItem{
 		this.slash = slash;
 		this.strength = strength;
 	}
-	//This method does nothing. Will fix another time.
-	/*public void onWield(LivingEquipmentChangeEvent event) {
+
+	@SubscribeEvent
+	public void onWield(LivingEquipmentChangeEvent event) {
 		LivingEntity entity = event.getEntityLiving();
 		IStats stat = entity.getCapability(StatCapability.STAT_CAP).orElse(null);
 		IAttackStyle style = entity.getCapability(AttackStyleCapability.STYLE_CAP).orElse(null);
@@ -48,10 +54,15 @@ public class GcDaggerItem extends SwordItem{
 				PacketHandler.sendTo(new AccuracyPacket(0, stab), (ServerPlayerEntity) entity);
 				PacketHandler.sendTo(new AccuracyPacket(1, slash), (ServerPlayerEntity) entity);
 				PacketHandler.sendTo(new MeleeStrengthPacket(strength), (ServerPlayerEntity) entity);
+				stat.sync((ServerPlayerEntity) entity);
+				style.sync((ServerPlayerEntity) entity);
 			}
 			
 			if(event.getSlot() == EquipmentSlotType.OFFHAND) {
 				event.setCanceled(true);
+				if(entity instanceof ServerPlayerEntity) {
+					PacketHandler.sendTo(new StringPacket("You cannot wield this item in your offhand."), (ServerPlayerEntity) entity);
+				}
 			}
 		}
 		
@@ -70,7 +81,9 @@ public class GcDaggerItem extends SwordItem{
 				PacketHandler.sendTo(new AccuracyPacket(0, -stab), (ServerPlayerEntity) entity);
 				PacketHandler.sendTo(new AccuracyPacket(1, -slash), (ServerPlayerEntity) entity);
 				PacketHandler.sendTo(new MeleeStrengthPacket(-strength), (ServerPlayerEntity) entity);
+				stat.sync((ServerPlayerEntity) entity);
+				style.sync((ServerPlayerEntity) entity);
 			}
 		}
-	}*/
+	}
 }

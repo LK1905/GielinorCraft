@@ -1,20 +1,23 @@
 package lk1905.gielinorcraft.events;
 
 import lk1905.gielinorcraft.Gielinorcraft;
+import lk1905.gielinorcraft.api.events.AttackStyleEvent;
 import lk1905.gielinorcraft.api.events.LevelUpEvent;
 import lk1905.gielinorcraft.api.events.XPGainEvent;
 import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.StringPacket;
+import lk1905.gielinorcraft.network.attackstyle.ChangeStylePacket;
 import lk1905.gielinorcraft.network.skill.LevelUpPacket;
 import lk1905.gielinorcraft.network.skill.XPGainPacket;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**A class for all custom mod events.*/
 @Mod.EventBusSubscriber(modid = Gielinorcraft.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class SkillEventHandler {
+public class GcEventHandler {
 
 	@SubscribeEvent
 	public static void onXPGain(XPGainEvent event) {
@@ -36,6 +39,14 @@ public class SkillEventHandler {
 			if(event.getNewLevel() == 99) {
 				PacketHandler.sendToAllPlayers(new StringPacket(player.getName() + " has reached level 99 in " + cap.getName(event.getSkillId()) + "!"), null);
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onAttackStyleChange(AttackStyleEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			PacketHandler.sendTo(new ChangeStylePacket(event.getSlot(), event.getStyle().getStyleId(),
+					event.getStyle().getName(), event.getStyle().getDescription()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 }

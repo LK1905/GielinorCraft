@@ -70,8 +70,8 @@ public class AttackStyleScreen extends Screen{
 	
 	@Override
 	public void render(final MatrixStack stack, final int mouseX, final int mouseY, final float partialTicks) {
-		super.render(stack, mouseX, mouseY, partialTicks);
 		renderBackground(stack);
+		super.render(stack, mouseX, mouseY, partialTicks);
 		stack.push();
 		stack.scale(1F, 1F, 1F);
 		mc.getTextureManager().bindTexture(TEXTURE);
@@ -82,19 +82,19 @@ public class AttackStyleScreen extends Screen{
 			if(styleButton[i] != null) {
 				styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 				
-					if(styleButton[i].isHovered()) {
-						this.renderTooltip(stack, new StringTextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
-						buttons.clear();
-						this.init();
-					}
+				if(styleButton[i].isHovered()) {
+					this.renderTooltip(stack, new StringTextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
+					buttons.clear();
+					this.init();
+				}
 			}
 			if(styleName[i] != null) {
-				drawCenteredString(stack, font, styleName[0], width / 2 - 30, height / 2 - 40, Integer.parseInt("FFFFFF", 16));
-				drawCenteredString(stack, font, styleName[1], width / 2 + 29, height / 2 - 40, Integer.parseInt("FFFFFF", 16));
-				drawCenteredString(stack, font, styleName[2], width / 2 - 30, height / 2 - 13, Integer.parseInt("FFFFFF", 16));
-				drawCenteredString(stack, font, styleName[3], width / 2 + 29, height / 2 - 13, Integer.parseInt("FFFFFF", 16));
-				drawCenteredString(stack, font, styleName[4], width / 2 - 30, height / 2 + 14, Integer.parseInt("FFFFFF", 16));
-				drawCenteredString(stack, font, styleName[5], width / 2 + 29, height / 2 + 14, Integer.parseInt("FFFFFF", 16));
+				drawCenteredString(stack, font, styleName[0], width / 2 - 30, height / 2 - 40, 0xFFFFFF);
+				drawCenteredString(stack, font, styleName[1], width / 2 + 29, height / 2 - 40, 0xFFFFFF);
+				drawCenteredString(stack, font, styleName[2], width / 2 - 30, height / 2 - 13, 0xFFFFFF);
+				drawCenteredString(stack, font, styleName[3], width / 2 + 29, height / 2 - 13, 0xFFFFFF);
+				drawCenteredString(stack, font, styleName[4], width / 2 - 30, height / 2 + 14, 0xFFFFFF);
+				drawCenteredString(stack, font, styleName[5], width / 2 + 29, height / 2 + 14, 0xFFFFFF);
 			}
 		}
 		stack.pop();

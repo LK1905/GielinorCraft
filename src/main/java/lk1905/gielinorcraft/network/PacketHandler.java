@@ -60,6 +60,11 @@ public class PacketHandler {
 				AttackStyleServerPacket::decode,
 				AttackStyleServerPacket.Handler::handle);
 		HANDLER.registerMessage(disc++,
+				ChangeStylePacket.class,
+				ChangeStylePacket::encode,
+				ChangeStylePacket::decode,
+				ChangeStylePacket.Handler::handle);
+		HANDLER.registerMessage(disc++,
 				AccuracyPacket.class,
 				AccuracyPacket::encode,
 				AccuracyPacket::decode,

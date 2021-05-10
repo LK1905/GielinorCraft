@@ -2,6 +2,7 @@ package lk1905.gielinorcraft.capability.attackstyle;
 
 import lk1905.gielinorcraft.api.combat.AttackStyles;
 import lk1905.gielinorcraft.api.combat.IAttackStyles;
+import lk1905.gielinorcraft.api.events.AttackStyleEvent;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.attackstyle.AttackStyleCapPacket;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +16,7 @@ import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.MinecraftForge;
 
 public class AttackStyle implements IAttackStyle{
 
@@ -99,7 +101,7 @@ public class AttackStyle implements IAttackStyle{
 	@Override
 	public void setAttackStyle(int slot, IAttackStyles style) {
 		this.style[slot] = style;
-		
+		MinecraftForge.EVENT_BUS.post(new AttackStyleEvent(entity, slot, style));
 	}
 
 	@Override
