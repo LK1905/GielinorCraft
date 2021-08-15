@@ -1,9 +1,12 @@
 package lk1905.gielinorcraft.api.stats;
 
+import lk1905.gielinorcraft.api.events.stats.*;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.stat.StatsPacket;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.MinecraftForge;
 
 public class Stats implements IStats{
 
@@ -15,6 +18,12 @@ public class Stats implements IStats{
 	private int MELEE_STRENGTH = 0;
 	private int RANGED_STRENGTH = 0;
 	private double MAGIC_STRENGTH = 0;
+	
+	private LivingEntity entity;
+	
+	public Stats(LivingEntity entity) {
+		this.entity = entity;
+	}
 	
 	@Override
 	public void setAccuracy(int slot, int stat) {
@@ -98,5 +107,55 @@ public class Stats implements IStats{
 	@Override
 	public void sync(ServerPlayerEntity player) {
 		PacketHandler.sendTo(new StatsPacket(serializeNBT()), player);
+	}
+
+	@Override
+	public void addAccuracy(int slot, int value) {
+		MinecraftForge.EVENT_BUS.post(new AccuracyEvent(slot, value, this.entity));
+	}
+
+	@Override
+	public void removeAccuracy(int slot, int value) {
+		addAccuracy(slot, -value);
+	}
+	
+	@Override
+	public void addDefence(int slot, int value) {
+		MinecraftForge.EVENT_BUS.post(new DefenceEvent(slot, value, this.entity));
+	}
+
+	@Override
+	public void removeDefence(int slot, int value) {
+		addAccuracy(slot, -value);
+	}
+
+	@Override
+	public void addMeleeStrength(int value) {
+		MinecraftForge.EVENT_BUS.post(new MeleeEvent(value, this.entity));
+	}
+
+	@Override
+	public void removeMeleeStrength(int value) {
+		addMeleeStrength(-value);
+	}
+
+	@Override
+	public void addRangedStrength(int value) {
+		MinecraftForge.EVENT_BUS.post(new RangedEvent(value, this.entity));
+	}
+
+	@Override
+	public void removeRangedStrength(int value) {
+		addRangedStrength(-value);
+	}
+
+	@Override
+	public void addMagicStrength(double value) {
+		MinecraftForge.EVENT_BUS.post(new MagicEvent(value, this.entity));
+	}
+
+	@Override
+	public void removeMagicStrength(double value) {
+		addMagicStrength(-value);
 	}
 }

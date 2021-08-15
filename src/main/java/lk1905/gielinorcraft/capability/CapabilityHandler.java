@@ -29,7 +29,7 @@ public class CapabilityHandler {
 			final Skills skills = new Skills((LivingEntity) event.getObject());
 			event.addCapability(SKILLS_CAP, SkillCapability.createProvider(skills));
 			
-			final Stats stats = new Stats();
+			final Stats stats = new Stats((LivingEntity) event.getObject());
 			event.addCapability(STATS_CAP, StatCapability.createProvider(stats));
 			
 			final AttackStyle style = new AttackStyle((LivingEntity) event.getObject());
@@ -39,7 +39,7 @@ public class CapabilityHandler {
 	
 	public static void register() {
 		CapabilityManager.INSTANCE.register(ISkills.class, new SkillStorage(), () -> new Skills(null));
-		CapabilityManager.INSTANCE.register(IStats.class, new StatStorage(), () -> new Stats());
+		CapabilityManager.INSTANCE.register(IStats.class, new StatStorage(), () -> new Stats(null));
 		CapabilityManager.INSTANCE.register(IAttackStyle.class, new AttackStyleStorage(), () -> new AttackStyle(null));
 	}
 }

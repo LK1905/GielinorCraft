@@ -1,9 +1,8 @@
 package lk1905.gielinorcraft.events;
 
 import lk1905.gielinorcraft.Gielinorcraft;
-import lk1905.gielinorcraft.api.events.AttackStyleEvent;
-import lk1905.gielinorcraft.api.events.LevelUpEvent;
-import lk1905.gielinorcraft.api.events.XPGainEvent;
+import lk1905.gielinorcraft.api.events.*;
+import lk1905.gielinorcraft.api.events.stats.*;
 import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import lk1905.gielinorcraft.network.PacketHandler;
@@ -11,6 +10,7 @@ import lk1905.gielinorcraft.network.StringPacket;
 import lk1905.gielinorcraft.network.attackstyle.ChangeStylePacket;
 import lk1905.gielinorcraft.network.skill.LevelUpPacket;
 import lk1905.gielinorcraft.network.skill.XPGainPacket;
+import lk1905.gielinorcraft.network.stat.*;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -47,6 +47,41 @@ public class GcEventHandler {
 		if(!event.getEntity().world.isRemote) {
 			PacketHandler.sendTo(new ChangeStylePacket(event.getSlot(), event.getStyle().getStyleId(),
 					event.getStyle().getName(), event.getStyle().getDescription()), (ServerPlayerEntity) event.getEntity());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onAccuracyChange(AccuracyEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			PacketHandler.sendTo(new AccuracyPacket(event.getSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onDefenceChange(DefenceEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			PacketHandler.sendTo(new DefencePacket(event.getSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onMeleeStrengthChange(MeleeEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			PacketHandler.sendTo(new MeleeStrengthPacket(event.getStat()), (ServerPlayerEntity) event.getEntity());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onRangedStrengthChange(RangedEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			PacketHandler.sendTo(new RangedStrengthPacket(event.getStat()), (ServerPlayerEntity) event.getEntity());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onMagicStrengthChange(MagicEvent event) {
+		if(!event.getEntity().world.isRemote) {
+			PacketHandler.sendTo(new MagicStrengthPacket(event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 }
