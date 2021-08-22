@@ -102,24 +102,12 @@ public class AttackStyle implements IAttackStyle{
 	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT data = new CompoundNBT();
-		
-		for(int i = 0; i < 6; i++) {
-			data.putString("style_name_" + i, getStyleName(i));
-			data.putString("style_descript_" + i, getStyleDescription(i));
-			data.putInt("style_id_" + i, getStyleId(i));
-		}
 		data.putInt("active_style", activeId);
 		return data;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundNBT data) {
-		
-		for(int i = 0; i < 6; i++) {
-			setStyleName(i, data.getString("style_name_" + i));
-			setStyleDescription(i, data.getString("style_descript_" + i));
-			setStyleId(i, data.getInt("style_id_" + i));
-		}
 		setActiveStyle(data.getInt("active_style"));
 	}
 
