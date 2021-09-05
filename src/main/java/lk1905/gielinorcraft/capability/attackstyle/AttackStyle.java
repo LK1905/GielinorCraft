@@ -5,6 +5,7 @@ import lk1905.gielinorcraft.api.combat.IAttackStyles;
 import lk1905.gielinorcraft.api.events.AttackStyleEvent;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.attackstyle.AttackStyleCapPacket;
+import lk1905.gielinorcraft.network.attackstyle.AttackStyleServerPacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,7 +14,6 @@ import net.minecraftforge.common.MinecraftForge;
 public class AttackStyle implements IAttackStyle{
 
 	private final IAttackStyles[] style;
-	private IAttackStyles activeStyle;
 	private final LivingEntity entity;
 	private int activeId;
 	
@@ -28,10 +28,10 @@ public class AttackStyle implements IAttackStyle{
 		style[4] = AttackStyles.EMPTY;
 		style[5] = AttackStyles.EMPTY;
 		
-		setActiveStyle(0);
+		setActiveSlot(0);
 			
-		if(activeStyle == AttackStyles.EMPTY) {
-			setActiveStyle(0);
+		if(style[activeId] == AttackStyles.EMPTY) {
+			setActiveSlot(0);
 		}
 	}
 	
@@ -49,14 +49,13 @@ public class AttackStyle implements IAttackStyle{
 	}
 
 	@Override
-	public void setActiveStyle(int slot) {
-		activeStyle = style[slot];
+	public void setActiveSlot(int slot) {
 		activeId = slot;	
 	}
 
 	@Override
 	public IAttackStyles getActiveStyle() {
-		return activeStyle;
+		return style[activeId];
 	}
 	
 	@Override
@@ -90,7 +89,7 @@ public class AttackStyle implements IAttackStyle{
 	}
 	
 	@Override
-	public int getActiveStyleId() {
+	public int getActiveSlot() {
 		return activeId;
 	}
 
@@ -108,13 +107,14 @@ public class AttackStyle implements IAttackStyle{
 
 	@Override
 	public void deserializeNBT(CompoundNBT data) {
-		setActiveStyle(data.getInt("active_style"));
+		setActiveSlot(data.getInt("active_style"));
 	}
 
 	@Override
 	public void sync(ServerPlayerEntity player) {
 		if(entity instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new AttackStyleCapPacket(serializeNBT()), player);
+			PacketHandler.sendTo(new AttackStyleServerPacket(activeId), player);
 		}
 	}
 }

@@ -30,7 +30,7 @@ public class AttackStyleClientPacket {
 				
 				ServerPlayerEntity player = ctx.get().getSender();
 				
-				player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(cap -> cap.setActiveStyle(msg.slot));
+				player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(cap -> cap.setActiveSlot(msg.slot));
 				PacketHandler.sendTo(new AttackStyleServerPacket(msg.slot), player);
 			});
 			ctx.get().setPacketHandled(true);

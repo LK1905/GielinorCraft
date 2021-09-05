@@ -10,7 +10,7 @@ public interface IAttackStyle {
 	void setAttackStyle(int slot, IAttackStyles style);
 	IAttackStyles getAttackStyle(int slot);
 	
-	void setActiveStyle(int style);
+	void setActiveSlot(int slot);
 	IAttackStyles getActiveStyle();
 	
 	void setStyleName(int slot, String name);
@@ -22,7 +22,7 @@ public interface IAttackStyle {
 	void setStyleId(int slot, int id);
 	int getStyleId(int slot);
 	
-	int getActiveStyleId();
+	int getActiveSlot();
 	
 	LivingEntity getEntity();
 	

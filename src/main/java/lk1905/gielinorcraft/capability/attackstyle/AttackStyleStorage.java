@@ -14,7 +14,7 @@ public class AttackStyleStorage implements Capability.IStorage<IAttackStyle>{
 	public INBT writeNBT(Capability<IAttackStyle> capability, IAttackStyle instance, Direction side) {
 		CompoundNBT data = new CompoundNBT();
 		
-		data.putInt("active_style", instance.getActiveStyleId());
+		data.putInt("active_style", instance.getActiveSlot());
 		return data;
 	}
 
@@ -25,6 +25,6 @@ public class AttackStyleStorage implements Capability.IStorage<IAttackStyle>{
 		}
 		CompoundNBT data = (CompoundNBT) nbt;
 
-		instance.setActiveStyle(data.getInt("active_style"));
+		instance.setActiveSlot(data.getInt("active_style"));
 	}
 }

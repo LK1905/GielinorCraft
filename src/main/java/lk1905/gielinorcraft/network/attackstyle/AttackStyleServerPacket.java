@@ -29,7 +29,7 @@ public class AttackStyleServerPacket {
 				
 				Minecraft mc = Minecraft.getInstance();
 				
-				mc.player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(cap -> cap.setActiveStyle(msg.slot));
+				mc.player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(cap -> cap.setActiveSlot(msg.slot));
 			});
 			ctx.get().setPacketHandled(true);
 		}

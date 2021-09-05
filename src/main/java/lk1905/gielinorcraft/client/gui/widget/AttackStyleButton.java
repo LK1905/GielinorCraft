@@ -17,7 +17,7 @@ public class AttackStyleButton extends ImageButton{
 		PlayerEntity player =  mc.player;
 		IAttackStyle styleCap = player.getCapability(AttackStyleCapability.STYLE_CAP).orElse(null);
 		
-		if(styleCap.getActiveStyleId() == slotId) {
+		if(styleCap.getActiveSlot() == slotId) {
 			return 23;
 		}else {
 			return 0;

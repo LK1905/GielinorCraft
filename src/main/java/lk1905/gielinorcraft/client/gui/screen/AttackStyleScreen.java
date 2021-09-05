@@ -47,7 +47,7 @@ public class AttackStyleScreen extends Screen{
 	public void init() {
 		guiLeft = (width - xSize) / 2;
 		guiTop = (height - ySize) / 2;
-		
+		this.clear();
 		for(int i = 0; i < 6; i++) {
 			if(styleCap.getAttackStyle(i) == AttackStyles.EMPTY) {
 				styleButton[i] = null;
@@ -62,9 +62,16 @@ public class AttackStyleScreen extends Screen{
 				
 				styleName[i] = styleCap.getStyleName(i);
 			}
-			if(styleButton[i] != null) {
+			if(styleButton[i] != null) {			
 				this.addButton(styleButton[i]);
 			}
+		}
+	}
+	
+	private void clear() {
+		for(int i = 0; i < 6; i++) {
+			styleButton[i] = null;
+			styleName[i] = null;
 		}
 	}
 	
