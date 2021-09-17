@@ -10,26 +10,20 @@ import net.minecraftforge.fml.network.NetworkEvent;
 public class ChangeStylePacket {
 
 	private final int slot;
-	private final int id;
-	private final String name;
-	private final String descript;
+	private final int style;
 	
-	public ChangeStylePacket(int slot, int id, String name, String descript) {
+	public ChangeStylePacket(int slot, int style) {
 		this.slot = slot;
-		this.id = id;
-		this.name = name;
-		this.descript = descript;
+		this.style = style;
 	}
 	
 	public static void encode(ChangeStylePacket msg, PacketBuffer buf) {
 		buf.writeInt(msg.slot);
-		buf.writeInt(msg.id);
-		buf.writeString(msg.name);
-		buf.writeString(msg.descript);
+		buf.writeInt(msg.style);
 	}
 	
 	public static ChangeStylePacket decode(PacketBuffer buf) {
-		return new ChangeStylePacket(buf.readInt(), buf.readInt(), buf.readString(), buf.readString());
+		return new ChangeStylePacket(buf.readInt(), buf.readInt());
 	}
 	
 	public static class Handler{
@@ -39,9 +33,7 @@ public class ChangeStylePacket {
 				Minecraft mc = Minecraft.getInstance();
 				
 				mc.player.getCapability(AttackStyleCapability.STYLE_CAP).ifPresent(cap -> {
-					cap.setStyleId(msg.slot, msg.id);
-					cap.setStyleName(msg.slot, msg.name);
-					cap.setStyleDescription(msg.slot, msg.descript);
+					cap.setAttackStyle(msg.slot, msg.style);
 				});
 			});
 			ctx.get().setPacketHandled(true);

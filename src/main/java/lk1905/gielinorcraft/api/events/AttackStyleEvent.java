@@ -2,7 +2,6 @@ package lk1905.gielinorcraft.api.events;
 
 import javax.annotation.Nonnull;
 
-import lk1905.gielinorcraft.api.combat.IAttackStyles;
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -10,9 +9,9 @@ public class AttackStyleEvent extends Event{
 
 	private final LivingEntity entity;
 	private final int slot;
-	private final IAttackStyles style;
+	private final int style;
 	
-	public AttackStyleEvent(LivingEntity entity, int slot, IAttackStyles style) {
+	public AttackStyleEvent(LivingEntity entity, int slot, int style) {
 		this.entity = entity;
 		this.slot = slot;
 		this.style = style;
@@ -28,7 +27,7 @@ public class AttackStyleEvent extends Event{
 		return slot;
 	}
 	
-	public IAttackStyles getStyle() {
+	public int getStyle() {
 		return style;
 	}
 }

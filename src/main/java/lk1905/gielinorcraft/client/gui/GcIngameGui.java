@@ -15,6 +15,6 @@ public class GcIngameGui extends AbstractGui{
 	private IAttackStyle styleCap = player.getCapability(AttackStyleCapability.STYLE_CAP).orElseThrow(() -> new NullPointerException("Could not find capability."));
 	
 	public GcIngameGui(Minecraft mc, MatrixStack stack) {
-		drawString(stack, mc.fontRenderer, styleCap.getActiveStyle().getName(), 250, 195, 111111);
+		drawString(stack, mc.fontRenderer, styleCap.getStyleName(styleCap.getActiveSlot()), 250, 195, 111111);
 	}
 }

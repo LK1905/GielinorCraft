@@ -1,7 +1,7 @@
 package lk1905.gielinorcraft.events;
 
 import lk1905.gielinorcraft.Gielinorcraft;
-import lk1905.gielinorcraft.api.combat.AttackStyles;
+import lk1905.gielinorcraft.capability.attackstyle.AttackStyle;
 import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
 import lk1905.gielinorcraft.capability.attackstyle.IAttackStyle;
 import lk1905.gielinorcraft.network.PacketHandler;
@@ -44,73 +44,67 @@ public class EquipmentEventHandler {
 		
 		if(event.getSlot() == EquipmentSlotType.MAINHAND && entity.getHeldItemMainhand().getItem() == to) {
 			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
-				for(int i = 0; i < 6; i++) {
-					PacketHandler.sendTo(new StringPacket("Attack Style: "
-							+ style.getStyleName(i) + ", " + style.getStyleDescription(i)), (ServerPlayerEntity) entity);
-				}
-				PacketHandler.sendTo(new StringPacket("Active Style: " + style.getActiveStyle().getName()
-						+ ", " + style.getActiveStyle().getDescription()), (ServerPlayerEntity) entity);
 				style.sync((ServerPlayerEntity) entity);
 			}
 			if(entity.getHeldItemMainhand().getItem() instanceof SwordItem) {
-				style.setAttackStyle(0, AttackStyles.ACCURATE_STAB);
-				style.setAttackStyle(1, AttackStyles.AGGRESSIVE_STAB);
-				style.setAttackStyle(2, AttackStyles.AGGRESSIVE_SLASH);
-				style.setAttackStyle(3, AttackStyles.DEFENSIVE_STAB);
-				style.setAttackStyle(4, AttackStyles.EMPTY);
-				style.setAttackStyle(5, AttackStyles.EMPTY);							
+				style.setAttackStyle(0, AttackStyle.ACCURATE_STAB);
+				style.setAttackStyle(1, AttackStyle.AGGRESSIVE_STAB);
+				style.setAttackStyle(2, AttackStyle.AGGRESSIVE_SLASH);
+				style.setAttackStyle(3, AttackStyle.DEFENSIVE_STAB);
+				style.setAttackStyle(4, AttackStyle.EMPTY);
+				style.setAttackStyle(5, AttackStyle.EMPTY);							
 			}else if(entity.getHeldItemMainhand().getItem() instanceof AxeItem) {
-				style.setAttackStyle(0, AttackStyles.ACCURATE_SLASH);
-				style.setAttackStyle(1, AttackStyles.AGGRESSIVE_SLASH);
-				style.setAttackStyle(2, AttackStyles.AGGRESSIVE_CRUSH);
-				style.setAttackStyle(3, AttackStyles.DEFENSIVE_SLASH);
-				style.setAttackStyle(4, AttackStyles.EMPTY);
-				style.setAttackStyle(5, AttackStyles.EMPTY);
+				style.setAttackStyle(0, AttackStyle.ACCURATE_SLASH);
+				style.setAttackStyle(1, AttackStyle.AGGRESSIVE_SLASH);
+				style.setAttackStyle(2, AttackStyle.AGGRESSIVE_CRUSH);
+				style.setAttackStyle(3, AttackStyle.DEFENSIVE_SLASH);
+				style.setAttackStyle(4, AttackStyle.EMPTY);
+				style.setAttackStyle(5, AttackStyle.EMPTY);
 			}else if(entity.getHeldItemMainhand().getItem() instanceof PickaxeItem) {
-				style.setAttackStyle(0, AttackStyles.ACCURATE_STAB);
-				style.setAttackStyle(1, AttackStyles.AGGRESSIVE_STAB);
-				style.setAttackStyle(2, AttackStyles.AGGRESSIVE_CRUSH);
-				style.setAttackStyle(3, AttackStyles.DEFENSIVE_STAB);
-				style.setAttackStyle(4, AttackStyles.EMPTY);
-				style.setAttackStyle(5, AttackStyles.EMPTY);
+				style.setAttackStyle(0, AttackStyle.ACCURATE_STAB);
+				style.setAttackStyle(1, AttackStyle.AGGRESSIVE_STAB);
+				style.setAttackStyle(2, AttackStyle.AGGRESSIVE_CRUSH);
+				style.setAttackStyle(3, AttackStyle.DEFENSIVE_STAB);
+				style.setAttackStyle(4, AttackStyle.EMPTY);
+				style.setAttackStyle(5, AttackStyle.EMPTY);
 			}else if(entity.getHeldItemMainhand().getItem() instanceof ShovelItem) {
-				style.setAttackStyle(0, AttackStyles.ACCURATE_CRUSH);
-				style.setAttackStyle(1, AttackStyles.AGGRESSIVE_CRUSH);
-				style.setAttackStyle(2, AttackStyles.AGGRESSIVE_SLASH);
-				style.setAttackStyle(3, AttackStyles.DEFENSIVE_CRUSH);
-				style.setAttackStyle(4, AttackStyles.EMPTY);
-				style.setAttackStyle(5, AttackStyles.EMPTY);
+				style.setAttackStyle(0, AttackStyle.ACCURATE_CRUSH);
+				style.setAttackStyle(1, AttackStyle.AGGRESSIVE_CRUSH);
+				style.setAttackStyle(2, AttackStyle.AGGRESSIVE_SLASH);
+				style.setAttackStyle(3, AttackStyle.DEFENSIVE_CRUSH);
+				style.setAttackStyle(4, AttackStyle.EMPTY);
+				style.setAttackStyle(5, AttackStyle.EMPTY);
 			}else if(entity.getHeldItemMainhand().getItem() instanceof HoeItem) {
-				style.setAttackStyle(0, AttackStyles.ACCURATE_SLASH);
-				style.setAttackStyle(1, AttackStyles.AGGRESSIVE_SLASH);
-				style.setAttackStyle(2, AttackStyles.AGGRESSIVE_STAB);
-				style.setAttackStyle(3, AttackStyles.DEFENSIVE_SLASH);
-				style.setAttackStyle(4, AttackStyles.EMPTY);
-				style.setAttackStyle(5, AttackStyles.EMPTY);
+				style.setAttackStyle(0, AttackStyle.ACCURATE_SLASH);
+				style.setAttackStyle(1, AttackStyle.AGGRESSIVE_SLASH);
+				style.setAttackStyle(2, AttackStyle.AGGRESSIVE_STAB);
+				style.setAttackStyle(3, AttackStyle.DEFENSIVE_SLASH);
+				style.setAttackStyle(4, AttackStyle.EMPTY);
+				style.setAttackStyle(5, AttackStyle.EMPTY);
 			}else if(entity.getHeldItemMainhand().getItem() instanceof BowItem || entity.getHeldItemMainhand().getItem() instanceof CrossbowItem) {
-				style.setAttackStyle(0, AttackStyles.RANGED_ACCURATE);
-				style.setAttackStyle(1, AttackStyles.RANGED_RAPID);
-				style.setAttackStyle(2, AttackStyles.RANGED_LONG);
-				style.setAttackStyle(3, AttackStyles.EMPTY);
-				style.setAttackStyle(4, AttackStyles.EMPTY);
-				style.setAttackStyle(5, AttackStyles.EMPTY);
+				style.setAttackStyle(0, AttackStyle.RANGED_ACCURATE);
+				style.setAttackStyle(1, AttackStyle.RANGED_RAPID);
+				style.setAttackStyle(2, AttackStyle.RANGED_LONG);
+				style.setAttackStyle(3, AttackStyle.EMPTY);
+				style.setAttackStyle(4, AttackStyle.EMPTY);
+				style.setAttackStyle(5, AttackStyle.EMPTY);
 			}else {
-				style.setAttackStyle(0, AttackStyles.ACCURATE_CRUSH);
-				style.setAttackStyle(1, AttackStyles.AGGRESSIVE_CRUSH);
-				style.setAttackStyle(2, AttackStyles.DEFENSIVE_CRUSH);
-				style.setAttackStyle(3, AttackStyles.EMPTY);
-				style.setAttackStyle(4, AttackStyles.EMPTY);
-				style.setAttackStyle(5, AttackStyles.EMPTY);
+				style.setAttackStyle(0, AttackStyle.ACCURATE_CRUSH);
+				style.setAttackStyle(1, AttackStyle.AGGRESSIVE_CRUSH);
+				style.setAttackStyle(2, AttackStyle.DEFENSIVE_CRUSH);
+				style.setAttackStyle(3, AttackStyle.EMPTY);
+				style.setAttackStyle(4, AttackStyle.EMPTY);
+				style.setAttackStyle(5, AttackStyle.EMPTY);
 			}
 		}
 		
 		if(from instanceof TieredItem && !(to instanceof TieredItem)) {
-			style.setAttackStyle(0, AttackStyles.ACCURATE_CRUSH);
-			style.setAttackStyle(1, AttackStyles.AGGRESSIVE_CRUSH);
-			style.setAttackStyle(2, AttackStyles.DEFENSIVE_CRUSH);
-			style.setAttackStyle(3, AttackStyles.EMPTY);
-			style.setAttackStyle(4, AttackStyles.EMPTY);
-			style.setAttackStyle(5, AttackStyles.EMPTY);		
+			style.setAttackStyle(0, AttackStyle.ACCURATE_CRUSH);
+			style.setAttackStyle(1, AttackStyle.AGGRESSIVE_CRUSH);
+			style.setAttackStyle(2, AttackStyle.DEFENSIVE_CRUSH);
+			style.setAttackStyle(3, AttackStyle.EMPTY);
+			style.setAttackStyle(4, AttackStyle.EMPTY);
+			style.setAttackStyle(5, AttackStyle.EMPTY);		
 			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
 				style.sync((ServerPlayerEntity) entity);
 				PacketHandler.sendTo(new StringPacket("Weapon is no longer being wielded."), (ServerPlayerEntity) entity);

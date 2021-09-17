@@ -1,8 +1,6 @@
 package lk1905.gielinorcraft.events;
 
 import lk1905.gielinorcraft.Gielinorcraft;
-import lk1905.gielinorcraft.api.combat.AttackStyles;
-import lk1905.gielinorcraft.api.combat.IAttackStyles;
 import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
 import lk1905.gielinorcraft.capability.attackstyle.IAttackStyle;
@@ -12,7 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 public class XPEventHandler {
 
 	@SubscribeEvent
-	public static void entityHurt(LivingHurtEvent event) {
+	public static void entityDamage(LivingDamageEvent event) {
 		if(!(event.getSource().getTrueSource() instanceof PlayerEntity)) {
 			return;
 		}
@@ -29,40 +27,40 @@ public class XPEventHandler {
 		PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		IAttackStyle style = player.getCapability(AttackStyleCapability.STYLE_CAP).orElse(null);
-		IAttackStyles activeStyle = style.getActiveStyle();
+		int activeStyle = style.getActiveStyle();
 		
-		if(activeStyle == AttackStyles.ACCURATE_STAB || activeStyle == AttackStyles.ACCURATE_SLASH || activeStyle == AttackStyles.ACCURATE_CRUSH) {
+		if(activeStyle == 1 || activeStyle == 2 || activeStyle == 3) {
 			skills.addXp(0, event.getAmount() * 4);
 			skills.addXp(3, event.getAmount() * (1 + 1/3));
 			skills.sync((ServerPlayerEntity) player);
-		}else if(activeStyle == AttackStyles.AGGRESSIVE_STAB || activeStyle == AttackStyles.AGGRESSIVE_SLASH || activeStyle == AttackStyles.AGGRESSIVE_CRUSH) {
+		}else if(activeStyle == 4 || activeStyle == 5 || activeStyle == 6) {
 			skills.addXp(2, event.getAmount() * 4);
 			skills.addXp(3, event.getAmount() * (1 + 1/3));
 			skills.sync((ServerPlayerEntity) player);
-		}else if(activeStyle == AttackStyles.CONTROLLED_STAB || activeStyle == AttackStyles.CONTROLLED_SLASH || activeStyle == AttackStyles.CONTROLLED_CRUSH) {
+		}else if(activeStyle == 7 || activeStyle == 8 || activeStyle == 9) {
 			skills.addXp(0, event.getAmount() * (1 + 1/3));
 			skills.addXp(1, event.getAmount() * (1 + 1/3));
 			skills.addXp(2, event.getAmount() * (1 + 1/3));
 			skills.addXp(3, event.getAmount() * (1 + 1/3));
 			skills.sync((ServerPlayerEntity) player);
-		}else if(activeStyle == AttackStyles.DEFENSIVE_STAB || activeStyle == AttackStyles.DEFENSIVE_SLASH || activeStyle == AttackStyles.DEFENSIVE_CRUSH) {
+		}else if(activeStyle == 10 || activeStyle == 11 || activeStyle == 12) {
 			skills.addXp(1, event.getAmount() * 4);
 			skills.addXp(3, event.getAmount() * (1 + 1/3));
 			skills.sync((ServerPlayerEntity) player);
-		}else if(activeStyle == AttackStyles.RANGED_ACCURATE || activeStyle == AttackStyles.RANGED_RAPID) {
+		}else if(activeStyle == 13 || activeStyle == 14) {
 			skills.addXp(4, event.getAmount() * 4);
 			skills.addXp(3, event.getAmount() * (1 + 1/3));
 			skills.sync((ServerPlayerEntity) player);
-		}else if(activeStyle == AttackStyles.RANGED_LONG) {
+		}else if(activeStyle == 15) {
 			skills.addXp(1, event.getAmount() * 2);
 			skills.addXp(4, event.getAmount() * 2);
 			skills.addXp(3, event.getAmount() * (1 + 1/3));
 			skills.sync((ServerPlayerEntity) player);
-		}else if(activeStyle == AttackStyles.SPELL_CAST) {
+		}else if(activeStyle == 16) {
 			skills.addXp(6, event.getAmount() * 4);
 			skills.addXp(3, event.getAmount() * (1 + 1/3));
 			skills.sync((ServerPlayerEntity) player);
-		}else if(activeStyle == AttackStyles.SPELL_DEFENSIVE) {
+		}else if(activeStyle == 17) {
 			skills.addXp(1, event.getAmount() * 2);
 			skills.addXp(6, event.getAmount() * 2);
 			skills.addXp(3, event.getAmount() * (1 + 1/3));

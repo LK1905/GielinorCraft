@@ -45,8 +45,7 @@ public class GcEventHandler {
 	@SubscribeEvent
 	public static void onAttackStyleChange(AttackStyleEvent event) {
 		if(!event.getEntity().world.isRemote) {
-			PacketHandler.sendTo(new ChangeStylePacket(event.getSlot(), event.getStyle().getStyleId(),
-					event.getStyle().getName(), event.getStyle().getDescription()), (ServerPlayerEntity) event.getEntity());
+			PacketHandler.sendTo(new ChangeStylePacket(event.getSlot(), event.getStyle()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	

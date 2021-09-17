@@ -3,8 +3,8 @@ package lk1905.gielinorcraft.client.gui.screen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import lk1905.gielinorcraft.Gielinorcraft;
-import lk1905.gielinorcraft.api.combat.AttackStyles;
 import lk1905.gielinorcraft.api.skill.ISkills;
+import lk1905.gielinorcraft.capability.attackstyle.AttackStyle;
 import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
 import lk1905.gielinorcraft.capability.attackstyle.IAttackStyle;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
@@ -49,7 +49,7 @@ public class AttackStyleScreen extends Screen{
 		guiTop = (height - ySize) / 2;
 		this.clear();
 		for(int i = 0; i < 6; i++) {
-			if(styleCap.getAttackStyle(i) == AttackStyles.EMPTY) {
+			if(styleCap.getAttackStyle(i) == AttackStyle.EMPTY) {
 				styleButton[i] = null;
 				styleName[i] = null;
 			}else {

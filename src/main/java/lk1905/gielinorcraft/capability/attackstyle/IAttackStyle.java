@@ -1,26 +1,20 @@
 package lk1905.gielinorcraft.capability.attackstyle;
 
-import lk1905.gielinorcraft.api.combat.IAttackStyles;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 
 public interface IAttackStyle {
 
-	void setAttackStyle(int slot, IAttackStyles style);
-	IAttackStyles getAttackStyle(int slot);
+	void setAttackStyle(int slot, int style);
+	int getAttackStyle(int slot);
 	
 	void setActiveSlot(int slot);
-	IAttackStyles getActiveStyle();
+	int getActiveStyle();
 	
-	void setStyleName(int slot, String name);
 	String getStyleName(int slot);
 	
-	void setStyleDescription(int slot, String description);
 	String getStyleDescription(int slot);
-	
-	void setStyleId(int slot, int id);
-	int getStyleId(int slot);
 	
 	int getActiveSlot();
 	
