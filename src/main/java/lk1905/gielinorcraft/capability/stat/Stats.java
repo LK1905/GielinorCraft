@@ -23,7 +23,7 @@ public class Stats implements IStats{
 	private final int[] ranged;
 	private final double[] magic;
 	
-	private LivingEntity entity;
+	private final LivingEntity entity;
 	
 	public Stats(LivingEntity entity) {
 		this.entity = entity;
@@ -32,35 +32,48 @@ public class Stats implements IStats{
 		this.melee = new int[7];
 		this.ranged = new int[7];
 		this.magic = new double[7];
+		
+		for(int i = 0; i < 7; i++) {
+			for(int j = 0; j < 5; j++) {
+				accuracy[i][j] = 0;
+				defence[i][j] = 0;
+			}
+			melee[i] = 0;
+			ranged[i] = 0;
+			magic[i] = 0.0;
+		}
 	}
 
 	@Override
 	public CompoundNBT serializeNBT() {
 		CompoundNBT data = new CompoundNBT();
 		
-		for(int i = 0; i < 5; i++) {
-			data.putInt("accuracy_" + i, accuracy[0][i]);
-			data.putInt("defence_" + i, defence[0][i]);
+		for(int i = 0; i < 7; i++) {
+			for(int j = 0; j < 5; j++) {
+				data.putInt("accuracy_" + i + "_" + j, accuracy[i][j]);
+				data.putInt("defence_" + i + "_" + j, defence[i][j]);
+			}
+		
+			data.putInt("melee_strength_" + i, melee[i]);
+			data.putInt("ranged_strength_" + i, ranged[i]);
+			data.putDouble("magic_strength_" + i, magic[i]);
 		}
-		
-		data.putInt("melee_strength", melee[0]);
-		data.putInt("ranged_strength", ranged[0]);
-		data.putDouble("magic_strength", magic[0]);
-		
 		return data;
 	}
 
 	@Override
 	public void deserializeNBT(CompoundNBT data) {
 		
-		for(int i = 0; i < 5; i++) {
-			accuracy[0][i] = data.getInt("accuracy_" + i);
-			defence[0][i] = data.getInt("defence_" + i);
-		}
+		for(int i = 0; i < 7; i++) {
+			for(int j = 0; j < 5; j++) {
+				accuracy[0][j] = data.getInt("accuracy_" + i + "_" + j);
+				defence[0][j] = data.getInt("defence_" + i + "_" + j);
+			}
 		
-		melee[0] = data.getInt("melee_strength");
-		ranged[0] = data.getInt("ranged_strength");
-		magic[0] = data.getDouble("magic_strength");
+			melee[0] = data.getInt("melee_strength_" + i);
+			ranged[0] = data.getInt("ranged_strength_"+ i);
+			magic[0] = data.getDouble("magic_strength_" + i);
+		}
 	}
 	
 	@Override
