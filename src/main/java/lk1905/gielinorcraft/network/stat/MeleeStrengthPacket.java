@@ -9,18 +9,21 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class MeleeStrengthPacket {
 
+	private int equip;
 	private int stat;
 	
-	public MeleeStrengthPacket(int newStat) {
+	public MeleeStrengthPacket(int equipSlot, int newStat) {
+		equip = equipSlot;
 		stat = newStat;
 	}
 	
 	public static void encode(MeleeStrengthPacket msg, PacketBuffer buf) {
+		buf.writeInt(msg.equip);
 		buf.writeInt(msg.stat);
 	}
 	
 	public static MeleeStrengthPacket decode(PacketBuffer buf) {
-		return new MeleeStrengthPacket(buf.readInt());
+		return new MeleeStrengthPacket(buf.readInt(), buf.readInt());
 	}
 	
 	public static class Handler{
@@ -30,7 +33,7 @@ public class MeleeStrengthPacket {
 			
 			ctx.get().enqueueWork(() -> {
 				
-				mc.player.getCapability(StatCapability.STAT_CAP).ifPresent(cap -> cap.setMeleeStrength(cap.getMeleeStrength() + msg.stat));
+				mc.player.getCapability(StatCapability.STAT_CAP).ifPresent(cap -> cap.setSlotMeleeStrength(msg.equip, msg.stat));
 				
 			});
 			ctx.get().setPacketHandled(true);

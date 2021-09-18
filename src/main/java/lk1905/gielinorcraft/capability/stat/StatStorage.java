@@ -12,13 +12,13 @@ public class StatStorage implements Capability.IStorage<IStats>{
 		CompoundNBT data = new CompoundNBT();
 		
 		for(int i = 0; i < 5; i++) {
-			data.putInt("accuracy_" + i, instance.getAccuracy(i));
-			data.putInt("defence_" + i, instance.getDefence(i));
+			data.putInt("accuracy_" + i, instance.getSlotAccuracy(0, i));
+			data.putInt("defence_" + i, instance.getSlotDefence(0, i));
 		}
 		
-		data.putInt("melee_strength", instance.getMeleeStrength());
-		data.putInt("ranged_strength", instance.getRangedStrength());
-		data.putDouble("magic_strength", instance.getMagicStrength());
+		data.putInt("melee_strength", instance.getSlotMeleeStrength(0));
+		data.putInt("ranged_strength", instance.getSlotRangedStrength(0));
+		data.putDouble("magic_strength", instance.getSlotMagicStrength(0));
 		
 		return data;
 	}
@@ -31,13 +31,13 @@ public class StatStorage implements Capability.IStorage<IStats>{
 		CompoundNBT data = (CompoundNBT) nbt;
 		
 		for(int i = 0; i < 5; i++) {
-			instance.setAccuracy(i, data.getInt("accuracy_" + i));
-			instance.setDefence(i, data.getInt("defence_" + i));
+			instance.setSlotAccuracy(0, i, data.getInt("accuracy_" + i));
+			instance.setSlotDefence(0, i, data.getInt("defence_" + i));
 		}
 		
-		instance.setMeleeStrength(data.getInt("melee_strength"));
-		instance.setRangedStrength(data.getInt("ranged_strength"));
-		instance.setMagicStrength(data.getDouble("magic_strength"));
+		instance.setSlotMeleeStrength(0, data.getInt("melee_strength"));
+		instance.setSlotRangedStrength(0, data.getInt("ranged_strength"));
+		instance.setSlotMagicStrength(0, data.getDouble("magic_strength"));
 		
 	}
 

@@ -54,7 +54,7 @@ public class CombatEventHandler {
 			rangedBonus = 3;
 		}
 		
-		if(receiverActive == 10 || receiverActive == 11 || receiverActive == 12) {
+		if(receiverActive == 10 || receiverActive == 11 || receiverActive == 12 || receiverActive == 15) {
 			defenceBonus = 3;
 		}else if(receiverActive == 7 || receiverActive == 8 || receiverActive == 9) {
 			defenceBonus = 1;
@@ -70,16 +70,22 @@ public class CombatEventHandler {
 		
 		int damage = 1;
 		
-		for(int i = 0; i < 5; i++) {
-			if(sourceActive == i && i > 0 && i < 13) {
-				accuracyRoll = attack * (sourceStats.getAccuracy(i) + 64);
-				defenceRoll = defence * (receiverStats.getDefence(i) + 64);
-				damage = (int) Math.floor(1.3 + (strength / 10) + (sourceStats.getMeleeStrength() / 80) + ((strength * sourceStats.getMeleeStrength()) / 640));
-			}else if(sourceActive == i && i == 4) {
-				accuracyRoll = ranged * (sourceStats.getAccuracy(4) + 64);
-				defenceRoll = defence * (receiverStats.getDefence(4) + 64);
-				damage = (int) Math.floor(1.3 + (ranged / 10) + (sourceStats.getRangedStrength() / 80) + ((ranged * sourceStats.getRangedStrength()) / 640));
-			}
+		if(sourceActive == 1 || sourceActive == 4 || sourceActive == 7 || sourceActive == 10) {
+			accuracyRoll = attack * (sourceStats.getTotalAccuracy(0) + 64);
+			defenceRoll = defence * (receiverStats.getTotalDefence(0) + 64);
+			damage = (int) Math.floor(1.3 + (strength / 10) + (sourceStats.getTotalMeleeStrength() / 80) + ((strength * sourceStats.getTotalMeleeStrength()) / 640));
+		}else if(sourceActive == 2 || sourceActive == 5 || sourceActive == 8 || sourceActive == 11) {
+			accuracyRoll = attack * (sourceStats.getTotalAccuracy(0) + 64);
+			defenceRoll = defence * (receiverStats.getTotalDefence(0) + 64);
+			damage = (int) Math.floor(1.3 + (strength / 10) + (sourceStats.getTotalMeleeStrength() / 80) + ((strength * sourceStats.getTotalMeleeStrength()) / 640));
+		}else if(sourceActive == 3 || sourceActive == 6 || sourceActive == 9 || sourceActive == 12) {
+			accuracyRoll = attack * (sourceStats.getTotalAccuracy(0) + 64);
+			defenceRoll = defence * (receiverStats.getTotalDefence(0) + 64);
+			damage = (int) Math.floor(1.3 + (strength / 10) + (sourceStats.getTotalMeleeStrength() / 80) + ((strength * sourceStats.getTotalMeleeStrength()) / 640));
+		}else if(sourceActive > 12 && sourceActive < 16) {
+			accuracyRoll = ranged * (sourceStats.getTotalAccuracy(4) + 64);
+			defenceRoll = defence * (receiverStats.getTotalDefence(4) + 64);
+			damage = (int) Math.floor(1.3 + (ranged / 10) + (sourceStats.getTotalRangedStrength() / 80) + ((ranged * sourceStats.getTotalRangedStrength()) / 640));
 		}
 		
 		double accuracy;

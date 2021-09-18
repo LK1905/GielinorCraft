@@ -9,18 +9,21 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class MagicStrengthPacket {
 
-private double stat;
+	private int equip;
+	private double stat;
 	
-	public MagicStrengthPacket(double newStat) {
+	public MagicStrengthPacket(int equipSlot, double newStat) {
+		equip = equipSlot;
 		stat = newStat;
 	}
 	
 	public static void encode(MagicStrengthPacket msg, PacketBuffer buf) {
+		buf.writeInt(msg.equip);
 		buf.writeDouble(msg.stat);
 	}
 	
 	public static MagicStrengthPacket decode(PacketBuffer buf) {
-		return new MagicStrengthPacket(buf.readDouble());
+		return new MagicStrengthPacket(buf.readInt(), buf.readDouble());
 	}
 	
 	public static class Handler{
@@ -30,7 +33,7 @@ private double stat;
 			
 			ctx.get().enqueueWork(() -> {
 				
-				mc.player.getCapability(StatCapability.STAT_CAP).ifPresent(cap -> cap.setMagicStrength(cap.getMagicStrength() + msg.stat));
+				mc.player.getCapability(StatCapability.STAT_CAP).ifPresent(cap -> cap.setSlotMagicStrength(msg.equip, msg.stat));
 				
 			});
 			ctx.get().setPacketHandled(true);

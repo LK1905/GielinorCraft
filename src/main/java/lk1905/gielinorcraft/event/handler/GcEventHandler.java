@@ -58,35 +58,35 @@ public class GcEventHandler {
 	@SubscribeEvent
 	public static void onAccuracyChange(AccuracyEvent event) {
 		if(!event.getEntity().world.isRemote) {
-			PacketHandler.sendTo(new AccuracyPacket(event.getSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
+			PacketHandler.sendTo(new AccuracyPacket(event.getEquipSlot(), event.getAttackType(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onDefenceChange(DefenceEvent event) {
 		if(!event.getEntity().world.isRemote) {
-			PacketHandler.sendTo(new DefencePacket(event.getSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
+			PacketHandler.sendTo(new DefencePacket(event.getEquipSlot(), event.getAttackType(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onMeleeStrengthChange(MeleeEvent event) {
 		if(!event.getEntity().world.isRemote) {
-			PacketHandler.sendTo(new MeleeStrengthPacket(event.getStat()), (ServerPlayerEntity) event.getEntity());
+			PacketHandler.sendTo(new MeleeStrengthPacket(event.getEquipSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onRangedStrengthChange(RangedEvent event) {
 		if(!event.getEntity().world.isRemote) {
-			PacketHandler.sendTo(new RangedStrengthPacket(event.getStat()), (ServerPlayerEntity) event.getEntity());
+			PacketHandler.sendTo(new RangedStrengthPacket(event.getEquipSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onMagicStrengthChange(MagicEvent event) {
 		if(!event.getEntity().world.isRemote) {
-			PacketHandler.sendTo(new MagicStrengthPacket(event.getStat()), (ServerPlayerEntity) event.getEntity());
+			PacketHandler.sendTo(new MagicStrengthPacket(event.getEquipSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 }

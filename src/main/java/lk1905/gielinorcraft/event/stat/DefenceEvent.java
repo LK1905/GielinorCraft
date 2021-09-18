@@ -5,18 +5,24 @@ import net.minecraftforge.eventbus.api.Event;
 
 public class DefenceEvent extends Event{
 
-	private int slot;
+	private int equipSlot;
+	private int typeSlot;
 	private int stat;
 	private LivingEntity entity;
 	
-	public DefenceEvent(int slot, int stat, LivingEntity entity) {
-		this.slot = slot;
+	public DefenceEvent(int equipSlot, int typeSlot, int stat, LivingEntity entity) {
+		this.equipSlot = equipSlot;
+		this.typeSlot = typeSlot;
 		this.stat = stat;
 		this.entity = entity;
 	}
 	
-	public int getSlot() {
-		return slot;
+	public int getEquipSlot() {
+		return equipSlot;
+	}
+	
+	public int getAttackType() {
+		return typeSlot;
 	}
 	
 	public int getStat() {
