@@ -2,7 +2,6 @@ package lk1905.gielinorcraft.capability.skill;
 
 import javax.annotation.Nullable;
 
-import lk1905.gielinorcraft.api.skill.ISkills;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;

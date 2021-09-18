@@ -2,8 +2,8 @@ package lk1905.gielinorcraft.client.gui.screen;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import lk1905.gielinorcraft.api.stats.IStats;
-import lk1905.gielinorcraft.capability.stats.StatCapability;
+import lk1905.gielinorcraft.capability.stat.IStats;
+import lk1905.gielinorcraft.capability.stat.StatCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;

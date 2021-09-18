@@ -2,8 +2,8 @@ package lk1905.gielinorcraft;
 
 import org.apache.logging.log4j.Logger;
 
-import lk1905.gielinorcraft.capability.CapabilityHandler;
-import lk1905.gielinorcraft.events.*;
+import lk1905.gielinorcraft.event.handler.CapabilityHandler;
+import lk1905.gielinorcraft.event.handler.ClientEventHandler;
 import lk1905.gielinorcraft.init.GcItems;
 import lk1905.gielinorcraft.network.PacketHandler;
 import net.minecraftforge.common.MinecraftForge;

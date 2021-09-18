@@ -5,7 +5,7 @@ import java.util.Locale;
 import com.ibm.icu.text.NumberFormat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import lk1905.gielinorcraft.api.skill.ISkills;
+import lk1905.gielinorcraft.capability.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;

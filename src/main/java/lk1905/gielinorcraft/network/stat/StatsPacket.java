@@ -2,7 +2,7 @@ package lk1905.gielinorcraft.network.stat;
 
 import java.util.function.Supplier;
 
-import lk1905.gielinorcraft.capability.stats.StatCapability;
+import lk1905.gielinorcraft.capability.stat.StatCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;

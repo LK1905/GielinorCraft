@@ -1,6 +1,6 @@
 package lk1905.gielinorcraft.capability.attackstyle;
 
-import lk1905.gielinorcraft.api.events.AttackStyleEvent;
+import lk1905.gielinorcraft.event.AttackStyleEvent;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.attackstyle.AttackStyleCapPacket;
 import lk1905.gielinorcraft.network.attackstyle.AttackStyleServerPacket;

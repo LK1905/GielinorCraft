@@ -1,7 +1,6 @@
 package lk1905.gielinorcraft.capability.skill;
 
-import lk1905.gielinorcraft.api.capability.SerializableCapabilityProvider;
-import lk1905.gielinorcraft.api.skill.ISkills;
+import lk1905.gielinorcraft.capability.SerializableCapabilityProvider;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;

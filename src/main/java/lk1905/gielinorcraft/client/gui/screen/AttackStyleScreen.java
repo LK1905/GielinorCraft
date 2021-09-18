@@ -3,10 +3,10 @@ package lk1905.gielinorcraft.client.gui.screen;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import lk1905.gielinorcraft.Gielinorcraft;
-import lk1905.gielinorcraft.api.skill.ISkills;
 import lk1905.gielinorcraft.capability.attackstyle.AttackStyle;
 import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
 import lk1905.gielinorcraft.capability.attackstyle.IAttackStyle;
+import lk1905.gielinorcraft.capability.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import lk1905.gielinorcraft.client.gui.widget.AttackStyleButton;
 import net.minecraft.client.Minecraft;
