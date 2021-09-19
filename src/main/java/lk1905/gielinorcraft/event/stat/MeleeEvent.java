@@ -6,9 +6,9 @@ import net.minecraftforge.eventbus.api.Event;
 /**This event modifies an entity's Melee strength stat.*/
 public class MeleeEvent extends Event{
 
-	private int equipSlot;
-	private int stat;
-	private LivingEntity entity;
+	private final int equipSlot;
+	private final int stat;
+	private final LivingEntity entity;
 	
 	public MeleeEvent(int equipSlot, int stat, LivingEntity entity) {
 		this.equipSlot = equipSlot;

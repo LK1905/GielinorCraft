@@ -5,10 +5,10 @@ import net.minecraftforge.eventbus.api.Event;
 
 public class AccuracyEvent extends Event{
 
-	private int equipSlot;
-	private int typeSlot;
-	private int stat;
-	private LivingEntity entity;
+	private final int equipSlot;
+	private final int typeSlot;
+	private final int stat;
+	private final LivingEntity entity;
 	
 	public AccuracyEvent(int equipSlot, int typeSlot, int stat, LivingEntity entity) {
 		this.equipSlot = equipSlot;

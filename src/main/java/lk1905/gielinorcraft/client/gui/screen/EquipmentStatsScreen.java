@@ -37,7 +37,7 @@ public class EquipmentStatsScreen extends Screen{
 		drawString(stack, font, "Ranged: " + stats.getTotalAccuracy(3), (width / 2) - 100, height - 140, 111111);
 		drawString(stack, font, "Magic: " + stats.getTotalAccuracy(4), (width / 2) - 100, height - 130, 111111);
 		drawString(stack, font, "Strength bonuses", (width / 2) - 100, height - 120, 111111);
-		drawString(stack, font, "Melee: " + stats.getTotalMagicStrength(), (width / 2) - 100, height - 110, 111111);
+		drawString(stack, font, "Melee: " + stats.getTotalMeleeStrength(), (width / 2) - 100, height - 110, 111111);
 		drawString(stack, font, "Ranged: " + stats.getTotalRangedStrength(), (width / 2) - 100, height - 100, 111111);
 		drawString(stack, font, "Magic: " + stats.getTotalMagicStrength() + "%", (width / 2) - 100, height - 90, 111111);
 

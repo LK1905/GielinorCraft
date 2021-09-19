@@ -48,6 +48,7 @@ public class EquipmentEventHandler {
 		if(event.getSlot() == EquipmentSlotType.MAINHAND && entity.getHeldItemMainhand().getItem() == to) {
 			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
 				style.sync((ServerPlayerEntity) entity);
+				stats.sync((ServerPlayerEntity) entity);
 			}
 			if(entity.getHeldItemMainhand().getItem() instanceof SwordItem) {
 				style.setAttackStyle(0, AttackStyle.ACCURATE_STAB);

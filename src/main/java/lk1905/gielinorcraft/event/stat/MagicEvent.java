@@ -6,9 +6,9 @@ import net.minecraftforge.eventbus.api.Event;
 /**This event modifies an entity's Magic strength stat.*/
 public class MagicEvent extends Event{
 
-	private int equipSlot;
-	private double stat;
-	private LivingEntity entity;
+	private final int equipSlot;
+	private final double stat;
+	private final LivingEntity entity;
 	
 	public MagicEvent(int equipSlot, double stat, LivingEntity entity) {
 		this.equipSlot = equipSlot;

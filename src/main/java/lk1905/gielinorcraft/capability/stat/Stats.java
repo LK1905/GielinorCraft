@@ -77,50 +77,51 @@ public class Stats implements IStats{
 	}
 	
 	@Override
-	public void sync(ServerPlayerEntity player) {
-		if(entity instanceof ServerPlayerEntity) {
-			PacketHandler.sendTo(new StatsPacket(serializeNBT()), player);
+	public void setSlotAccuracy(int equipSlot, int typeSlot, int stat) {
+		if(accuracy[equipSlot][typeSlot] != stat) {
+		accuracy[equipSlot][typeSlot] = stat;
+		MinecraftForge.EVENT_BUS.post(new AccuracyEvent(equipSlot, typeSlot, stat, entity));
 		}
 	}
 
 
 
 	@Override
-	public void setSlotAccuracy(int equipSlot, int typeSlot, int stat) {
-		accuracy[equipSlot][typeSlot] = stat;
-		MinecraftForge.EVENT_BUS.post(new AccuracyEvent(equipSlot, typeSlot, stat, entity));
-	}
-
-
-
-	@Override
 	public void setSlotDefence(int equipSlot, int typeSlot, int stat) {
-		defence[equipSlot][typeSlot] = stat;
-		MinecraftForge.EVENT_BUS.post(new DefenceEvent(equipSlot, typeSlot, stat, entity));
+		if(defence[equipSlot][typeSlot] != stat) {
+			defence[equipSlot][typeSlot] = stat;
+			MinecraftForge.EVENT_BUS.post(new DefenceEvent(equipSlot, typeSlot, stat, entity));
+		}
 	}
 
 
 
 	@Override
 	public void setSlotMeleeStrength(int equipSlot, int stat) {
-		melee[equipSlot] = stat;
-		MinecraftForge.EVENT_BUS.post(new MeleeEvent(equipSlot, stat, entity));
+		if(melee[equipSlot] != stat) {
+			melee[equipSlot] = stat;
+			MinecraftForge.EVENT_BUS.post(new MeleeEvent(equipSlot, stat, entity));
+		}
 	}
 
 
 
 	@Override
 	public void setSlotRangedStrength(int equipSlot, int stat) {
-		ranged[equipSlot] = stat;
-		MinecraftForge.EVENT_BUS.post(new RangedEvent(equipSlot, stat, entity));
+		if(ranged[equipSlot] != stat) {
+			ranged[equipSlot] = stat;
+			MinecraftForge.EVENT_BUS.post(new RangedEvent(equipSlot, stat, entity));
+		}
 	}
 
 
 
 	@Override
 	public void setSlotMagicStrength(int equipSlot, double stat) {
-		magic[equipSlot] = stat;
-		MinecraftForge.EVENT_BUS.post(new MagicEvent(equipSlot, stat, entity));
+		if(magic[equipSlot] != stat) {
+			magic[equipSlot] = stat;
+			MinecraftForge.EVENT_BUS.post(new MagicEvent(equipSlot, stat, entity));
+		}
 	}
 
 
@@ -211,5 +212,12 @@ public class Stats implements IStats{
 			total += magic[i];
 		}
 		return total;
+	}
+	
+	@Override
+	public void sync(ServerPlayerEntity player) {
+		if(entity instanceof ServerPlayerEntity) {
+			PacketHandler.sendTo(new StatsPacket(serializeNBT()), player);
+		}
 	}
 }
