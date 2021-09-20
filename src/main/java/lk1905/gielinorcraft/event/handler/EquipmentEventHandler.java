@@ -45,10 +45,43 @@ public class EquipmentEventHandler {
 			}
 		}
 		
+		if(from instanceof TieredItem && !(to instanceof TieredItem)) {
+			style.setAttackStyle(0, AttackStyle.ACCURATE_CRUSH);
+			style.setAttackStyle(1, AttackStyle.AGGRESSIVE_CRUSH);
+			style.setAttackStyle(2, AttackStyle.DEFENSIVE_CRUSH);
+			style.setAttackStyle(3, AttackStyle.EMPTY);
+			style.setAttackStyle(4, AttackStyle.EMPTY);
+			style.setAttackStyle(5, AttackStyle.EMPTY);
+			stats.setSlotAccuracy(1, 0, 0);
+			stats.setSlotAccuracy(1, 1, 0);
+			stats.setSlotAccuracy(1, 2, 0);
+			stats.setSlotAccuracy(1, 3, 0);
+			stats.setSlotAccuracy(1, 4, 0);
+			stats.setSlotMeleeStrength(1, 0);
+			stats.setSlotRangedStrength(1, 0);
+			stats.setSlotMagicStrength(1, 0.0);
+			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
+				style.sync((ServerPlayerEntity) entity);
+			}
+		}
+		
+		if(from instanceof TieredItem) {
+			stats.setSlotAccuracy(1, 0, 0);
+			stats.setSlotAccuracy(1, 1, 0);
+			stats.setSlotAccuracy(1, 2, 0);
+			stats.setSlotAccuracy(1, 3, 0);
+			stats.setSlotAccuracy(1, 4, 0);
+			stats.setSlotMeleeStrength(1, 0);
+			stats.setSlotRangedStrength(1, 0);
+			stats.setSlotMagicStrength(1, 0.0);
+			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
+				style.sync((ServerPlayerEntity) entity);
+			}
+		}
+		
 		if(event.getSlot() == EquipmentSlotType.MAINHAND && entity.getHeldItemMainhand().getItem() == to) {
 			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
 				style.sync((ServerPlayerEntity) entity);
-				stats.sync((ServerPlayerEntity) entity);
 			}
 			if(entity.getHeldItemMainhand().getItem() instanceof SwordItem) {
 				style.setAttackStyle(0, AttackStyle.ACCURATE_STAB);
@@ -114,28 +147,15 @@ public class EquipmentEventHandler {
 				style.setAttackStyle(3, AttackStyle.EMPTY);
 				style.setAttackStyle(4, AttackStyle.EMPTY);
 				style.setAttackStyle(5, AttackStyle.EMPTY);
+				stats.setSlotAccuracy(1, 0, 0);
+				stats.setSlotAccuracy(1, 1, 0);
+				stats.setSlotAccuracy(1, 2, 0);
+				stats.setSlotAccuracy(1, 3, 0);
+				stats.setSlotAccuracy(1, 4, 0);
+				stats.setSlotMeleeStrength(1, 0);
+				stats.setSlotRangedStrength(1, 0);
+				stats.setSlotMagicStrength(1, 0.0);
 			}
-		}
-		
-		if(from instanceof TieredItem && !(to instanceof TieredItem)) {
-			style.setAttackStyle(0, AttackStyle.ACCURATE_CRUSH);
-			style.setAttackStyle(1, AttackStyle.AGGRESSIVE_CRUSH);
-			style.setAttackStyle(2, AttackStyle.DEFENSIVE_CRUSH);
-			style.setAttackStyle(3, AttackStyle.EMPTY);
-			style.setAttackStyle(4, AttackStyle.EMPTY);
-			style.setAttackStyle(5, AttackStyle.EMPTY);
-			stats.setSlotAccuracy(1, 0, 0);
-			stats.setSlotAccuracy(1, 1, 0);
-			stats.setSlotAccuracy(1, 2, 0);
-			stats.setSlotAccuracy(1, 3, 0);
-			stats.setSlotAccuracy(1, 4, 0);
-			stats.setSlotMeleeStrength(1, 0);
-			stats.setSlotRangedStrength(1, 0);
-			stats.setSlotMagicStrength(1, 0.0);
-			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
-				style.sync((ServerPlayerEntity) entity);
-				stats.sync((ServerPlayerEntity) entity);
-			}
-		}
+		}	
 	}
 }

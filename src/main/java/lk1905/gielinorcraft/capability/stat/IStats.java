@@ -1,8 +1,5 @@
 package lk1905.gielinorcraft.capability.stat;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-
 public interface IStats {
 	
 	/**Determine the accuracy value for the specified equipment slot and attack type.
@@ -80,16 +77,4 @@ public interface IStats {
 	/**Gets the total magic strength. Unlike all the other values, this value is a double, not an int.
 	 * @return The total magic strength.*/
 	double getTotalMagicStrength();
-	
-	/**Serializes the stat data into nbt tag format. Only the base equipment slot (equipslot = 0) needs to be serialized.
-	 * @return The CompoundNBT representing the stat data.*/
-	CompoundNBT serializeNBT();
-	
-	/**Deserializes the stat data from nbt tag format. Only the base equipment slot (equipslot = 0) needs to be deserialized.
-	 * @param data The CompoundNBT representing the stat data.*/
-	void deserializeNBT(CompoundNBT data);
-	
-	/**Syncs any changes to the stat data to the client.
-	 * @param player The ServerPlayerEntity sending the skill data.*/
-	void sync(ServerPlayerEntity player);
 }

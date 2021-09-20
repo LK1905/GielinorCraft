@@ -17,7 +17,6 @@ public class XPGainEvent extends Event{
 		xp = xpGained;
 	}
 	
-	@Nonnull
 	public int getSkillId() {
 		return id;
 	}

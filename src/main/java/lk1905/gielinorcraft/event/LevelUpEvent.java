@@ -1,5 +1,7 @@
 package lk1905.gielinorcraft.event;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -19,6 +21,7 @@ public class LevelUpEvent extends Event{
 		return id;
 	}
 	
+	@Nonnull
 	public LivingEntity getEntity() {
 		return entity;
 	}

@@ -89,11 +89,6 @@ public class PacketHandler {
 				MagicStrengthPacket::encode,
 				MagicStrengthPacket::decode,
 				MagicStrengthPacket.Handler::handle);
-		HANDLER.registerMessage(disc++,
-				StatsPacket.class,
-				StatsPacket::encode,
-				StatsPacket::decode,
-				StatsPacket.Handler::handle);
 	}
 	
 	/**

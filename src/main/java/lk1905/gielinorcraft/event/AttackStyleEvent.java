@@ -22,7 +22,6 @@ public class AttackStyleEvent extends Event{
 		return entity;
 	}
 	
-	@Nonnull
 	public int getSlot() {
 		return slot;
 	}

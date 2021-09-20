@@ -1,5 +1,7 @@
 package lk1905.gielinorcraft.event.stat;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.LivingEntity;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -24,6 +26,7 @@ public class MagicEvent extends Event{
 		return stat;
 	}
 	
+	@Nonnull
 	public LivingEntity getEntity() {
 		return entity;
 	}

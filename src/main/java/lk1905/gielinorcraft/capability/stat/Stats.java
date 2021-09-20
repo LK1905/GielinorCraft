@@ -1,11 +1,7 @@
 package lk1905.gielinorcraft.capability.stat;
 
 import lk1905.gielinorcraft.event.stat.*;
-import lk1905.gielinorcraft.network.PacketHandler;
-import lk1905.gielinorcraft.network.stat.StatsPacket;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Stats implements IStats{
@@ -45,46 +41,12 @@ public class Stats implements IStats{
 	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
-		CompoundNBT data = new CompoundNBT();
-		
-		for(int i = 0; i < 7; i++) {
-			for(int j = 0; j < 5; j++) {
-				data.putInt("accuracy_" + i + "_" + j, accuracy[i][j]);
-				data.putInt("defence_" + i + "_" + j, defence[i][j]);
-			}
-		
-			data.putInt("melee_strength_" + i, melee[i]);
-			data.putInt("ranged_strength_" + i, ranged[i]);
-			data.putDouble("magic_strength_" + i, magic[i]);
-		}
-		return data;
-	}
-
-	@Override
-	public void deserializeNBT(CompoundNBT data) {
-		
-		for(int i = 0; i < 7; i++) {
-			for(int j = 0; j < 5; j++) {
-				accuracy[0][j] = data.getInt("accuracy_" + i + "_" + j);
-				defence[0][j] = data.getInt("defence_" + i + "_" + j);
-			}
-		
-			melee[0] = data.getInt("melee_strength_" + i);
-			ranged[0] = data.getInt("ranged_strength_"+ i);
-			magic[0] = data.getDouble("magic_strength_" + i);
-		}
-	}
-	
-	@Override
 	public void setSlotAccuracy(int equipSlot, int typeSlot, int stat) {
 		if(accuracy[equipSlot][typeSlot] != stat) {
-		accuracy[equipSlot][typeSlot] = stat;
-		MinecraftForge.EVENT_BUS.post(new AccuracyEvent(equipSlot, typeSlot, stat, entity));
+			accuracy[equipSlot][typeSlot] = stat;
+			MinecraftForge.EVENT_BUS.post(new AccuracyEvent(equipSlot, typeSlot, stat, entity));
 		}
 	}
-
-
 
 	@Override
 	public void setSlotDefence(int equipSlot, int typeSlot, int stat) {
@@ -94,8 +56,6 @@ public class Stats implements IStats{
 		}
 	}
 
-
-
 	@Override
 	public void setSlotMeleeStrength(int equipSlot, int stat) {
 		if(melee[equipSlot] != stat) {
@@ -103,8 +63,6 @@ public class Stats implements IStats{
 			MinecraftForge.EVENT_BUS.post(new MeleeEvent(equipSlot, stat, entity));
 		}
 	}
-
-
 
 	@Override
 	public void setSlotRangedStrength(int equipSlot, int stat) {
@@ -114,8 +72,6 @@ public class Stats implements IStats{
 		}
 	}
 
-
-
 	@Override
 	public void setSlotMagicStrength(int equipSlot, double stat) {
 		if(magic[equipSlot] != stat) {
@@ -124,42 +80,30 @@ public class Stats implements IStats{
 		}
 	}
 
-
-
 	@Override
 	public int getSlotAccuracy(int equipSlot, int typeSlot) {
 		return accuracy[equipSlot][typeSlot];
 	}
-
-
 
 	@Override
 	public int getSlotDefence(int equipSlot, int typeSlot) {
 		return defence[equipSlot][typeSlot];
 	}
 
-
-
 	@Override
 	public int getSlotMeleeStrength(int equipSlot) {
 		return melee[equipSlot];
 	}
-
-
 
 	@Override
 	public int getSlotRangedStrength(int equipSlot) {
 		return ranged[equipSlot];
 	}
 
-
-
 	@Override
 	public double getSlotMagicStrength(int equipSlot) {
 		return magic[equipSlot];
 	}
-
-
 
 	@Override
 	public int getTotalAccuracy(int typeSlot) {
@@ -170,8 +114,6 @@ public class Stats implements IStats{
 		return total;
 	}
 
-
-
 	@Override
 	public int getTotalDefence(int typeSlot) {
 		int total = 0;
@@ -180,8 +122,6 @@ public class Stats implements IStats{
 		}
 		return total;
 	}
-
-
 
 	@Override
 	public int getTotalMeleeStrength() {
@@ -192,8 +132,6 @@ public class Stats implements IStats{
 		return total;
 	}
 
-
-
 	@Override
 	public int getTotalRangedStrength() {
 		int total = 0;
@@ -203,8 +141,6 @@ public class Stats implements IStats{
 		return total;
 	}
 
-
-
 	@Override
 	public double getTotalMagicStrength() {
 		double total = 0;
@@ -212,12 +148,5 @@ public class Stats implements IStats{
 			total += magic[i];
 		}
 		return total;
-	}
-	
-	@Override
-	public void sync(ServerPlayerEntity player) {
-		if(entity instanceof ServerPlayerEntity) {
-			PacketHandler.sendTo(new StatsPacket(serializeNBT()), player);
-		}
 	}
 }
