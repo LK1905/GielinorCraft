@@ -10,7 +10,7 @@ public class StatStorage implements Capability.IStorage<IStats>{
 
 	@Override
 	public INBT writeNBT(Capability<IStats> capability, IStats instance, Direction side) {
-		return null;
+		return new CompoundNBT();
 	}
 
 	@Override

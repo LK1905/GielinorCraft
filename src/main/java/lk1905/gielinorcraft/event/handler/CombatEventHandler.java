@@ -75,12 +75,12 @@ public class CombatEventHandler {
 			defenceRoll = defence * (receiverStats.getTotalDefence(0) + 64);
 			damage = (int) Math.floor(1.3 + (strength / 10) + (sourceStats.getTotalMeleeStrength() / 80) + ((strength * sourceStats.getTotalMeleeStrength()) / 640));
 		}else if(sourceActive == 2 || sourceActive == 5 || sourceActive == 8 || sourceActive == 11) {
-			accuracyRoll = attack * (sourceStats.getTotalAccuracy(0) + 64);
-			defenceRoll = defence * (receiverStats.getTotalDefence(0) + 64);
+			accuracyRoll = attack * (sourceStats.getTotalAccuracy(1) + 64);
+			defenceRoll = defence * (receiverStats.getTotalDefence(1) + 64);
 			damage = (int) Math.floor(1.3 + (strength / 10) + (sourceStats.getTotalMeleeStrength() / 80) + ((strength * sourceStats.getTotalMeleeStrength()) / 640));
 		}else if(sourceActive == 3 || sourceActive == 6 || sourceActive == 9 || sourceActive == 12) {
-			accuracyRoll = attack * (sourceStats.getTotalAccuracy(0) + 64);
-			defenceRoll = defence * (receiverStats.getTotalDefence(0) + 64);
+			accuracyRoll = attack * (sourceStats.getTotalAccuracy(2) + 64);
+			defenceRoll = defence * (receiverStats.getTotalDefence(2) + 64);
 			damage = (int) Math.floor(1.3 + (strength / 10) + (sourceStats.getTotalMeleeStrength() / 80) + ((strength * sourceStats.getTotalMeleeStrength()) / 640));
 		}else if(sourceActive > 12 && sourceActive < 16) {
 			accuracyRoll = ranged * (sourceStats.getTotalAccuracy(4) + 64);

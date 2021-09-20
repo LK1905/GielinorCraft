@@ -13,11 +13,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.AxeItem;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShootableItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.TieredItem;
@@ -45,7 +44,7 @@ public class EquipmentEventHandler {
 			}
 		}
 		
-		if(from instanceof TieredItem && !(to instanceof TieredItem)) {
+		if((from instanceof TieredItem || from instanceof ShootableItem) && !(to instanceof TieredItem || to instanceof ShootableItem)) {
 			style.setAttackStyle(0, AttackStyle.ACCURATE_CRUSH);
 			style.setAttackStyle(1, AttackStyle.AGGRESSIVE_CRUSH);
 			style.setAttackStyle(2, AttackStyle.DEFENSIVE_CRUSH);
@@ -65,7 +64,7 @@ public class EquipmentEventHandler {
 			}
 		}
 		
-		if(from instanceof TieredItem) {
+		if(from instanceof TieredItem || from instanceof ShootableItem) {
 			stats.setSlotAccuracy(1, 0, 0);
 			stats.setSlotAccuracy(1, 1, 0);
 			stats.setSlotAccuracy(1, 2, 0);
@@ -133,13 +132,15 @@ public class EquipmentEventHandler {
 				stats.setSlotAccuracy(1, 0, 3);
 				stats.setSlotAccuracy(1, 1, 5);
 				stats.setSlotMeleeStrength(1, 7);
-			}else if(entity.getHeldItemMainhand().getItem() instanceof BowItem || entity.getHeldItemMainhand().getItem() instanceof CrossbowItem) {
+			}else if(entity.getHeldItemMainhand().getItem() instanceof ShootableItem) {
 				style.setAttackStyle(0, AttackStyle.RANGED_ACCURATE);
 				style.setAttackStyle(1, AttackStyle.RANGED_RAPID);
 				style.setAttackStyle(2, AttackStyle.RANGED_LONG);
 				style.setAttackStyle(3, AttackStyle.EMPTY);
 				style.setAttackStyle(4, AttackStyle.EMPTY);
 				style.setAttackStyle(5, AttackStyle.EMPTY);
+				stats.setSlotAccuracy(1, 4, 8);
+				stats.setSlotRangedStrength(1, 10);
 			}else {
 				style.setAttackStyle(0, AttackStyle.ACCURATE_CRUSH);
 				style.setAttackStyle(1, AttackStyle.AGGRESSIVE_CRUSH);

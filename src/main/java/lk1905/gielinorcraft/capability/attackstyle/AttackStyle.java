@@ -31,20 +31,41 @@ public class AttackStyle implements IAttackStyle{
 		SPELL_CAST = 16,
 		SPELL_DEFENSIVE = 17;
 	
+	public static final	String[] STYLE_TYPE = {
+			"Empty",
+			"Accurate",
+			"Accurate",
+			"Accurate",
+			"Aggressive",
+			"Aggressive",
+			"Aggressive",
+			"Controlled",
+			"Controlled",
+			"Controlled",
+			"Defensive",
+			"Defensive",
+			"Defensive",
+			"Accurate",
+			"Rapid",
+			"Long Range",
+			"Standard,",
+			"Defensive"
+		};
+	
 	public static final	String[] STYLE_NAME = {
 		"Empty",
-		"Accurate",
-		"Accurate",
-		"Accurate",
-		"Aggressive",
-		"Aggressive",
-		"Aggressive",
-		"Controlled",
-		"Controlled",
-		"Controlled",
-		"Defensive",
-		"Defensive",
-		"Defensive",
+		"Stab",
+		"Chop",
+		"Pound",
+		"Lunge",
+		"Slash",
+		"Smash",
+		"Lunge",
+		"Swipe",
+		"Pound",
+		"Block",
+		"Block",
+		"Block",
 		"Accurate",
 		"Rapid",
 		"Long Range",
@@ -116,6 +137,11 @@ public class AttackStyle implements IAttackStyle{
 	@Override
 	public int getActiveStyle() {
 		return styleSlot[activeSlot];
+	}
+	
+	@Override
+	public String getStyleType(int slot) {
+		return STYLE_TYPE[styleSlot[slot]];
 	}
 	
 	@Override
