@@ -7,6 +7,8 @@ import lk1905.gielinorcraft.client.gui.GcIngameGui;
 import lk1905.gielinorcraft.client.gui.screen.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.client.event.InputEvent.ClickInputEvent;
 import net.minecraftforge.client.event.InputEvent.KeyInputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -52,6 +54,17 @@ public class ClientEventHandler {
 	public static void onRenderGui(RenderGameOverlayEvent.Post event) {
 		if(event.getType().equals(ElementType.ALL)) {
 			new GcIngameGui(mc, event.getMatrixStack());
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onLeftClick(ClickInputEvent event) {
+		PlayerEntity player = mc.player;
+		if(event.isAttack()) {
+			if(player.getCooledAttackStrength(0) < 1) {
+				event.setCanceled(true);
+				event.setSwingHand(false);
+			}
 		}
 	}
 }
