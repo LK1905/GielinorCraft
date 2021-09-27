@@ -50,42 +50,42 @@ public class GcEventHandler {
 	
 	@SubscribeEvent
 	public static void onAttackStyleChange(AttackStyleEvent event) {
-		if(!event.getEntity().world.isRemote) {
+		if(!event.getEntity().world.isRemote && event.getEntity() instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new ChangeStylePacket(event.getSlot(), event.getStyle()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onAccuracyChange(AccuracyEvent event) {
-		if(!event.getEntity().world.isRemote) {
+		if(!event.getEntity().world.isRemote && event.getEntity() instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new AccuracyPacket(event.getEquipSlot(), event.getAttackType(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onDefenceChange(DefenceEvent event) {
-		if(!event.getEntity().world.isRemote) {
+		if(!event.getEntity().world.isRemote && event.getEntity() instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new DefencePacket(event.getEquipSlot(), event.getAttackType(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onMeleeStrengthChange(MeleeEvent event) {
-		if(!event.getEntity().world.isRemote) {
+		if(!event.getEntity().world.isRemote && event.getEntity() instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new MeleeStrengthPacket(event.getEquipSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onRangedStrengthChange(RangedEvent event) {
-		if(!event.getEntity().world.isRemote) {
+		if(!event.getEntity().world.isRemote && event.getEntity() instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new RangedStrengthPacket(event.getEquipSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}
 	
 	@SubscribeEvent
 	public static void onMagicStrengthChange(MagicEvent event) {
-		if(!event.getEntity().world.isRemote) {
+		if(!event.getEntity().world.isRemote && event.getEntity() instanceof ServerPlayerEntity) {
 			PacketHandler.sendTo(new MagicStrengthPacket(event.getEquipSlot(), event.getStat()), (ServerPlayerEntity) event.getEntity());
 		}
 	}

@@ -11,10 +11,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SEntityPropertiesPacket;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -118,23 +120,36 @@ public final class Skills implements ISkills{
 		
 		for(int i = 0; i < 26; i++) {
 			if(!(entity instanceof PlayerEntity)) {
-				if(i == HITPOINTS) {
-					this.xp[HITPOINTS] = getXpByLevel(i);
-					this.staticLevels[HITPOINTS] = 10;
-					this.dynamicLevels[HITPOINTS] = 10;
-				}else {
-					this.xp[i] = getXpByLevel(i);
-					this.staticLevels[i] = 1;
-					this.dynamicLevels[i] = getStaticLevel(i);
+				double multiplier = 1.0;
+				Difficulty difficulty = entity.world.getDifficulty();
+				if(difficulty == Difficulty.NORMAL) {
+					multiplier = 1.5;
+				}else if(difficulty == Difficulty.HARD) {
+					multiplier = 2.0;
 				}
+				if(i == HITPOINTS) {
+					if(entity instanceof SlimeEntity) {
+						SlimeEntity slime = (SlimeEntity) entity;
+						staticLevels[STRENGTH] = (int) Math.floor(slime.getSlimeSize() * 8 * multiplier);
+						dynamicLevels[STRENGTH] = getStaticLevel(STRENGTH);
+						staticLevels[HITPOINTS] = (int) slime.getMaxHealth();
+						dynamicLevels[HITPOINTS] = (int) slime.getHealth();
+						
+					}
+				}else {
+					xp[i] = getXpByLevel(i);
+					staticLevels[i] = 1;
+					dynamicLevels[i] = getStaticLevel(i);
+				}
+			//Player
 			}else if(i == HITPOINTS) {
-				this.xp[HITPOINTS] = 1154;
-				this.dynamicLevels[HITPOINTS] = getLevel(HITPOINTS);
-				this.staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
+				xp[HITPOINTS] = 1154;
+				dynamicLevels[HITPOINTS] = getLevel(HITPOINTS);
+				staticLevels[HITPOINTS] = getStaticLevelByXp(HITPOINTS);
 			}else {
-				this.xp[i] = 0;
-				this.staticLevels[i] = getStaticLevelByXp(i);
-				this.dynamicLevels[i] = getStaticLevel(i);
+				xp[i] = 0;
+				staticLevels[i] = getStaticLevelByXp(i);
+				dynamicLevels[i] = getStaticLevel(i);
 			}
 		}
 	}

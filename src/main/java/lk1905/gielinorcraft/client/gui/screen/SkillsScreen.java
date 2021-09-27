@@ -5,20 +5,34 @@ import java.util.Locale;
 import com.ibm.icu.text.NumberFormat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import lk1905.gielinorcraft.Gielinorcraft;
 import lk1905.gielinorcraft.capability.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
+import lk1905.gielinorcraft.capability.skill.Skills;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
 /**A Simple gui containing all the player's skill data. Just text for now, will upgrade in the future.*/
 public class SkillsScreen extends Screen{
 
-	private String[] skill_info = new String[26];
+	private final ResourceLocation TEXTURE = new ResourceLocation(Gielinorcraft.MODID, "textures/gui/skills.png");
+	
+	private final int[] dynamicLevel = new int[26];
+	private final int[] staticLevel = new int[26];
+	private final ImageButton[] skillButton = new ImageButton[26];
+	private ImageButton totalButton;
 	
 	private PlayerEntity player = Minecraft.getInstance().player;
 	private ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+	
+	private final int xSize = 159;
+	private final int ySize = 206;
+	private int guiLeft;
+	private int guiTop;
 	
 	public SkillsScreen() {
 		super(new StringTextComponent("Skills"));
@@ -31,74 +45,132 @@ public class SkillsScreen extends Screen{
 	
 	@Override
 	public void init() {
-		super.init();
+		guiLeft = (width - xSize) / 2;
+		guiTop = (height - ySize) / 2;
 		
-		//Theres probably an easier way of doing this.
-		skill_info[0] = "Attack, Level: " + skills.getLevel(0) + "/" + skills.getStaticLevel(0) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(0)));
-		skill_info[1] = "Defence, Level: " + skills.getLevel(1) + "/" + skills.getStaticLevel(1) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(1)));
-		skill_info[2] = "Strength, Level: " + skills.getLevel(2) + "/" + skills.getStaticLevel(2) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(2)));
-		skill_info[3] = "Hitpoints, Level: " + (int) player.getHealth() + "/" + skills.getStaticLevel(3) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(3)));
-		skill_info[4] = "Ranged, Level: " + skills.getLevel(4) + "/" + skills.getStaticLevel(4) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(4)));
-		skill_info[5] = "Prayer, Level: " + skills.getLevel(5) + "/" + skills.getStaticLevel(5) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(5)));
-		skill_info[6] = "Magic, Level: " + skills.getLevel(6) + "/" + skills.getStaticLevel(6) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(6)));
-		skill_info[7] = "Cooking, Level: " + skills.getLevel(7) + "/" + skills.getStaticLevel(7) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(7)));
-		skill_info[8] = "Woodcutting, Level: " + skills.getLevel(8) + "/" + skills.getStaticLevel(8) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(8)));
-		skill_info[9] = "Fletching, Level: " + skills.getLevel(9) + "/" + skills.getStaticLevel(9) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(9)));
-		skill_info[10] = "Fishing, Level: " + skills.getLevel(10) + "/" + skills.getStaticLevel(10) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(10)));
-		skill_info[11] = "Firemaking, Level: " + skills.getLevel(11) + "/" + skills.getStaticLevel(11) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(11)));
-		skill_info[12] = "Crafting, Level: " + skills.getLevel(12) + "/" + skills.getStaticLevel(12) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(12)));
-		skill_info[13] = "Smithing, Level: " + skills.getLevel(13) + "/" + skills.getStaticLevel(13) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(13)));
-		skill_info[14] = "Mining, Level: " + skills.getLevel(14) + "/" + skills.getStaticLevel(14) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(14)));
-		skill_info[15] = "Herblore, Level: " + skills.getLevel(15) + "/" + skills.getStaticLevel(15) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(15)));
-		skill_info[16] = "Agility, Level: " + skills.getLevel(16) + "/" + skills.getStaticLevel(16) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(16)));
-		skill_info[17] = "Thieving, Level: " + skills.getLevel(17) + "/" + skills.getStaticLevel(17) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(17)));
-		skill_info[18] = "Slayer, Level: " + skills.getLevel(18) + "/" + skills.getStaticLevel(18) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(18)));
-		skill_info[19] = "Farming, Level: " + skills.getLevel(19) + "/" + skills.getStaticLevel(19) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(19)));
-		skill_info[20] = "Runecrafting, Level: " + skills.getLevel(20) + "/" + skills.getStaticLevel(20) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(20)));
-		skill_info[21] = "Hunter, Level: " + skills.getLevel(21) + "/" + skills.getStaticLevel(21) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(21)));
-		skill_info[22] = "Carpentry, Level: " + skills.getLevel(22) + "/" + skills.getStaticLevel(22) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(22)));
-		skill_info[23] = "Summoning, Level: " + skills.getLevel(23) + "/" + skills.getStaticLevel(23) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(23)));
-		skill_info[24] = "Digging, Level: " + skills.getLevel(24) + "/" + skills.getStaticLevel(24) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(24)));
-		skill_info[25] = "Stonecutting, Level: " + skills.getLevel(25) + "/" + skills.getStaticLevel(25) + ", xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getXp(25)));
+		
+		
+		skillButton[Skills.ATTACK] = new ImageButton(guiLeft + 10, guiTop + 10, 46, 20, 10, 10, 0, TEXTURE, null);
+		skillButton[Skills.HITPOINTS] = new ImageButton(guiLeft + 57, guiTop + 10, 46, 20, 57, 10, 0, TEXTURE, null);
+		skillButton[Skills.MINING] = new ImageButton(guiLeft + 104, guiTop + 10, 46, 20, 104, 10, 0, TEXTURE, null);
+		skillButton[Skills.STRENGTH] = new ImageButton(guiLeft + 10, guiTop + 31, 46, 20, 10, 31, 0, TEXTURE, null);
+		skillButton[Skills.AGILITY] = new ImageButton(guiLeft + 57, guiTop + 31, 46, 20, 57, 31, 0, TEXTURE, null);
+		skillButton[Skills.SMITHING] = new ImageButton(guiLeft + 104, guiTop + 31, 46, 20, 104, 31, 0, TEXTURE, null);
+		skillButton[Skills.DEFENCE] = new ImageButton(guiLeft + 10, guiTop + 52, 46, 20, 10, 52, 0, TEXTURE, null);
+		skillButton[Skills.HERBLORE] = new ImageButton(guiLeft + 57, guiTop + 52, 46, 20, 57, 52, 0, TEXTURE, null);
+		skillButton[Skills.FISHING] = new ImageButton(guiLeft + 104, guiTop + 52, 46, 20, 104, 52, 0, TEXTURE, null);
+		skillButton[Skills.RANGED] = new ImageButton(guiLeft + 10, guiTop + 73, 46, 20, 10, 73, 0, TEXTURE, null);
+		skillButton[Skills.THIEVING] = new ImageButton(guiLeft + 57, guiTop + 73, 46, 20, 57, 73, 0, TEXTURE, null);
+		skillButton[Skills.COOKING] = new ImageButton(guiLeft + 104, guiTop + 73, 46, 20, 104, 73, 0, TEXTURE, null);
+		skillButton[Skills.PRAYER] = new ImageButton(guiLeft + 10, guiTop + 94, 46, 20, 10, 94, 0, TEXTURE, null);
+		skillButton[Skills.CRAFTING] = new ImageButton(guiLeft + 57, guiTop + 94, 46, 20, 57, 94, 0, TEXTURE, null);
+		skillButton[Skills.FIREMAKING] = new ImageButton(guiLeft + 104, guiTop + 94, 46, 20, 104, 94, 0, TEXTURE, null);
+		skillButton[Skills.MAGIC] = new ImageButton(guiLeft + 10, guiTop + 115, 46, 20, 10, 115, 0, TEXTURE, null);
+		skillButton[Skills.FLETCHING] = new ImageButton(guiLeft + 57, guiTop + 115, 46, 20, 57, 115, 0, TEXTURE, null);
+		skillButton[Skills.WOODCUTTING] = new ImageButton(guiLeft + 104, guiTop + 115, 46, 20, 104, 115, 0, TEXTURE, null);
+		skillButton[Skills.RUNECRAFTING] = new ImageButton(guiLeft + 10, guiTop + 136, 46, 20, 10, 136, 0, TEXTURE, null);
+		skillButton[Skills.SLAYER] = new ImageButton(guiLeft + 57, guiTop + 136, 46, 20, 57, 136, 0, TEXTURE, null);
+		skillButton[Skills.FARMING] = new ImageButton(guiLeft + 104, guiTop + 136, 46, 20, 104, 136, 0, TEXTURE, null);
+		skillButton[Skills.CARPENTRY] = new ImageButton(guiLeft + 10, guiTop + 157, 46, 20, 10, 157, 0, TEXTURE, null);
+		skillButton[Skills.HUNTER] = new ImageButton(guiLeft + 57, guiTop + 157, 46, 20, 57, 157, 0, TEXTURE, null);
+		skillButton[Skills.SUMMONING] = new ImageButton(guiLeft + 104, guiTop + 157, 46, 20, 104, 157, 0, TEXTURE, null);
+		skillButton[Skills.STONECUTTING] = new ImageButton(guiLeft + 10, guiTop + 178, 46, 20, 10, 178, 0, TEXTURE, null);
+		skillButton[Skills.DIGGING] = new ImageButton(guiLeft + 57, guiTop + 178, 46, 20, 57, 178, 0, TEXTURE, null);
+		
+		for(int i = 0; i < 26; i++) {
+			dynamicLevel[i] = skills.getLevel(i);
+			staticLevel[i] = skills.getStaticLevel(i);
+			addButton(skillButton[i]);
+		}
+		
+		totalButton = new ImageButton(guiLeft + 109, guiTop + 183, 42, 16, 109, 183, 0, TEXTURE, null);
+		addButton(totalButton);
 	}
 	
 	@Override
 	public void render(final MatrixStack stack, final int mouseX, final int mouseY, final float partialTicks) {
 		renderBackground(stack);
-		this.blit(stack, width, height, 0, 0, width, height);
-		
-		drawCenteredString(stack, font, "Skills", width / 2, height - 200, 111111);
-		drawCenteredString(stack, font, "Total level: " + skills.getTotalLevel() + ", Total xp: " + NumberFormat.getInstance(Locale.US).format((int) Math.floor(skills.getTotalXp())), width / 2, height - 190, 111111);
-		
-		//Again, theres probably an easier way of doing this.
-		drawString(stack, font, skill_info[0], (width / 2) - 200, height - 180, 111111);
-		drawString(stack, font, skill_info[1], (width / 2) - 200, height - 170, 111111);
-		drawString(stack, font, skill_info[2], (width / 2) - 200, height - 160, 111111);
-		drawString(stack, font, skill_info[3], (width / 2) - 200, height - 150, 111111);
-		drawString(stack, font, skill_info[4], (width / 2) - 200, height - 140, 111111);
-		drawString(stack, font, skill_info[5], (width / 2) - 200, height - 130, 111111);
-		drawString(stack, font, skill_info[6], (width / 2) - 200, height - 120, 111111);
-		drawString(stack, font, skill_info[7], (width / 2) - 200, height - 110, 111111);
-		drawString(stack, font, skill_info[8], (width / 2) - 200, height - 100, 111111);
-		drawString(stack, font, skill_info[9], (width / 2) - 200, height - 90, 111111);
-		drawString(stack, font, skill_info[10], (width / 2) - 200, height - 80, 111111);
-		drawString(stack, font, skill_info[11], (width / 2) - 200, height - 70, 111111);
-		drawString(stack, font, skill_info[12], (width / 2) - 200, height - 60, 111111);
-		drawString(stack, font, skill_info[13], (width / 2) + 20, height - 180, 111111);
-		drawString(stack, font, skill_info[14], (width / 2) + 20, height - 170, 111111);
-		drawString(stack, font, skill_info[15], (width / 2) + 20, height - 160, 111111);
-		drawString(stack, font, skill_info[16], (width / 2) + 20, height - 150, 111111);
-		drawString(stack, font, skill_info[17], (width / 2) + 20, height - 140, 111111);
-		drawString(stack, font, skill_info[18], (width / 2) + 20, height - 130, 111111);
-		drawString(stack, font, skill_info[19], (width / 2) + 20, height - 120, 111111);
-		drawString(stack, font, skill_info[20], (width / 2) + 20, height - 110, 111111);
-		drawString(stack, font, skill_info[21], (width / 2) + 20, height - 100, 111111);
-		drawString(stack, font, skill_info[22], (width / 2) + 20, height - 90, 111111);
-		drawString(stack, font, skill_info[23], (width / 2) + 20, height - 80, 111111);
-		drawString(stack, font, skill_info[24], (width / 2) + 20, height - 70, 111111);
-		drawString(stack, font, skill_info[25], (width / 2) + 20, height - 60, 111111);
-		
 		super.render(stack, mouseX, mouseY, partialTicks);
+		stack.push();
+		stack.scale(1F, 1F, 1F);
+		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
+		this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
+		
+		for(int i = 0; i < 26; i++) {
+			skillButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
+			
+			if(skillButton[i].isHovered()) {
+				//I have no idea how to make tooltips multiple lines.
+				this.renderTooltip(stack, new StringTextComponent(skills.getName(i) + " xp: "
+						+ NumberFormat.getInstance(Locale.US).format((int) skills.getXp(i)) + ", xp to next: "
+						+ NumberFormat.getInstance(Locale.US).format((int) (skills.getXpByLevel(skills.getStaticLevel(i) + 1) - skills.getXp(i)))), mouseX, mouseY);
+			}
+		}
+		
+		if(totalButton.isHovered()) {
+			this.renderTooltip(stack, new StringTextComponent("total xp: " + NumberFormat.getInstance(Locale.US).format((int) skills.getTotalXp())), mouseX, mouseY);
+		}
+		
+		int colour = 0xffff00;
+		
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.ATTACK], guiLeft + 34, guiTop + 11, colour);
+		drawCenteredString(stack, font, "" + (int) player.getHealth(), guiLeft + 81, guiTop + 11, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.MINING], guiLeft + 128, guiTop + 11, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.STRENGTH], guiLeft + 34, guiTop + 32, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.AGILITY], guiLeft + 81, guiTop + 32, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.SMITHING], guiLeft + 128, guiTop + 32, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.DEFENCE], guiLeft + 34, guiTop + 53, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.HERBLORE], guiLeft + 81, guiTop + 53, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.FISHING], guiLeft + 128, guiTop + 53, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.RANGED], guiLeft + 34, guiTop + 74, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.THIEVING], guiLeft + 81, guiTop + 74, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.COOKING], guiLeft + 128, guiTop + 74, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.PRAYER], guiLeft + 34, guiTop + 95, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.CRAFTING], guiLeft + 81, guiTop + 95, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.FIREMAKING], guiLeft + 128, guiTop + 95, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.MAGIC], guiLeft + 34, guiTop + 116, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.FLETCHING], guiLeft + 81, guiTop + 116, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.WOODCUTTING], guiLeft + 128, guiTop + 116, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.RUNECRAFTING], guiLeft + 34, guiTop + 137, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.SLAYER], guiLeft + 81, guiTop + 137, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.FARMING], guiLeft + 128, guiTop + 137, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.CARPENTRY], guiLeft + 34, guiTop + 158, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.HUNTER], guiLeft + 81, guiTop + 158, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.SUMMONING], guiLeft + 128, guiTop + 158, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.STONECUTTING], guiLeft + 34, guiTop + 179, colour);
+		drawCenteredString(stack, font, "" + dynamicLevel[Skills.DIGGING], guiLeft + 81, guiTop + 179, colour);
+		
+		drawCenteredString(stack, font, "" + staticLevel[Skills.ATTACK], guiLeft + 46, guiTop + 19, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.HITPOINTS], guiLeft + 93, guiTop + 19, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.MINING], guiLeft + 140, guiTop + 19, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.STRENGTH], guiLeft + 46, guiTop + 40, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.AGILITY], guiLeft + 93, guiTop + 40, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.SMITHING], guiLeft + 140, guiTop + 40, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.DEFENCE], guiLeft + 46, guiTop + 61, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.HERBLORE], guiLeft + 93, guiTop + 61, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.FISHING], guiLeft + 140, guiTop + 61, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.RANGED], guiLeft + 46, guiTop + 82, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.THIEVING], guiLeft + 93, guiTop + 82, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.COOKING], guiLeft + 140, guiTop + 82, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.PRAYER], guiLeft + 46, guiTop + 103, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.CRAFTING], guiLeft + 93, guiTop + 103, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.FIREMAKING], guiLeft + 140, guiTop + 103, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.MAGIC], guiLeft + 46, guiTop + 124, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.FLETCHING], guiLeft + 93, guiTop + 124, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.WOODCUTTING], guiLeft + 140, guiTop + 124, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.RUNECRAFTING], guiLeft + 46, guiTop + 145, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.SLAYER], guiLeft + 93, guiTop + 145, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.FARMING], guiLeft + 140, guiTop + 145, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.CARPENTRY], guiLeft + 46, guiTop + 166, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.HUNTER], guiLeft + 93, guiTop + 166, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.SUMMONING], guiLeft + 140, guiTop + 166, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.STONECUTTING], guiLeft + 46, guiTop + 187, colour);
+		drawCenteredString(stack, font, "" + staticLevel[Skills.DIGGING], guiLeft + 93, guiTop + 187, colour);
+		
+		drawCenteredString(stack, font, "Total:", guiLeft + 130, guiTop + 182, colour);
+		drawCenteredString(stack, font, "" + skills.getTotalLevel(), guiLeft + 130, guiTop + 190, colour);
+		
+		stack.pop();
 	}
 
 }
