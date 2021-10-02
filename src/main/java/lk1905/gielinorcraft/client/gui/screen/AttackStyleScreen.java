@@ -47,31 +47,20 @@ public class AttackStyleScreen extends Screen{
 	public void init() {
 		guiLeft = (width - xSize) / 2;
 		guiTop = (height - ySize) / 2;
-		this.clear();
 		for(int i = 0; i < 6; i++) {
-			if(styleCap.getAttackStyle(i) == AttackStyle.EMPTY) {
-				styleButton[i] = null;
-				styleName[i] = null;
-			}else {
+			if(styleCap.getAttackStyle(i) != AttackStyle.EMPTY) {
 				styleButton[0] = new AttackStyleButton((width / 2) - 57, height / 2 - 45, 0);
 				styleButton[1] = new AttackStyleButton((width / 2) + 1, height / 2 - 45, 1);
 				styleButton[2] = new AttackStyleButton((width / 2) - 57, height / 2 - 18, 2);
 				styleButton[3] = new AttackStyleButton((width / 2) + 1, height / 2 - 18, 3);
 				styleButton[4] = new AttackStyleButton((width / 2) - 57, height / 2 + 9, 4);
 				styleButton[5] = new AttackStyleButton((width / 2) + 1, height / 2 + 9, 5);
-				
-				styleName[i] = styleCap.getStyleName(i);
-			}
-			if(styleButton[i] != null) {			
 				this.addButton(styleButton[i]);
+				styleName[i] = styleCap.getStyleName(i);
+			}else {
+				styleButton[i] = null;
+				styleName[i] = null;
 			}
-		}
-	}
-	
-	private void clear() {
-		for(int i = 0; i < 6; i++) {
-			styleButton[i] = null;
-			styleName[i] = null;
 		}
 	}
 	
@@ -83,7 +72,11 @@ public class AttackStyleScreen extends Screen{
 		stack.scale(1F, 1F, 1F);
 		mc.getTextureManager().bindTexture(TEXTURE);
 		this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
-		drawCenteredString(stack, font, "Combat level: " + skillCap.getCombatLevel(), width / 2, (height / 2) - 70, 111111);
+		int colour = 111111;
+		String wieldedItem = player.getHeldItemMainhand().getItem().getName().getString();
+		
+		drawCenteredString(stack, font, wieldedItem, width / 2, (height / 2) - 70, colour);
+		drawCenteredString(stack, font, "Combat level: " + skillCap.getCombatLevel(), width / 2, (height / 2) - 60, colour);
 
 		for(int i = 0; i < 6; i++) {
 			if(styleButton[i] != null) {
@@ -96,12 +89,12 @@ public class AttackStyleScreen extends Screen{
 				}
 			}
 			if(styleName[i] != null) {
-				drawCenteredString(stack, font, styleName[0], width / 2 - 30, height / 2 - 40, 0xFFFFFF);
-				drawCenteredString(stack, font, styleName[1], width / 2 + 29, height / 2 - 40, 0xFFFFFF);
-				drawCenteredString(stack, font, styleName[2], width / 2 - 30, height / 2 - 13, 0xFFFFFF);
-				drawCenteredString(stack, font, styleName[3], width / 2 + 29, height / 2 - 13, 0xFFFFFF);
-				drawCenteredString(stack, font, styleName[4], width / 2 - 30, height / 2 + 14, 0xFFFFFF);
-				drawCenteredString(stack, font, styleName[5], width / 2 + 29, height / 2 + 14, 0xFFFFFF);
+				drawCenteredString(stack, font, styleName[0], width / 2 - 30, height / 2 - 40, 0xffffff);
+				drawCenteredString(stack, font, styleName[1], width / 2 + 29, height / 2 - 40, 0xffffff);
+				drawCenteredString(stack, font, styleName[2], width / 2 - 30, height / 2 - 13, 0xffffff);
+				drawCenteredString(stack, font, styleName[3], width / 2 + 29, height / 2 - 13, 0xffffff);
+				drawCenteredString(stack, font, styleName[4], width / 2 - 30, height / 2 + 14, 0xffffff);
+				drawCenteredString(stack, font, styleName[5], width / 2 + 29, height / 2 + 14, 0xffffff);
 			}
 		}
 		stack.pop();

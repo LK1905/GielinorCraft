@@ -49,7 +49,7 @@ public class GcIngameGui extends AbstractGui{
 				levelColour = 0x00ff00;
 			}
 			
-			drawString(stack, mc.fontRenderer, entity.getName().getString() + " (level " + entityStats.getCombatLevel() + ")", 5, 5, levelColour);
+			drawString(stack, mc.fontRenderer, entity.getName().getString() + " (level " + entityCombat + ")", 5, 5, levelColour);
 			drawString(stack, mc.fontRenderer, (int) entity.getHealth() + " / " + (int) entity.getMaxHealth(), 5, 15, 0xffffff);
 			drawString(stack, mc.fontRenderer, entityStats.getLevel(3) + " / " + entityStats.getStaticLevel(3), 5, 25, 0xffffff);
 		}

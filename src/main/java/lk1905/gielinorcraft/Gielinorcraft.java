@@ -1,7 +1,5 @@
 package lk1905.gielinorcraft;
 
-import org.apache.logging.log4j.Logger;
-
 import lk1905.gielinorcraft.event.handler.CapabilityHandler;
 import lk1905.gielinorcraft.event.handler.ClientEventHandler;
 import lk1905.gielinorcraft.init.GcItems;
@@ -18,8 +16,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(Gielinorcraft.MODID)
 @Mod.EventBusSubscriber(modid = Gielinorcraft.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Gielinorcraft {
-
-	public static Logger logger;
 	
 	public static final String MODID = "gielinorcraft";
 	

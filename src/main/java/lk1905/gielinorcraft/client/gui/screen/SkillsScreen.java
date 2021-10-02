@@ -83,7 +83,7 @@ public class SkillsScreen extends Screen{
 			addButton(skillButton[i]);
 		}
 		
-		totalButton = new ImageButton(guiLeft + 109, guiTop + 183, 42, 16, 109, 183, 0, TEXTURE, null);
+		totalButton = new ImageButton(guiLeft + 104, guiTop + 178, 46, 20, 104, 178, 0, TEXTURE, null);
 		addButton(totalButton);
 	}
 	
@@ -100,7 +100,7 @@ public class SkillsScreen extends Screen{
 			skillButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 			
 			if(skillButton[i].isHovered()) {
-				//I have no idea how to make tooltips multiple lines.
+				//I have no idea how to make tooltips have  multiple lines.
 				this.renderTooltip(stack, new StringTextComponent(skills.getName(i) + " xp: "
 						+ NumberFormat.getInstance(Locale.US).format((int) skills.getXp(i)) + ", xp to next: "
 						+ NumberFormat.getInstance(Locale.US).format((int) (skills.getXpByLevel(skills.getStaticLevel(i) + 1) - skills.getXp(i)))), mouseX, mouseY);
@@ -167,8 +167,8 @@ public class SkillsScreen extends Screen{
 		drawCenteredString(stack, font, "" + staticLevel[Skills.STONECUTTING], guiLeft + 46, guiTop + 187, colour);
 		drawCenteredString(stack, font, "" + staticLevel[Skills.DIGGING], guiLeft + 93, guiTop + 187, colour);
 		
-		drawCenteredString(stack, font, "Total:", guiLeft + 130, guiTop + 182, colour);
-		drawCenteredString(stack, font, "" + skills.getTotalLevel(), guiLeft + 130, guiTop + 190, colour);
+		drawCenteredString(stack, font, "Total lvl:", guiLeft + 126, guiTop + 179, colour);
+		drawCenteredString(stack, font, "" + skills.getTotalLevel(), guiLeft + 126, guiTop + 188, colour);
 		
 		stack.pop();
 	}
