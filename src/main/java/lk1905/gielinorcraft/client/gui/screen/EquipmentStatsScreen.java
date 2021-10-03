@@ -46,26 +46,26 @@ public class EquipmentStatsScreen extends Screen{
 		stack.scale(1F, 1F, 1F);
 		Minecraft.getInstance().getTextureManager().bindTexture(TEXTURE);
 		this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
+		int colour = 111111;
+		drawCenteredString(stack, font, "Equipment Stats", width / 2, (height / 2) - 70, colour);
 		
-		drawCenteredString(stack, font, "Equipment Stats", width / 2, (height / 2) - 70, 111111);
-		
-		drawString(stack, font, "Accuracy", (width / 2) - 60, height - 180, 111111);
-		drawString(stack, font, "Stab: " + stats.getTotalAccuracy(0), (width / 2) - 60, height - 170, 111111);
-		drawString(stack, font, "Slash: " + stats.getTotalAccuracy(1), (width / 2) - 60, height - 160, 111111);
-		drawString(stack, font, "Crush: " + stats.getTotalAccuracy(2), (width / 2) - 60, height - 150, 111111);
-		drawString(stack, font, "Magic: " + stats.getTotalAccuracy(3), (width / 2) - 60, height - 140, 111111);
-		drawString(stack, font, "Ranged: " + stats.getTotalAccuracy(4), (width / 2) - 60, height - 130, 111111);
-		drawString(stack, font, "Strength", (width / 2) - 60, height - 110, 111111);
-		drawString(stack, font, "Melee: " + stats.getTotalMeleeStrength(), (width / 2) - 60, height - 100, 111111);
-		drawString(stack, font, "Ranged: " + stats.getTotalRangedStrength(), (width / 2) - 60, height - 90, 111111);
-		drawString(stack, font, "Magic: " + stats.getTotalMagicStrength() + "%", (width / 2) - 60, height - 80, 111111);
+		drawString(stack, font, "Accuracy", (width / 2) - 60, height - 180, colour);
+		drawString(stack, font, "Stab: " + stats.getTotalAccuracy(0), (width / 2) - 60, height - 170, colour);
+		drawString(stack, font, "Slash: " + stats.getTotalAccuracy(1), (width / 2) - 60, height - 160, colour);
+		drawString(stack, font, "Crush: " + stats.getTotalAccuracy(2), (width / 2) - 60, height - 150, colour);
+		drawString(stack, font, "Magic: " + stats.getTotalAccuracy(3), (width / 2) - 60, height - 140, colour);
+		drawString(stack, font, "Range: " + stats.getTotalAccuracy(4), (width / 2) - 60, height - 130, colour);
+		drawString(stack, font, "Strength", (width / 2) - 60, height - 110, colour);
+		drawString(stack, font, "Melee: " + stats.getTotalMeleeStrength(), (width / 2) - 60, height - 100, colour);
+		drawString(stack, font, "Ranged: " + stats.getTotalRangedStrength(), (width / 2) - 60, height - 90, colour);
+		drawString(stack, font, "Magic: " + stats.getTotalMagicStrength() + "%", (width / 2) - 60, height - 80, colour);
 
-		drawString(stack, font, "Defence", (width / 2) + 5, height - 180, 111111);
-		drawString(stack, font, "Stab: " + stats.getTotalDefence(0), (width / 2) + 5, height - 170, 111111);
-		drawString(stack, font, "Slash: " + stats.getTotalDefence(1), (width / 2) + 5, height - 160, 111111);
-		drawString(stack, font, "Crush: " + stats.getTotalDefence(2), (width / 2) + 5, height - 150, 111111);
-		drawString(stack, font, "Magic: " + stats.getTotalDefence(3), (width / 2) + 5, height - 140, 111111);
-		drawString(stack, font, "Ranged: " + stats.getTotalDefence(4), (width / 2) + 5, height - 130, 111111);
+		drawString(stack, font, "Defence", (width / 2) + 5, height - 180, colour);
+		drawString(stack, font, "Stab: " + stats.getTotalDefence(0), (width / 2) + 5, height - 170, colour);
+		drawString(stack, font, "Slash: " + stats.getTotalDefence(1), (width / 2) + 5, height - 160, colour);
+		drawString(stack, font, "Crush: " + stats.getTotalDefence(2), (width / 2) + 5, height - 150, colour);
+		drawString(stack, font, "Magic: " + stats.getTotalDefence(3), (width / 2) + 5, height - 140, colour);
+		drawString(stack, font, "Range: " + stats.getTotalDefence(4), (width / 2) + 5, height - 130, colour);
 		
 		stack.pop();
 	}
