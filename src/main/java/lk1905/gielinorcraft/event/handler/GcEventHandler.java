@@ -27,8 +27,16 @@ public class GcEventHandler {
 
 	@SubscribeEvent
 	public static void onXPGain(XPGainEvent event) {
-		if(!event.getEntity().world.isRemote) {
-			PacketHandler.sendTo(new XPGainPacket(event.getSkillId(), event.getXPGained()), (ServerPlayerEntity) event.getEntity());
+		ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
+		ISkills cap = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		
+		if(!player.world.isRemote) {
+			PacketHandler.sendTo(new XPGainPacket(event.getSkillId(), event.getXPGained()), (ServerPlayerEntity) player);
+			
+			if(cap.getXp(event.getSkillId()) + event.getXPGained() == 200000000) {
+				PacketHandler.sendToAllPlayers(new StringPacket(player.getName() + " has reached the maximum xp value of 200,000,000 in "
+						+ cap.getName(event.getSkillId()) + "!"), player.server);
+			}
 		}
 	}
 	
@@ -43,7 +51,8 @@ public class GcEventHandler {
 			+ "! You are now level " + event.getNewLevel() + "."), player);
 		
 			if(event.getNewLevel() == 99) {
-				PacketHandler.sendToAllPlayers(new StringPacket(player.getName() + " has reached level 99 in " + cap.getName(event.getSkillId()) + "!"), null);
+				PacketHandler.sendToAllPlayers(new StringPacket(player.getName() + " has reached level 99 in "
+						+ cap.getName(event.getSkillId()) + "!"), player.server);
 			}
 		}
 	}

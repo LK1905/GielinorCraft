@@ -9,6 +9,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,10 +27,15 @@ public class LevelLockEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = diggingLevelForBlock(event.getState().getBlock());
 		
-		if(skills.getLevel(24) < levelReq) {
-			event.setCanceled(true);
-			PacketHandler.sendTo(new StringPacket("You do not have the Digging level required to dig this block. Level "
+		if(!player.world.isRemote) {
+			if(event.getState().getHarvestTool() == ToolType.SHOVEL && !(player.getHeldItemMainhand().getItem() instanceof ShovelItem)) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("A shovel is required to dig this block."), (ServerPlayerEntity) player);
+			}else if(skills.getLevel(24) < levelReq) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("You do not have the Digging level required to dig this block. Level "
 						+ levelReq + " required."), (ServerPlayerEntity) player);
+			}
 		}
 	}
 	
@@ -37,10 +46,15 @@ public class LevelLockEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = miningLevelForBlock(event.getState().getBlock());
 		
-		if(skills.getLevel(14) < levelReq) {
-			event.setCanceled(true);
-			PacketHandler.sendTo(new StringPacket("You do not have the Mining level required to mine this block. Level "
+		if(!player.world.isRemote) {
+			if(event.getState().getHarvestTool() == ToolType.PICKAXE && !(player.getHeldItemMainhand().getItem() instanceof PickaxeItem)) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("A pickaxe is required to mine this block."), (ServerPlayerEntity) player);
+			}else if(skills.getLevel(14) < levelReq) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("You do not have the Mining level required to mine this block. Level "
 						+ levelReq + " required."), (ServerPlayerEntity) player);
+			}
 		}
 	}
 	
@@ -51,10 +65,15 @@ public class LevelLockEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = woodcuttingLevelForBlock(event.getState().getBlock());
 		
-		if(skills.getLevel(8) < levelReq) {
-			event.setCanceled(true);
-			PacketHandler.sendTo(new StringPacket("You do not have the Woodcutting level required to chop this block. Level "
+		if(!player.world.isRemote) {
+			if(event.getState().getHarvestTool() == ToolType.AXE && !(player.getHeldItemMainhand().getItem() instanceof AxeItem)) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("An axe is required to cut this block."), (ServerPlayerEntity) player);
+			}else if(skills.getLevel(8) < levelReq) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("You do not have the Woodcutting level required to chop this block. Level "
 						+ levelReq + " required."), (ServerPlayerEntity) player);
+			}
 		}
 	}
 	
@@ -65,10 +84,12 @@ public class LevelLockEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = farmingLevelForBlock(event.getState().getBlock());
 		
-		if(skills.getLevel(19) < levelReq) {
-			event.setCanceled(true);
-			PacketHandler.sendTo(new StringPacket("You do not have the Farming level required to harvest this block. Level "
+		if(!player.world.isRemote) {
+			if(skills.getLevel(19) < levelReq) {
+				event.setCanceled(true);
+				PacketHandler.sendTo(new StringPacket("You do not have the Farming level required to harvest this block. Level "
 						+ levelReq + " required."), (ServerPlayerEntity) player);
+			}
 		}
 	}
 	

@@ -5,12 +5,16 @@ import lk1905.gielinorcraft.capability.attackstyle.AttackStyleCapability;
 import lk1905.gielinorcraft.capability.attackstyle.IAttackStyle;
 import lk1905.gielinorcraft.capability.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
+import lk1905.gielinorcraft.capability.skill.Skills;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemSmeltedEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -154,6 +158,39 @@ public class XPEventHandler {
 				skills.addXp(19, xpGained);
 				skills.sync((ServerPlayerEntity) player);
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onSmeltingEvent(ItemSmeltedEvent event) {
+		PlayerEntity player = event.getPlayer();
+		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		double xpGained = 0;
+		Item smeltedItem = event.getSmelting().getItem();
+		
+		if(smeltedItem == Items.STONE) {
+			xpGained = 1.0;
+		}else if(smeltedItem == Items.COAL || smeltedItem == Items.CHARCOAL) {
+			xpGained = 8.0;
+		}else if(smeltedItem == Items.IRON_INGOT) {
+			xpGained = 12.5;
+		}else if(smeltedItem == Items.QUARTZ) {
+			xpGained = 17.5;
+		}else if(smeltedItem == Items.GOLD_INGOT) {
+			xpGained = 22.5;
+		}else if(smeltedItem == Items.REDSTONE) {
+			xpGained = 20.0;
+		}else if(smeltedItem == Items.LAPIS_LAZULI) {
+			xpGained = 30.0;;
+		}else if(smeltedItem == Items.EMERALD) {
+			xpGained = 37.5;
+		}else if(smeltedItem == Items.DIAMOND) {
+			xpGained = 50.0;
+		}
+		
+		if(!player.world.isRemote) {
+			skills.addXp(Skills.SMITHING, xpGained * event.getSmelting().getCount());
+			skills.sync((ServerPlayerEntity) player);
 		}
 	}
 	

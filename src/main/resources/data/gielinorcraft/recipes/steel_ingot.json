@@ -1,0 +1,12 @@
+{
+  "type": "gielinorcraft:alloy",
+  "ingredient_1": {
+    "item": "minecraft:iron_ore"
+  },
+  "ingredient_2": {
+    "item": "minecraft:coal"
+  },
+  "result": "gielinorcraft:steel_ingot",
+  "experience": 0.35,
+  "cookingtime": 200
+}

@@ -1,0 +1,16 @@
+{
+    "result": {
+        "item": "gielinorcraft:furnace"
+    },
+    "pattern": [
+        "ccc",
+        "c c",
+        "ccc"
+    ],
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "c": {
+            "item": "minecraft:stone"
+        }
+    }
+}

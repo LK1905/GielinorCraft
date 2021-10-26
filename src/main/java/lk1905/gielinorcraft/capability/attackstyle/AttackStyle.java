@@ -81,17 +81,17 @@ public class AttackStyle implements IAttackStyle{
 		"Stab - Strength xp",
 		"Slash - Strength xp",
 		"Crush - Strength xp",
-		"Stab - Attack/Defence/Strength xp",
-		"Slash - Attack/Defence/Strength xp",
-		"Crush - Attack/Defence/Strength xp",
+		"Stab - Split Attack/Defence/Strength xp",
+		"Slash - Split Attack/Defence/Strength xp",
+		"Crush - Split Attack/Defence/Strength xp",
 		"Stab - Defence xp",
 		"Slash - Defence xp",
 		"Crush - Defence xp",
 		"Level bonus - Ranged xp",
 		"Speed bonus - Ranged xp",
-		"Range bonus - Ranged/Defence xp",
+		"Range bonus - Split Ranged/Defence xp",
 		"Standard cast - Magic xp",
-		"Defensive cast - Magic/Defence xp"
+		"Defensive cast - Split Magic/Defence xp"
 	};
 	
 	private final int[] styleSlot;

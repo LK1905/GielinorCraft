@@ -1,9 +1,14 @@
 package lk1905.gielinorcraft;
 
+import lk1905.gielinorcraft.client.gui.screen.container.GcFurnaceScreen;
 import lk1905.gielinorcraft.event.handler.CapabilityHandler;
 import lk1905.gielinorcraft.event.handler.ClientEventHandler;
+import lk1905.gielinorcraft.init.GcBlocks;
+import lk1905.gielinorcraft.init.GcContainerType;
 import lk1905.gielinorcraft.init.GcItems;
+import lk1905.gielinorcraft.init.GcTileEntityType;
 import lk1905.gielinorcraft.network.PacketHandler;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,12 +30,16 @@ public class Gielinorcraft {
 		final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		
 		GcItems.initialise(bus);
+		GcBlocks.initialise(bus);
+		GcTileEntityType.initialise(bus);
+		GcContainerType.initialise(bus);
 	}
 	
 	@SubscribeEvent
 	public static void onCommonSetup(final FMLCommonSetupEvent event) {
 		CapabilityHandler.register();
 		PacketHandler.register();
+		event.enqueueWork(() -> ScreenManager.registerFactory(GcContainerType.FURNACE.get(), GcFurnaceScreen::new));
 	}
 	
 	@SubscribeEvent

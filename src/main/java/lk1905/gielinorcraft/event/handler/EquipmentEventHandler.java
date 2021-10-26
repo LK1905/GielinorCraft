@@ -8,6 +8,7 @@ import lk1905.gielinorcraft.capability.stat.IStats;
 import lk1905.gielinorcraft.capability.stat.StatCapability;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.StringPacket;
+import lk1905.gielinorcraft.network.attackstyle.AttackStyleServerPacket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -16,6 +17,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShearsItem;
@@ -40,11 +42,20 @@ public class EquipmentEventHandler {
 		Item to = event.getTo().getItem();
 		Item from = event.getFrom().getItem();
 		
+		if(style.getActiveStyle() == AttackStyle.EMPTY) {
+			style.setActiveSlot(0);
+			if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
+				PacketHandler.sendTo(new AttackStyleServerPacket(0), (ServerPlayerEntity) entity);
+			}
+		}
+		
 		//-----Mainhand items-----//
 		
-		if(to instanceof TieredItem) {
+		if(to instanceof TieredItem || to instanceof ArmorItem) {
 			if(event.getSlot() == EquipmentSlotType.OFFHAND && entity instanceof PlayerEntity) {
-				if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
+				entity.entityDropItem(event.getTo());
+				entity.setItemStackToSlot(event.getSlot(), ItemStack.EMPTY);
+				if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {				
 					PacketHandler.sendTo(new StringPacket("You cannot wield this item in your offhand."), (ServerPlayerEntity) entity);
 				}
 			}
@@ -296,11 +307,13 @@ public class EquipmentEventHandler {
 		
 		if(to instanceof ShieldItem) {
 			if(event.getSlot() == EquipmentSlotType.MAINHAND && entity instanceof PlayerEntity) {
+				entity.entityDropItem(event.getTo());
+				entity.setItemStackToSlot(event.getSlot(), ItemStack.EMPTY);
 				if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
 					PacketHandler.sendTo(new StringPacket("You cannot wield this item in your mainhand."), (ServerPlayerEntity) entity);
 				}
 			}
-		}
+		}		
 		
 		if((from instanceof ShieldItem) && !(to instanceof ShieldItem)) {
 			stats.setSlotAccuracy(2, 0, 0);
@@ -345,16 +358,6 @@ public class EquipmentEventHandler {
 				stats.setSlotDefence(2, 2, 15);
 				stats.setSlotDefence(2, 3, 0);
 				stats.setSlotDefence(2, 4, 17);
-			}
-		}
-		
-		//-----all armour slots-----//
-		
-		if(to instanceof ArmorItem) {
-			if((event.getSlot() == EquipmentSlotType.MAINHAND || event.getSlot() == EquipmentSlotType.OFFHAND) && entity instanceof PlayerEntity) {
-				if(entity instanceof ServerPlayerEntity && !(entity.world.isRemote)) {
-					PacketHandler.sendTo(new StringPacket("You cannot wield this item."), (ServerPlayerEntity) entity);
-				}
 			}
 		}
 		
