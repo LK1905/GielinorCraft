@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "gielinorcraft:block/furnace_top",
+        "front": "gielinorcraft:block/furnace_front_on",
+        "side": "gielinorcraft:block/furnace_side"
+    }
+}
