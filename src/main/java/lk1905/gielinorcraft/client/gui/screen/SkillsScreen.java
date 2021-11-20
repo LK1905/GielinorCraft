@@ -3,6 +3,7 @@ package lk1905.gielinorcraft.client.gui.screen;
 import java.util.Locale;
 
 import com.ibm.icu.text.NumberFormat;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import lk1905.gielinorcraft.Gielinorcraft;
@@ -10,8 +11,9 @@ import lk1905.gielinorcraft.capability.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import lk1905.gielinorcraft.capability.skill.Skills;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -19,12 +21,12 @@ import net.minecraft.world.entity.player.Player;
 /**A Simple gui containing all the player's skill data. Just text for now, will upgrade in the future.*/
 public class SkillsScreen extends Screen{
 
-	private final ResourceLocation TEXTURE = new ResourceLocation(Gielinorcraft.MODID, "textures/gui/skills.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Gielinorcraft.MODID, "textures/gui/skills.png");
 	
 	private final int[] dynamicLevel = new int[26];
 	private final int[] staticLevel = new int[26];
-	private final ImageButton[] skillButton = new ImageButton[26];
-	private ImageButton totalButton;
+	private final Button[] skillButton = new Button[26];
+	private Button totalButton;
 	
 	private Player player = Minecraft.getInstance().player;
 	private ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
@@ -47,35 +49,33 @@ public class SkillsScreen extends Screen{
 	public void init() {
 		guiLeft = (width - xSize) / 2;
 		guiTop = (height - ySize) / 2;
-		
-		
-		
-		skillButton[Skills.ATTACK] = new ImageButton(guiLeft + 10, guiTop + 10, 46, 20, 10, 10, 0, TEXTURE, null);
-		skillButton[Skills.HITPOINTS] = new ImageButton(guiLeft + 57, guiTop + 10, 46, 20, 57, 10, 0, TEXTURE, null);
-		skillButton[Skills.MINING] = new ImageButton(guiLeft + 104, guiTop + 10, 46, 20, 104, 10, 0, TEXTURE, null);
-		skillButton[Skills.STRENGTH] = new ImageButton(guiLeft + 10, guiTop + 31, 46, 20, 10, 31, 0, TEXTURE, null);
-		skillButton[Skills.AGILITY] = new ImageButton(guiLeft + 57, guiTop + 31, 46, 20, 57, 31, 0, TEXTURE, null);
-		skillButton[Skills.SMITHING] = new ImageButton(guiLeft + 104, guiTop + 31, 46, 20, 104, 31, 0, TEXTURE, null);
-		skillButton[Skills.DEFENCE] = new ImageButton(guiLeft + 10, guiTop + 52, 46, 20, 10, 52, 0, TEXTURE, null);
-		skillButton[Skills.HERBLORE] = new ImageButton(guiLeft + 57, guiTop + 52, 46, 20, 57, 52, 0, TEXTURE, null);
-		skillButton[Skills.FISHING] = new ImageButton(guiLeft + 104, guiTop + 52, 46, 20, 104, 52, 0, TEXTURE, null);
-		skillButton[Skills.RANGED] = new ImageButton(guiLeft + 10, guiTop + 73, 46, 20, 10, 73, 0, TEXTURE, null);
-		skillButton[Skills.THIEVING] = new ImageButton(guiLeft + 57, guiTop + 73, 46, 20, 57, 73, 0, TEXTURE, null);
-		skillButton[Skills.COOKING] = new ImageButton(guiLeft + 104, guiTop + 73, 46, 20, 104, 73, 0, TEXTURE, null);
-		skillButton[Skills.PRAYER] = new ImageButton(guiLeft + 10, guiTop + 94, 46, 20, 10, 94, 0, TEXTURE, null);
-		skillButton[Skills.CRAFTING] = new ImageButton(guiLeft + 57, guiTop + 94, 46, 20, 57, 94, 0, TEXTURE, null);
-		skillButton[Skills.FIREMAKING] = new ImageButton(guiLeft + 104, guiTop + 94, 46, 20, 104, 94, 0, TEXTURE, null);
-		skillButton[Skills.MAGIC] = new ImageButton(guiLeft + 10, guiTop + 115, 46, 20, 10, 115, 0, TEXTURE, null);
-		skillButton[Skills.FLETCHING] = new ImageButton(guiLeft + 57, guiTop + 115, 46, 20, 57, 115, 0, TEXTURE, null);
-		skillButton[Skills.WOODCUTTING] = new ImageButton(guiLeft + 104, guiTop + 115, 46, 20, 104, 115, 0, TEXTURE, null);
-		skillButton[Skills.RUNECRAFTING] = new ImageButton(guiLeft + 10, guiTop + 136, 46, 20, 10, 136, 0, TEXTURE, null);
-		skillButton[Skills.SLAYER] = new ImageButton(guiLeft + 57, guiTop + 136, 46, 20, 57, 136, 0, TEXTURE, null);
-		skillButton[Skills.FARMING] = new ImageButton(guiLeft + 104, guiTop + 136, 46, 20, 104, 136, 0, TEXTURE, null);
-		skillButton[Skills.CARPENTRY] = new ImageButton(guiLeft + 10, guiTop + 157, 46, 20, 10, 157, 0, TEXTURE, null);
-		skillButton[Skills.HUNTER] = new ImageButton(guiLeft + 57, guiTop + 157, 46, 20, 57, 157, 0, TEXTURE, null);
-		skillButton[Skills.SUMMONING] = new ImageButton(guiLeft + 104, guiTop + 157, 46, 20, 104, 157, 0, TEXTURE, null);
-		skillButton[Skills.STONECUTTING] = new ImageButton(guiLeft + 10, guiTop + 178, 46, 20, 10, 178, 0, TEXTURE, null);
-		skillButton[Skills.DIGGING] = new ImageButton(guiLeft + 57, guiTop + 178, 46, 20, 57, 178, 0, TEXTURE, null);
+				
+		skillButton[Skills.ATTACK] = new Button(guiLeft + 10, guiTop + 10, 46, 20, null, (button) -> {});
+		skillButton[Skills.HITPOINTS] = new Button(guiLeft + 57, guiTop + 10, 46, 20, null, (button) -> {});
+		skillButton[Skills.MINING] = new Button(guiLeft + 104, guiTop + 10, 46, 20, null, (button) -> {});
+		skillButton[Skills.STRENGTH] = new Button(guiLeft + 10, guiTop + 31, 46, 20, null, (button) -> {});
+		skillButton[Skills.AGILITY] = new Button(guiLeft + 57, guiTop + 31, 46, 20, null, (button) -> {});
+		skillButton[Skills.SMITHING] = new Button(guiLeft + 104, guiTop + 31, 46, 20, null, (button) -> {});
+		skillButton[Skills.DEFENCE] = new Button(guiLeft + 10, guiTop + 52, 46, 20, null, (button) -> {});
+		skillButton[Skills.HERBLORE] = new Button(guiLeft + 57, guiTop + 52, 46, 20, null, (button) -> {});
+		skillButton[Skills.FISHING] = new Button(guiLeft + 104, guiTop + 52, 46, 20, null, (button) -> {});
+		skillButton[Skills.RANGED] = new Button(guiLeft + 10, guiTop + 73, 46, 20, null, (button) -> {});
+		skillButton[Skills.THIEVING] = new Button(guiLeft + 57, guiTop + 73, 46, 20, null, (button) -> {});
+		skillButton[Skills.COOKING] = new Button(guiLeft + 104, guiTop + 73, 46, 20, null, (button) -> {});
+		skillButton[Skills.PRAYER] = new Button(guiLeft + 10, guiTop + 94, 46, 20, null, (button) -> {});
+		skillButton[Skills.CRAFTING] = new Button(guiLeft + 57, guiTop + 94, 46, 20, null, (button) -> {});
+		skillButton[Skills.FIREMAKING] = new Button(guiLeft + 104, guiTop + 94, 46, 20, null, (button) -> {});
+		skillButton[Skills.MAGIC] = new Button(guiLeft + 10, guiTop + 115, 46, 20, null, (button) -> {});
+		skillButton[Skills.FLETCHING] = new Button(guiLeft + 57, guiTop + 115, 46, 20, null, (button) -> {});
+		skillButton[Skills.WOODCUTTING] = new Button(guiLeft + 104, guiTop + 115, 46, 20, null, (button) -> {});
+		skillButton[Skills.RUNECRAFTING] = new Button(guiLeft + 10, guiTop + 136, 46, 20, null, (button) -> {});
+		skillButton[Skills.SLAYER] = new Button(guiLeft + 57, guiTop + 136, 46, 20, null, (button) -> {});
+		skillButton[Skills.FARMING] = new Button(guiLeft + 104, guiTop + 136, 46, 20, null, (button) -> {});
+		skillButton[Skills.CARPENTRY] = new Button(guiLeft + 10, guiTop + 157, 46, 20, null, (button) -> {});
+		skillButton[Skills.HUNTER] = new Button(guiLeft + 57, guiTop + 157, 46, 20, null, (button) -> {});
+		skillButton[Skills.SUMMONING] = new Button(guiLeft + 104, guiTop + 157, 46, 20, null, (button) -> {});
+		skillButton[Skills.STONECUTTING] = new Button(guiLeft + 10, guiTop + 178, 46, 20, null, (button) -> {});
+		skillButton[Skills.DIGGING] = new Button(guiLeft + 57, guiTop + 178, 46, 20, null, (button) -> {});
 		
 		for(int i = 0; i < 26; i++) {
 			dynamicLevel[i] = skills.getLevel(i);
@@ -83,22 +83,26 @@ public class SkillsScreen extends Screen{
 			addWidget(skillButton[i]);
 		}
 		
-		totalButton = new ImageButton(guiLeft + 104, guiTop + 178, 46, 20, 104, 178, 0, TEXTURE, null);
+		totalButton = new Button(guiLeft + 104, guiTop + 178, 46, 20, null, (button) -> {});
 		addWidget(totalButton);
+	}
+	
+	@Override
+	public void renderBackground(final PoseStack stack) {
+		super.renderBackground(stack);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+		RenderSystem.setShaderTexture(0, TEXTURE);
+		this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
 	
 	@Override
 	public void render(final PoseStack stack, final int mouseX, final int mouseY, final float partialTicks) {
 		renderBackground(stack);
 		super.render(stack, mouseX, mouseY, partialTicks);
-		stack.pushPose();
-		stack.scale(1F, 1F, 1F);
-		Minecraft.getInstance().getTextureManager().getTexture(TEXTURE);
-		this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
+		stack.pushPose();		
 		
 		for(int i = 0; i < 26; i++) {
-			skillButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
-			
 			if(skillButton[i].isHovered()) {
 				//I have no idea how to make tooltips have  multiple lines.
 				this.renderTooltip(stack, new TextComponent(skills.getName(i) + " xp: "

@@ -18,7 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
 
-public final class Skills implements ISkills{
+public final class Skills implements ISkills {
 
 	/**Represents an array of skill names.*/
 	public static final String[] SKILL_NAME = {

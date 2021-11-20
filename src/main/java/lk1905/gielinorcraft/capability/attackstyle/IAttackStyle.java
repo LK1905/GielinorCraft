@@ -2,8 +2,9 @@ package lk1905.gielinorcraft.capability.attackstyle;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public interface IAttackStyle {
+public interface IAttackStyle extends INBTSerializable<CompoundTag>{
 
 	void setAttackStyle(int slot, int style);
 	int getAttackStyle(int slot);
@@ -16,9 +17,6 @@ public interface IAttackStyle {
 	String getStyleDescription(int slot);
 	
 	int getActiveSlot();
-	
-	CompoundTag serializeNBT();
-	void deserializeNBT(CompoundTag data);
 	
 	void sync(ServerPlayer player);
 }

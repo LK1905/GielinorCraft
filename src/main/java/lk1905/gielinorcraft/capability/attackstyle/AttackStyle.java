@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
-public class AttackStyle implements IAttackStyle{
+public class AttackStyle implements IAttackStyle {
 
 	public static final int
 		EMPTY = 0,

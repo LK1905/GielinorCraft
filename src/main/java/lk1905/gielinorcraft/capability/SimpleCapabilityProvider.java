@@ -45,16 +45,6 @@ public class SimpleCapabilityProvider<HANDLER> implements ICapabilityProvider{
 		lazyOptional = LazyOptional.of(() -> this.instance);
 	}
 
-	/**
-	 * Retrieves the handler for the capability requested on the specific side.
-	 * The return value CAN be null if the object does not support the capability.
-	 * The return value CAN be the same for multiple faces.
-	 *
-	 * @param capability The capability to check
-	 * @param facing     The Side to check from:
-	 *                   CAN BE NULL. Null is defined to represent 'internal' or 'self'
-	 * @return A lazy optional containing the handler, if this object supports the capability.
-	 */
 	@Override
 	public <T> LazyOptional<T> getCapability(final Capability<T> capability, @Nullable final Direction facing) {
 		return getCapability().orEmpty(capability, lazyOptional);

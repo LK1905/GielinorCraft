@@ -4,7 +4,6 @@ import lk1905.gielinorcraft.Gielinorcraft;
 import lk1905.gielinorcraft.capability.skill.ISkills;
 import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import lk1905.gielinorcraft.capability.skill.Skills;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.PickaxeItem;
@@ -22,7 +21,7 @@ public class LevelSpeedEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		
 		if(!player.level.isClientSide) {
-			if(player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ShovelItem) {
+			if(player.getMainHandItem().getItem() instanceof ShovelItem) {
 				event.setNewSpeed(event.getOriginalSpeed() * (0.5F + skills.getLevel(Skills.DIGGING) / 100));
 			}
 		}
@@ -34,7 +33,7 @@ public class LevelSpeedEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		
 		if(!player.level.isClientSide) {
-			if(player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof PickaxeItem) {
+			if(player.getMainHandItem().getItem() instanceof PickaxeItem) {
 				event.setNewSpeed(event.getOriginalSpeed() * (0.5F + skills.getLevel(Skills.MINING) / 100));
 			}
 		}
@@ -46,7 +45,7 @@ public class LevelSpeedEventHandler {
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		
 		if(!player.level.isClientSide) {
-			if(player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof AxeItem) {
+			if(player.getMainHandItem().getItem() instanceof AxeItem) {
 				event.setNewSpeed(event.getOriginalSpeed() * (0.5F + skills.getLevel(Skills.WOODCUTTING) / 100));
 			}
 		}

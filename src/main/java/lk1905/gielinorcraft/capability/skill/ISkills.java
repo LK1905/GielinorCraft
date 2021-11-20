@@ -2,9 +2,10 @@ package lk1905.gielinorcraft.capability.skill;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.util.INBTSerializable;
 
 /**Represents an entity's skills.*/
-public interface ISkills {
+public interface ISkills extends INBTSerializable<CompoundTag> {
 
 	/**
 	 * Determine whether the specified skill is a combat skill.
@@ -28,18 +29,6 @@ public interface ISkills {
 	
 	/**Returns the dynamic levels to the static levels.*/
 	public void restore();
-	
-	/**
-	 * Serializes the skill data into nbt tag format.
-	 * @return A CompoundNBT tag representing skill data.
-	 * */
-	public CompoundTag serializeNBT();
-	
-	/**
-	 * Deserializes the skill data from nbt tag format.
-	 * @param data The CompoundNBT representing skill data.
-	 * */
-	public void deserializeNBT(CompoundTag data);
 	
 	/**
 	 * Gets the static level.

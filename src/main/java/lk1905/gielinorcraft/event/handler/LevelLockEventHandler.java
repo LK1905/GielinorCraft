@@ -6,13 +6,13 @@ import lk1905.gielinorcraft.capability.skill.SkillCapability;
 import lk1905.gielinorcraft.network.PacketHandler;
 import lk1905.gielinorcraft.network.StringPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,9 +26,12 @@ public class LevelLockEventHandler {
 		Player player = event.getPlayer();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = diggingLevelForBlock(event.getState().getBlock());
+		Material material = event.getState().getMaterial();
 		
 		if(!player.level.isClientSide) {
-			if(!(player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof ShovelItem)) {
+			if((material == Material.DIRT || material == Material.GRASS
+					|| material == Material.CLAY || material == Material.SAND || material == Material.SNOW)
+					&& !(player.getMainHandItem().getItem() instanceof ShovelItem)) {
 				event.setCanceled(true);
 				PacketHandler.sendTo(new StringPacket("A shovel is required to dig this block."), (ServerPlayer) player);
 			}else if(skills.getLevel(24) < levelReq) {
@@ -45,9 +48,12 @@ public class LevelLockEventHandler {
 		Player player = event.getPlayer();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = miningLevelForBlock(event.getState().getBlock());
+		Material material = event.getState().getMaterial();
 		
 		if(!player.level.isClientSide) {
-			if(!(player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof PickaxeItem)) {
+			if((material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL || material == Material.AMETHYST
+					|| material == Material.ICE || material == Material.ICE_SOLID)
+					&& !(player.getMainHandItem().getItem() instanceof PickaxeItem)) {
 				event.setCanceled(true);
 				PacketHandler.sendTo(new StringPacket("A pickaxe is required to mine this block."), (ServerPlayer) player);
 			}else if(skills.getLevel(14) < levelReq) {
@@ -64,9 +70,10 @@ public class LevelLockEventHandler {
 		Player player = event.getPlayer();
 		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
 		int levelReq = woodcuttingLevelForBlock(event.getState().getBlock());
+		Material material = event.getState().getMaterial();
 		
 		if(!player.level.isClientSide) {
-			if(!(player.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof AxeItem)) {
+			if((material == Material.WOOD || material == Material.NETHER_WOOD) && !(player.getMainHandItem().getItem() instanceof AxeItem)) {
 				event.setCanceled(true);
 				PacketHandler.sendTo(new StringPacket("An axe is required to cut this block."), (ServerPlayer) player);
 			}else if(skills.getLevel(8) < levelReq) {
