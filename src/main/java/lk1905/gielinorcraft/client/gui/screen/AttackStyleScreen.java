@@ -91,7 +91,7 @@ public class AttackStyleScreen extends Screen{
 			if(styleButton[i] != null) {
 				styleButton[i].renderButton(stack, mouseX, mouseY, partialTicks);
 				
-				if(styleButton[i].isHovered()) {
+				if(styleButton[i].isHoveredOrFocused()) {
 					this.renderTooltip(stack, new TextComponent(styleCap.getStyleDescription(i)), mouseX, mouseY);
 					this.clearWidgets();
 					this.init();

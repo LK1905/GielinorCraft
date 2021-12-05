@@ -103,7 +103,7 @@ public class SkillsScreen extends Screen{
 		stack.pushPose();		
 		
 		for(int i = 0; i < 26; i++) {
-			if(skillButton[i].isHovered()) {
+			if(skillButton[i].isHoveredOrFocused()) {
 				//I have no idea how to make tooltips have  multiple lines.
 				this.renderTooltip(stack, new TextComponent(skills.getName(i) + " xp: "
 						+ NumberFormat.getInstance(Locale.US).format((int) skills.getXp(i)) + ", xp to next: "
@@ -111,7 +111,7 @@ public class SkillsScreen extends Screen{
 			}
 		}
 		
-		if(totalButton.isHovered()) {
+		if(totalButton.isHoveredOrFocused()) {
 			this.renderTooltip(stack, new TextComponent("total xp: " + NumberFormat.getInstance(Locale.US).format((int) skills.getTotalXp())), mouseX, mouseY);
 		}
 		
