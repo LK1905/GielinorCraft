@@ -169,7 +169,9 @@ public class XPEventHandler {
 		Item smeltedItem = event.getSmelting().getItem();
 		
 		if(smeltedItem == Items.STONE) {
-			xpGained = 1.0;
+			xpGained = 2.5;
+		}else if(smeltedItem == Items.COPPER_INGOT) {
+			xpGained = 5.0;
 		}else if(smeltedItem == Items.COAL || smeltedItem == Items.CHARCOAL) {
 			xpGained = 8.0;
 		}else if(smeltedItem == Items.IRON_INGOT) {
@@ -224,7 +226,7 @@ public class XPEventHandler {
 				|| block == Blocks.END_STONE_BRICK_WALL || block == Blocks.END_STONE_BRICKS || block == Blocks.NETHERRACK
 				|| block == Blocks.CRACKED_STONE_BRICKS || block == Blocks.INFESTED_CHISELED_STONE_BRICKS || block == Blocks.INFESTED_CRACKED_STONE_BRICKS
 				|| block == Blocks.INFESTED_COBBLESTONE || block == Blocks.INFESTED_MOSSY_STONE_BRICKS || block == Blocks.INFESTED_STONE || block == Blocks.INFESTED_STONE_BRICKS) {
-			return 5;
+			return 7.5;
 		}else if(block == Blocks.ANDESITE || block == Blocks.ANDESITE_SLAB || block == Blocks.ANDESITE_STAIRS || block == Blocks.ANDESITE_WALL
 				|| block == Blocks.POLISHED_ANDESITE || block == Blocks.POLISHED_ANDESITE_SLAB || block == Blocks.POLISHED_ANDESITE_STAIRS
 				|| block == Blocks.DIORITE || block == Blocks.DIORITE_SLAB || block == Blocks.DIORITE_STAIRS || block == Blocks.DIORITE_WALL
@@ -235,29 +237,47 @@ public class XPEventHandler {
 		}else if(block == Blocks.NETHER_BRICK_FENCE || block == Blocks.NETHER_BRICK_SLAB || block == Blocks.NETHER_BRICK_STAIRS
 				|| block == Blocks.NETHER_BRICK_WALL || block == Blocks.NETHER_BRICKS || block == Blocks.RED_NETHER_BRICKS
 				|| block == Blocks.RED_NETHER_BRICK_SLAB || block == Blocks.RED_NETHER_BRICK_STAIRS || block == Blocks.RED_NETHER_BRICK_WALL) {
+			return 12.5;
+		}else if(block == Blocks.DEEPSLATE || block == Blocks.DEEPSLATE_BRICK_SLAB || block == Blocks.DEEPSLATE_BRICK_STAIRS
+				|| block == Blocks.DEEPSLATE_BRICK_WALL || block == Blocks.DEEPSLATE_BRICKS || block == Blocks.CHISELED_DEEPSLATE
+				|| block == Blocks.COBBLED_DEEPSLATE || block == Blocks.COBBLED_DEEPSLATE_SLAB || block == Blocks.COBBLED_DEEPSLATE_STAIRS || block == Blocks.COBBLED_DEEPSLATE_WALL
+				|| block == Blocks.DEEPSLATE_TILE_SLAB || block == Blocks.DEEPSLATE_TILE_STAIRS || block == Blocks.DEEPSLATE_TILE_WALL || block == Blocks.DEEPSLATE_TILES
+				|| block == Blocks.CRACKED_DEEPSLATE_BRICKS || block == Blocks.CRACKED_DEEPSLATE_TILES || block == Blocks.INFESTED_DEEPSLATE
+				|| block == Blocks.POLISHED_DEEPSLATE || block == Blocks.POLISHED_DEEPSLATE_SLAB || block == Blocks.POLISHED_DEEPSLATE_STAIRS || block == Blocks.POLISHED_DEEPSLATE_WALL) {
 			return 15;
-		}else if(block == Blocks.COAL_BLOCK || block == Blocks.COAL_ORE) {
+		}else if(block == Blocks.COPPER_BLOCK || block == Blocks.COPPER_ORE || block == Blocks.DEEPSLATE_COPPER_ORE || block == Blocks.RAW_COPPER_BLOCK
+				|| block == Blocks.CUT_COPPER || block == Blocks.CUT_COPPER_SLAB || block == Blocks.CUT_COPPER_STAIRS
+				|| block == Blocks.EXPOSED_COPPER || block == Blocks.EXPOSED_CUT_COPPER || block == Blocks.EXPOSED_CUT_COPPER_SLAB || block == Blocks.EXPOSED_CUT_COPPER_STAIRS
+				|| block == Blocks.OXIDIZED_COPPER || block == Blocks.OXIDIZED_CUT_COPPER || block == Blocks.OXIDIZED_CUT_COPPER_SLAB || block == Blocks.OXIDIZED_CUT_COPPER_STAIRS
+				|| block == Blocks.WAXED_COPPER_BLOCK || block == Blocks.WAXED_CUT_COPPER || block == Blocks.WAXED_CUT_COPPER_SLAB || block == Blocks.WAXED_CUT_COPPER_STAIRS
+				|| block == Blocks.WAXED_EXPOSED_COPPER || block == Blocks.WAXED_EXPOSED_CUT_COPPER || block == Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB || block == Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS
+				|| block == Blocks.WAXED_OXIDIZED_COPPER || block == Blocks.WAXED_OXIDIZED_CUT_COPPER || block == Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB || block == Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS
+				|| block == Blocks.WAXED_WEATHERED_COPPER || block == Blocks.WAXED_WEATHERED_CUT_COPPER || block == Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB || block == Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS
+				|| block == Blocks.WEATHERED_COPPER || block == Blocks.WEATHERED_CUT_COPPER || block == Blocks.WEATHERED_CUT_COPPER_SLAB || block == Blocks.WEATHERED_CUT_COPPER_STAIRS) {
+			return 17.5;
+		}else if(block == Blocks.COAL_BLOCK || block == Blocks.COAL_ORE || block == Blocks.DEEPSLATE_COAL_ORE) {
 			return 20;
 		}else if(block == Blocks.BLACKSTONE || block == Blocks.BLACKSTONE_SLAB || block == Blocks.BLACKSTONE_STAIRS || block == Blocks.BLACKSTONE_WALL
 				|| block == Blocks.CHISELED_POLISHED_BLACKSTONE || block == Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS || block == Blocks.GILDED_BLACKSTONE
 				|| block == Blocks.POLISHED_BLACKSTONE || block == Blocks.POLISHED_BLACKSTONE_BRICKS
 				|| block == Blocks.POLISHED_BLACKSTONE_BRICK_SLAB || block == Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS || block == Blocks.POLISHED_BLACKSTONE_BRICK_WALL) {
 			return 25;
-		}else if(block == Blocks.IRON_BARS || block == Blocks.IRON_BLOCK || block == Blocks.IRON_DOOR || block == Blocks.IRON_ORE || block == Blocks.IRON_TRAPDOOR) {
+		}else if(block == Blocks.IRON_BARS || block == Blocks.IRON_BLOCK || block == Blocks.IRON_DOOR || block == Blocks.IRON_ORE || block == Blocks.IRON_TRAPDOOR
+				|| block == Blocks.DEEPSLATE_IRON_ORE || block == Blocks.RAW_IRON_BLOCK) {
 			return 35;
-		}else if(block == Blocks.LAPIS_BLOCK || block == Blocks.LAPIS_ORE) {
+		}else if(block == Blocks.LAPIS_BLOCK || block == Blocks.LAPIS_ORE || block == Blocks.DEEPSLATE_LAPIS_ORE) {
 			return 40;
-		}else if(block == Blocks.REDSTONE_BLOCK || block == Blocks.REDSTONE_ORE) {
+		}else if(block == Blocks.REDSTONE_BLOCK || block == Blocks.REDSTONE_ORE || block == Blocks.DEEPSLATE_REDSTONE_ORE) {
 			return 50;
-		}else if(block == Blocks.GOLD_BLOCK || block == Blocks.GOLD_ORE || block == Blocks.NETHER_GOLD_ORE) {
+		}else if(block == Blocks.GOLD_BLOCK || block == Blocks.GOLD_ORE || block == Blocks.NETHER_GOLD_ORE || block == Blocks.DEEPSLATE_GOLD_ORE || block == Blocks.RAW_GOLD_BLOCK) {
 			return 65;
 		}else if(block == Blocks.NETHER_QUARTZ_ORE || block == Blocks.CHISELED_QUARTZ_BLOCK || block == Blocks.QUARTZ_BLOCK
 				|| block == Blocks.QUARTZ_BRICKS || block == Blocks.QUARTZ_PILLAR || block == Blocks.QUARTZ_SLAB || block == Blocks.QUARTZ_STAIRS
 				|| block == Blocks.SMOOTH_QUARTZ || block == Blocks.SMOOTH_QUARTZ_SLAB || block == Blocks.SMOOTH_QUARTZ_STAIRS) {
 			return 80;
-		}else if(block == Blocks.EMERALD_BLOCK || block == Blocks.EMERALD_ORE) {
+		}else if(block == Blocks.EMERALD_BLOCK || block == Blocks.EMERALD_ORE || block == Blocks.DEEPSLATE_EMERALD_ORE) {
 			return 95;
-		}else if(block == Blocks.DIAMOND_BLOCK || block == Blocks.DIAMOND_ORE) {
+		}else if(block == Blocks.DIAMOND_BLOCK || block == Blocks.DIAMOND_ORE || block == Blocks.DEEPSLATE_DIAMOND_ORE) {
 			return 135;
 		}else if(block == Blocks.NETHERITE_BLOCK || block == Blocks.ANCIENT_DEBRIS || block == Blocks.OBSIDIAN || block == Blocks.CRYING_OBSIDIAN) {
 			return 240;
