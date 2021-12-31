@@ -196,6 +196,34 @@ public class XPEventHandler {
 		}
 	}
 	
+	@SubscribeEvent
+	public static void onCookingEvent(ItemSmeltedEvent event) {
+		Player player = event.getPlayer();
+		ISkills skills = player.getCapability(SkillCapability.SKILL_CAP).orElse(null);
+		double xpGained = 0;
+		Item cookedItem = event.getSmelting().getItem();
+		
+		//Vegetables
+		if(cookedItem == Items.BAKED_POTATO) {
+			xpGained = 15.0;
+		}
+		
+		//Meats
+		if(cookedItem == Items.COOKED_BEEF || cookedItem == Items.COOKED_CHICKEN || cookedItem == Items.COOKED_PORKCHOP
+				|| cookedItem == Items.COOKED_MUTTON || cookedItem == Items.COOKED_RABBIT) {
+			xpGained = 30.0;
+		}else if(cookedItem == Items.COOKED_COD) {
+			xpGained = 75.0;
+		}else if(cookedItem == Items.COOKED_SALMON) {
+			xpGained = 90.0;
+		}
+		
+		if(!player.level.isClientSide) {
+			skills.addXp(Skills.COOKING, xpGained * event.getSmelting().getCount());
+			skills.sync((ServerPlayer) player);
+		}
+	}
+	
 	private static double diggingXpForBlock(Block block) {
 		
 		if(block == Blocks.DIRT || block == Blocks.GRASS_BLOCK || block == Blocks.DIRT_PATH || block == Blocks.SAND
